@@ -1,0 +1,110 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="FullSignature">
+  <Class Name="vengine::VoxelMesh">
+    <Position X="0.5" Y="3.75" Width="2.5" />
+    <Members>
+      <Method Name="GetAtlas" Hidden="true" />
+      <Method Name="SetAtlas" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAgAAACAAAAACCABAA=</HashCode>
+      <FileName>src\VoxelMesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vengine::Mesh">
+    <Position X="0.5" Y="0.5" Width="2.25" />
+    <Members>
+      <Field Name="_textured" Hidden="true" />
+      <Method Name="GetName" Hidden="true" />
+      <Method Name="GetTexture" Hidden="true" />
+      <Method Name="SetTexture" Hidden="true" />
+      <Method Name="SetTextured" Hidden="true" />
+      <Method Name="SetWireColor" Hidden="true" />
+      <Method Name="SetWired" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAIAACAQAQAgCIAAAAAAAAiCAAAAAAAAACACAABAA=</HashCode>
+      <FileName>src\Mesh.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vengine::Renderable">
+    <Position X="3.25" Y="0.5" Width="2.75" />
+    <Members>
+      <Field Name="_changed" Hidden="true" />
+      <Method Name="Delete" Hidden="true" />
+      <Method Name="DrawEnd" Hidden="true" />
+      <Method Name="GetIndices" Hidden="true" />
+      <Method Name="GetVertices" Hidden="true" />
+      <Method Name="Renderable" Hidden="true" />
+      <Method Name="UpdateBuffers" Hidden="true" />
+    </Members>
+    <NestedTypes>
+      <Enum Name="vengine::Renderable::VaoPos" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Renderable.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAEAAAQAAgAAABQACAAAAAGAAIQAABgCAGAIBAg=</HashCode>
+      <FileName>src\Renderable.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vengine::Lines" Collapsed="true">
+    <Position X="3.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAIAgAAAAAAAAAAAAAAAACCAAgAACAAAAA=</HashCode>
+      <FileName>src\Lines.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vengine::Points" Collapsed="true">
+    <Position X="5.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAYggAAAAAAAAAAAAAAAACAAAgAACAAAAA=</HashCode>
+      <FileName>src\Points.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vengine::Renderer">
+    <Position X="8.5" Y="0.5" Width="4" />
+    <Members>
+      <Method Name="ClearBuffers" Hidden="true" />
+      <Method Name="Delete" Hidden="true" />
+      <Method Name="DepthTestDisable" Hidden="true" />
+      <Method Name="DepthTestEnable" Hidden="true" />
+      <Method Name="GetActiveCamera" Hidden="true" />
+      <Method Name="GetModelMatrix" Hidden="true" />
+      <Method Name="GetProjectionMatrix" Hidden="true" />
+    </Members>
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+      <Compartment Name="Fields" Collapsed="true" />
+    </Compartments>
+    <NestedTypes>
+      <Enum Name="vengine::Renderer::ShadersIndexes" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Renderer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="vengine::Renderer::ShadersModes" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>src\Renderer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>CAICCQAAAAARAgKAAIVABBAYoCUGAAgAACEKEBIQgEA=</HashCode>
+      <FileName>src\Renderer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="vengine::RenderInfo">
+    <Position X="6.25" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAIBAAAAIAAAAAAAIAAAAAAIAAAAACgAAAAEAAAAAA=</HashCode>
+      <FileName>src\RenderInfo.h</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

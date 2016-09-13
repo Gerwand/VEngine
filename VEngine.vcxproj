@@ -89,10 +89,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\yekus\Source\Repos\VEngine\src;include;H:\Repos\VEngine\src;H:\Repos\VEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;H:\Repos\VEngine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;soil2-debug.lib;glfw3dbg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -103,10 +107,14 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\yekus\Source\Repos\VEngine\src;include;include;H:\Repos\VEngine\src;H:\Repos\VEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;lib;H:\Repos\VEngine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;soil2-debug.lib;glfw3dbg.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -119,12 +127,15 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\yekus\Source\Repos\VEngine\src;include;H:\Repos\VEngine\src;H:\Repos\VEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;H:\Repos\VEngine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;soil2.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -137,15 +148,163 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
+      <AdditionalIncludeDirectories>C:\Users\yekus\Source\Repos\VEngine\src;include;H:\Repos\VEngine\src;H:\Repos\VEngine\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>lib;H:\Repos\VEngine\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;soil2.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Assert.h" />
+    <ClInclude Include="src\CameraFPP.h" />
+    <ClInclude Include="src\Chunk.h" />
+    <ClInclude Include="src\CollisionInfo.h" />
+    <ClInclude Include="src\Engine\PlayerController.h" />
+    <ClInclude Include="src\Engine\World.h" />
+    <ClInclude Include="src\Frustum.h" />
+    <ClInclude Include="src\Managers\VoxelArrayManager.h" />
+    <ClInclude Include="src\Lines.h" />
+    <ClInclude Include="src\OctreeChunk.h" />
+    <ClInclude Include="src\PerlinNoise.h" />
+    <ClInclude Include="src\Points.h" />
+    <ClInclude Include="src\Ray.h" />
+    <ClInclude Include="src\RayIntersection.h" />
+    <ClInclude Include="src\TerrainGenerator.h" />
+    <ClInclude Include="src\VoxelMesh.h" />
+    <ClInclude Include="src\Engine\PhysicalObject.h" />
+    <ClInclude Include="src\Managers\MeshManager.h" />
+    <ClInclude Include="src\Node.h" />
+    <ClInclude Include="src\Engine\GameObject.h" />
+    <ClInclude Include="src\Engine\MeshedObject.h" />
+    <ClInclude Include="src\Errors.h" />
+    <ClInclude Include="src\BoundingBox.h" />
+    <ClInclude Include="src\Input.h" />
+    <ClInclude Include="src\KeyBindings.h" />
+    <ClInclude Include="src\Managers\File.h" />
+    <ClInclude Include="src\Managers\FileManager.h" />
+    <ClInclude Include="src\Managers\GlBuffer.h" />
+    <ClInclude Include="src\Managers\GlProgram.h" />
+    <ClInclude Include="src\Managers\GlProgramManager.h" />
+    <ClInclude Include="src\Managers\Handle.h" />
+    <ClInclude Include="src\Managers\HandleManager.h" />
+    <ClInclude Include="src\Managers\GlPipeline.h" />
+    <ClInclude Include="src\Managers\GlPipelineManager.h" />
+    <ClInclude Include="src\Managers\Shader.h" />
+    <ClInclude Include="src\Managers\ShaderFileManager.h" />
+    <ClInclude Include="src\Managers\ShaderManager.h" />
+    <ClInclude Include="src\Managers\Texture.h" />
+    <ClInclude Include="src\Managers\TextureManager.h" />
+    <ClInclude Include="src\Managers\VertexArray.h" />
+    <ClInclude Include="src\Math\MathFunctions.h" />
+    <ClInclude Include="src\Math\Matrix4.h" />
+    <ClInclude Include="src\Math\Plane.h" />
+    <ClInclude Include="src\Math\Quaternion.h" />
+    <ClInclude Include="src\Math\Vector2.h" />
+    <ClInclude Include="src\Math\Vector3.h" />
+    <ClInclude Include="src\Math\Vector4.h" />
+    <ClInclude Include="src\Mesh.h" />
+    <ClInclude Include="src\Octree.h" />
+    <ClInclude Include="src\Renderable.h" />
+    <ClInclude Include="src\Renderer.h" />
+    <ClInclude Include="src\RenderInfo.h" />
+    <ClInclude Include="src\Singleton.h" />
+    <ClInclude Include="src\Strcmp.h" />
+    <ClInclude Include="src\Time.h" />
+    <ClInclude Include="src\Transform.h" />
+    <ClInclude Include="src\VEMath.h" />
+    <ClInclude Include="src\VEngine.h" />
+    <ClInclude Include="src\Vertex.h" />
+    <ClInclude Include="src\Voxel.h" />
+    <ClInclude Include="src\VoxelArray3D.h" />
+    <ClInclude Include="src\Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="src\BoundingBox.cpp" />
+    <ClCompile Include="src\CameraFPP.cpp" />
+    <ClCompile Include="src\Chunk.cpp" />
+    <ClCompile Include="src\Engine\MeshedObject.cpp" />
+    <ClCompile Include="src\Engine\PhysicalObject.cpp" />
+    <ClCompile Include="src\Engine\PlayerController.cpp" />
+    <ClCompile Include="src\Frustum.cpp" />
+    <ClCompile Include="src\Managers\MeshManager.cpp" />
+    <ClCompile Include="src\Managers\VoxelArrayManager.cpp" />
+    <ClCompile Include="src\Lines.cpp" />
+    <ClCompile Include="src\PerlinNoise.cpp" />
+    <ClCompile Include="src\Points.cpp" />
+    <ClCompile Include="src\Ray.cpp" />
+    <ClCompile Include="src\TerrainGenerator.cpp" />
+    <ClCompile Include="src\VoxelMesh.cpp" />
+    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\Engine\GameObject.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Input.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\Managers\File.cpp" />
+    <ClCompile Include="src\Managers\GlBuffer.cpp" />
+    <ClCompile Include="src\Managers\GlProgram.cpp" />
+    <ClCompile Include="src\Managers\GlProgramManager.cpp" />
+    <ClCompile Include="src\Managers\GlPipeline.cpp" />
+    <ClCompile Include="src\Managers\GlPipelineManager.cpp" />
+    <ClCompile Include="src\Managers\Shader.cpp" />
+    <ClCompile Include="src\Managers\ShaderManager.cpp" />
+    <ClCompile Include="src\Managers\Texture.cpp" />
+    <ClCompile Include="src\Managers\TextureManager.cpp" />
+    <ClCompile Include="src\Managers\VertexArray.cpp" />
+    <ClCompile Include="src\Math\Matrix4.cpp" />
+    <ClCompile Include="src\Math\Plane.cpp" />
+    <ClCompile Include="src\Math\Quaternion.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
+    <ClCompile Include="src\Math\Vector3.cpp" />
+    <ClCompile Include="src\Math\Vector4.cpp" />
+    <ClCompile Include="src\Octree.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Others\glad.c" />
+    <ClCompile Include="src\Renderable.cpp" />
+    <ClCompile Include="src\Renderer.cpp" />
+    <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Transform.cpp" />
+    <ClCompile Include="src\VEngine.cpp" />
+    <ClCompile Include="src\Voxel.cpp" />
+    <ClCompile Include="src\VoxelArray3D.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="src\Window.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Renderer.cd" />
+    <None Include="Shaders\Simple.frag">
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Shaders\Simple.vert">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <FileType>Document</FileType>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </None>
+    <None Include="Shaders\Voxel.frag" />
+    <None Include="Shaders\Voxel.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
