@@ -1,11 +1,13 @@
 #pragma once
 
-#include "Node.h"
+#include "Engine/Objects/Node.h"
 #include "Transform.h"
-#include "Renderer.h"
-#include "Points.h"
-#include "Input.h"
-#include "Time.h"
+#include "Engine/Renderer.h"
+#include "Resources/Renderables/Points.h"
+#include "Resources/Renderables/Lines.h"
+#include "Engine/IO/Input.h"
+#include "Engine/Time.h"
+
 #include <string>
 
 namespace vengine {
@@ -26,6 +28,7 @@ public:
 	void Rename(const std::string& name);
 	void SetTag(const std::string& tag);
 	std::string GetName() const;
+	const std::string& GetRawName() const;
 	const std::string& GetTag() const;
 
 	bool CompareTag(const std::string& tag) const;
@@ -36,6 +39,7 @@ public:
 
 	void Init();
 	void Update();
+	void Physic();
 	void LateUpdate();
 	void Draw(Renderer* renderer);
 	void LateDraw(Renderer* renderer);
@@ -62,6 +66,7 @@ protected:
 	bool _destroyed;
 	
 	virtual void OnInit() {}
+	virtual void OnPhysic() {}
 	virtual void OnUpdate() {}
 	virtual void OnLateUpdate() {}
 	virtual void OnDraw(Renderer* renderer) {}
@@ -137,6 +142,11 @@ inline const Transform&
 GameObject::GetTransform()
 {
 	return _transform;
+}
+inline 	const std::string&
+GameObject::GetRawName() const
+{
+	return _name;
 }
 
 }

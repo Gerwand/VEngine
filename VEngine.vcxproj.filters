@@ -19,18 +19,6 @@
     <Filter Include="Source Files\Math">
       <UniqueIdentifier>{e98c6d3e-3419-4b31-97bf-8b916d1e5556}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Managers">
-      <UniqueIdentifier>{ae3852db-619f-44fb-96b4-d66f718dc778}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers">
-      <UniqueIdentifier>{6a4c2758-8775-400d-b80b-8a7fb551666a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Managers\IO">
-      <UniqueIdentifier>{62ac2c16-82e2-4211-a2f1-b905f5cd94a2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Managers\IO">
-      <UniqueIdentifier>{a78fb007-15fd-476f-9bf9-d2cd4a584129}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Resources">
       <UniqueIdentifier>{aaa3979a-e6bb-4152-959b-dd7b2fe4cb28}</UniqueIdentifier>
     </Filter>
@@ -61,21 +49,102 @@
     <Filter Include="Source Files\Engine">
       <UniqueIdentifier>{a7a9f159-01d1-4cb8-bda4-371a8cf6b962}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Obsolete">
-      <UniqueIdentifier>{e8a7a8ab-4657-4ff1-9da4-c3e9fff1d47b}</UniqueIdentifier>
+    <Filter Include="Header Files\Resources\Images">
+      <UniqueIdentifier>{23842fd4-2516-4fc5-8237-5b0a11c60f53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Graphics">
-      <UniqueIdentifier>{1e373c76-8be5-4d19-9884-7a3d9b9bc5c0}</UniqueIdentifier>
+    <Filter Include="Header Files\Resources\Managers">
+      <UniqueIdentifier>{6a4c2758-8775-400d-b80b-8a7fb551666a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Graphics">
-      <UniqueIdentifier>{3836802e-9375-48dc-852f-a99415387ff1}</UniqueIdentifier>
+    <Filter Include="Header Files\Resources\Renderables">
+      <UniqueIdentifier>{b54ce5bb-4844-4a92-bdb7-5d95f7483d47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\IO">
+      <UniqueIdentifier>{b5145324-5e19-4801-99d2-542b34fd2c7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Physic">
+      <UniqueIdentifier>{0db1966e-7bf6-4a37-b43f-990b10a0b759}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\IO">
+      <UniqueIdentifier>{9772b8cb-222d-44da-93b3-fa39e8175221}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Physic">
+      <UniqueIdentifier>{f75fa8cf-c25a-4455-9c57-cb4a52d5f5dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Engine\Objects">
+      <UniqueIdentifier>{08ac3a42-307e-4c54-ac14-7c982e788d05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Engine\Objects">
+      <UniqueIdentifier>{71466ec7-e8fb-448b-b308-88e2328a840f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Images">
+      <UniqueIdentifier>{f3d49ed4-f88a-4c91-97b9-a389f321601b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Managers">
+      <UniqueIdentifier>{a345f1d1-2935-49a3-97d2-1abc611634d4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Voxels">
+      <UniqueIdentifier>{5a1d55da-22eb-4284-89c4-057ba0d2d359}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\Renderables">
+      <UniqueIdentifier>{bb98bfc4-08e7-446e-855a-7b7ad5d71e7f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Resources\OpenGL">
+      <UniqueIdentifier>{75743afd-20da-4fcd-9e02-977d8c2bbe14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources\OpenGL">
+      <UniqueIdentifier>{39504105-0947-4dbb-a3d8-2f14325eaa1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources\Voxels">
+      <UniqueIdentifier>{4eccbc05-5325-43da-8185-498c47de62af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Assert.h">
+      <Filter>Header Files\Errors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Errors.h">
+      <Filter>Header Files\Errors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\CameraFPP.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Octree.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Renderer.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\RenderInfo.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\TerrainGenerator.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Time.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\VEngine.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Vertex.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\World.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Frustum.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Math\MathFunctions.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Matrix4.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\PerlinNoise.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Math\Plane.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
     <ClInclude Include="src\Math\Quaternion.h">
@@ -90,178 +159,217 @@
     <ClInclude Include="src\Math\Vector4.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\HandleManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\ShaderManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\FileManager.h">
-      <Filter>Header Files\Managers\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\ShaderFileManager.h">
-      <Filter>Header Files\Managers\IO</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\Shader.h">
+    <ClInclude Include="src\Resources\Handle.h">
       <Filter>Header Files\Resources</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\Handle.h">
-      <Filter>Header Files\Resources</Filter>
+    <ClInclude Include="src\Resources\Images\Texture.h">
+      <Filter>Header Files\Resources\Images</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\File.h">
+    <ClInclude Include="src\Resources\IO\File.h">
       <Filter>Header Files\Resources\IO</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\GlProgram.h">
-      <Filter>Header Files\Resources</Filter>
+    <ClInclude Include="src\Resources\Managers\GlPipelineManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\GlProgramManager.h">
-      <Filter>Header Files\Managers</Filter>
+    <ClInclude Include="src\Resources\Managers\GlProgramManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\GlPipeline.h">
-      <Filter>Header Files\Resources</Filter>
+    <ClInclude Include="src\Resources\Managers\HandleManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\GlPipelineManager.h">
-      <Filter>Header Files\Managers</Filter>
+    <ClInclude Include="src\Resources\Managers\MeshManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\GlBuffer.h">
-      <Filter>Header Files\Resources</Filter>
+    <ClInclude Include="src\Resources\Managers\ShaderFileManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Managers\VertexArray.h">
-      <Filter>Header Files\Resources</Filter>
+    <ClInclude Include="src\Resources\Managers\ShaderManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Voxel.h">
-      <Filter>Header Files\Graphics</Filter>
+    <ClInclude Include="src\Resources\Managers\TextureManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Chunk.h">
-      <Filter>Header Files\Graphics</Filter>
+    <ClInclude Include="src\Resources\Managers\VoxelArrayManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mesh.h">
-      <Filter>Header Files\Graphics</Filter>
+    <ClInclude Include="src\Resources\Managers\FileManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
-    <ClInclude Include="src\Vertex.h">
-      <Filter>Header Files\Graphics</Filter>
+    <ClInclude Include="src\Resources\OGL\GlBuffer.h">
+      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\VoxelArray3D.h">
-      <Filter>Header Files\Graphics</Filter>
+    <ClInclude Include="src\Resources\OGL\GlPipeline.h">
+      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\VEMath.h">
-      <Filter>Header Files\Math</Filter>
+    <ClInclude Include="src\Resources\OGL\GlProgram.h">
+      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Assert.h">
-      <Filter>Header Files\Errors</Filter>
+    <ClInclude Include="src\Resources\OGL\Shader.h">
+      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Errors.h">
-      <Filter>Header Files\Errors</Filter>
+    <ClInclude Include="src\Resources\OGL\VertexArray.h">
+      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input.h">
-      <Filter>Header Files\Engine</Filter>
+    <ClInclude Include="src\Resources\Renderables\Lines.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Renderables\Mesh.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Renderables\Points.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Renderables\Renderable.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Renderables\VoxelMesh.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Voxels\Chunk.h">
+      <Filter>Header Files\Resources\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Voxels\Voxel.h">
+      <Filter>Header Files\Resources\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Voxels\VoxelArray3D.h">
+      <Filter>Header Files\Resources\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Voxels\VoxelModels.h">
+      <Filter>Header Files\Resources\Voxels</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\IO\Window.h">
+      <Filter>Header Files\Engine\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\IO\Input.h">
+      <Filter>Header Files\Engine\IO</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\GameObject.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\MeshedObject.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\PhysicalObject.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\PlayerController.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physic\BoundingBox.h">
+      <Filter>Header Files\Engine\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physic\Ray.h">
+      <Filter>Header Files\Engine\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physic\RayIntersection.h">
+      <Filter>Header Files\Engine\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Physic\CollisionInfo.h">
+      <Filter>Header Files\Engine\Physic</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\Transform.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\KeyBindings.h">
       <Filter>Header Files\Hardcoded config</Filter>
     </ClInclude>
-    <ClInclude Include="src\Singleton.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VEngine.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\Texture.h">
-      <Filter>Header Files\Resources</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\TextureManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Math\Plane.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\BoundingBox.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\CameraFPP.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\VoxelMesh.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\GameObject.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\MeshedObject.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Node.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Octree.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Engine\PhysicalObject.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderable.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RenderInfo.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="src\Strcmp.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Time.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\MeshManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Managers\VoxelArrayManager.h">
-      <Filter>Header Files\Managers</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Lines.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Points.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PerlinNoise.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\TerrainGenerator.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\OctreeChunk.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\CollisionInfo.h">
+    <ClInclude Include="src\Singleton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Frustum.h">
-      <Filter>Header Files\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ray.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="src\RayIntersection.h">
+    <ClInclude Include="src\VEMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\World.h">
-      <Filter>Header Files\Engine</Filter>
+    <ClInclude Include="src\Engine\Objects\Node.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\PlayerController.h">
-      <Filter>Header Files\Engine</Filter>
+    <ClInclude Include="src\VoxelModels.h">
+      <Filter>Header Files\Hardcoded config</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Managers\GameObjectManager.h">
+      <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="src\Others\glad.c">
+      <Filter>Source Files\Other sources</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlBuffer.cpp">
+      <Filter>Header Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlPipeline.cpp">
+      <Filter>Header Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlProgram.cpp">
+      <Filter>Header Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\Shader.cpp">
+      <Filter>Header Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\VertexArray.cpp">
+      <Filter>Header Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\IO\Window.cpp">
+      <Filter>Source Files\Engine\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\IO\Input.cpp">
+      <Filter>Source Files\Engine\IO</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\GameObject.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\MeshedObject.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\PhysicalObject.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\PlayerController.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\Transform.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physic\BoundingBox.cpp">
+      <Filter>Source Files\Engine\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Physic\Ray.cpp">
+      <Filter>Source Files\Engine\Physic</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\CameraFPP.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Renderer.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Octree.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\TerrainGenerator.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\VEngine.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Time.cpp">
+      <Filter>Source Files\Engine</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Frustum.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Matrix4.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\PerlinNoise.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Plane.cpp">
+      <Filter>Source Files\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Math\Quaternion.cpp">
+      <Filter>Source Files\Math</Filter>
     </ClCompile>
     <ClCompile Include="src\Math\Vector2.cpp">
       <Filter>Source Files\Math</Filter>
@@ -272,134 +380,62 @@
     <ClCompile Include="src\Math\Vector4.cpp">
       <Filter>Source Files\Math</Filter>
     </ClCompile>
-    <ClCompile Include="src\Math\Matrix4.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Quaternion.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Managers\ShaderManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Managers\File.cpp">
+    <ClCompile Include="src\Resources\IO\File.cpp">
       <Filter>Source Files\Resources\IO</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\Shader.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Images\Texture.cpp">
+      <Filter>Source Files\Resources\Images</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\GlProgram.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Managers\GlPipelineManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\GlProgramManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+    <ClCompile Include="src\Resources\Managers\GlProgramManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\GlPipeline.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Managers\MeshManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\GlPipelineManager.cpp">
-      <Filter>Source Files\Managers</Filter>
+    <ClCompile Include="src\Resources\Managers\ShaderManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\GlBuffer.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Managers\TextureManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\VertexArray.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Managers\VoxelArrayManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Others\glad.c">
-      <Filter>Source Files\Other sources</Filter>
+    <ClCompile Include="src\Resources\Renderables\Lines.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="src\Window.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="src\Resources\Renderables\Mesh.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="src\Input.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="src\Resources\Renderables\Points.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="src\VoxelArray3D.cpp">
-      <Filter>Source Files\Graphics</Filter>
+    <ClCompile Include="src\Resources\Renderables\Renderable.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="Mesh.cpp">
-      <Filter>Source Files\Graphics</Filter>
+    <ClCompile Include="src\Resources\Renderables\VoxelMesh.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
-    <ClCompile Include="src\Voxel.cpp">
-      <Filter>Source Files\Graphics</Filter>
+    <ClCompile Include="src\Resources\Voxels\Chunk.cpp">
+      <Filter>Source Files\Resources\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="src\Chunk.cpp">
-      <Filter>Source Files\Graphics</Filter>
+    <ClCompile Include="src\Resources\Voxels\Voxel.cpp">
+      <Filter>Source Files\Resources\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\Texture.cpp">
-      <Filter>Source Files\Resources</Filter>
+    <ClCompile Include="src\Resources\Voxels\VoxelArray3D.cpp">
+      <Filter>Source Files\Resources\Voxels</Filter>
     </ClCompile>
-    <ClCompile Include="src\Managers\TextureManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Math\Plane.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\CameraFPP.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\BoundingBox.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\GameObject.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Node.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Octree.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderable.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Time.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\VoxelMesh.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\MeshedObject.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Managers\MeshManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Managers\VoxelArrayManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Lines.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Points.cpp">
-      <Filter>Source Files\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="src\PerlinNoise.cpp">
-      <Filter>Source Files\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\TerrainGenerator.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Frustum.cpp">
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\VEngine.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="src\Engine\Objects\Node.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ray.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\PhysicalObject.cpp">
-      <Filter>Source Files\Engine</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Engine\PlayerController.cpp">
-      <Filter>Source Files\Engine</Filter>
+    <ClCompile Include="src\Resources\Managers\GameObjectManager.cpp">
+      <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

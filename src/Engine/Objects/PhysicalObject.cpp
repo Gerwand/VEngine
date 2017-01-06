@@ -45,32 +45,31 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 	if (collision.GetOtherObject() == this)
 		return;
 
-	//printf("\nCollision %s!", GetName().c_str());
 
 	if (collision.HasCollidedWithTerrain()) {
 		const Directions& dirs = collision.GetHittedDirections();
 
-		const Vector3 dir = _transform.GetLastPosition() - _transform.GetPosition();
+		const Vector3 dir = _transform.GetPosition() - _transform.GetLastPosition();
 		const Vector3& last = _transform.GetLastPosition();
 		if (collision.HasCollidedWithTerrain(CollisionInfo::BOTTOM | CollisionInfo::TOP)) {
 			_velocity.y =  -_velocity.y * _bounciness;
 			_transform.GetPosition().y = last.y;
 		}
 
-		if (collision.HasCollidedWithTerrain(CollisionInfo::NORTH ) && dir.z > 0.0) {
+		if (collision.HasCollidedWithTerrain(CollisionInfo::NORTH ) && dir.z < 0.0) {
 			_velocity.z =  -_velocity.z * _bounciness;
 			_transform.GetPosition().z = last.z;
 		}
-		else if (collision.HasCollidedWithTerrain(CollisionInfo::SOUTH ) && dir.z < 0.0) {
+		else if (collision.HasCollidedWithTerrain(CollisionInfo::SOUTH ) && dir.z > 0.0) {
 			_velocity.z =  -_velocity.z * _bounciness;
 			_transform.GetPosition().z = last.z;
 		}
 
-		if (collision.HasCollidedWithTerrain(CollisionInfo::EAST) && dir.x > 0.0) {
+		if (collision.HasCollidedWithTerrain(CollisionInfo::EAST) && dir.x < 0.0) {
 			_velocity.x = -_velocity.z * _bounciness;
 			_transform.GetPosition().x = last.x;
 		}
-		else if (collision.HasCollidedWithTerrain(CollisionInfo::WEST ) && dir.x < 0.0) {
+		else if (collision.HasCollidedWithTerrain(CollisionInfo::WEST ) && dir.x > 0.0) {
 			_velocity.x = -_velocity.z * _bounciness;
 			_transform.GetPosition().x = last.x;
 		}
@@ -79,20 +78,16 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 		if (collision.HasCollidedWithTerrain(CollisionInfo::BOTTOM))
 			_grounded = true;
 	}
-	//std::cout << "\n";
-	
+
 	if (collision.HasCollidedWithObject()) {
 		PhysicalObject* other = (PhysicalObject *)collision.GetOtherObject();
 		assert(other != nullptr, "Other object is null");
-		
-		if (!other->IsStatic()) {
-			Vector3 tmp = _velocity;
-			_velocity += other->_mass * other->_velocity * Time::DeltaTime();
-			other->_velocity += _mass * tmp * Time::DeltaTime();
-		}
-		else {
-			_velocity = Vector3::zeroes;
-		}
+		//const Vector3 dir = _transform.GetLastPosition() - _transform.GetPosition();
+		const Vector3 dirO = other->_transform.GetPosition() - other->_transform.GetLastPosition();
+
+			//_velocity += other->_mass * dirO * Time::DeltaTime();
+			//other->_velocity = _mass * dir * Time::DeltaTime();
+			_transform.SetPosition(_transform.GetLastPosition());
 	}
 	
 	
@@ -101,7 +96,7 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 }
 
 void
-PhysicalObject::OnLateUpdate()
+PhysicalObject::OnPhysic()
 {
 	if (!IsStatic()) {
 		UpdatePhysic();

@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Managers/VertexArray.h"
-#include "Managers/GlBuffer.h"
+#include "Resources/OGL/VertexArray.h"
+#include "Resources/OGL/GlBuffer.h"
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace vengine {
 

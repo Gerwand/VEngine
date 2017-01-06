@@ -10,7 +10,6 @@
 #include <vector>
 #include <iostream>
 
-
 namespace vengine {
 
 #define MAX_BUF_LEN		256

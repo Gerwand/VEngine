@@ -3,7 +3,7 @@
 
 #include "HandleManager.h"
 #include "Singleton.h"
-#include "VoxelArray3D.h"
+#include "Resources/Voxels/VoxelArray3D.h"
 
 #include <string>
 #include <map>

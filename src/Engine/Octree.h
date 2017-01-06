@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Engine/PhysicalObject.h"
-#include "Chunk.h"
-#include "Lines.h"
-#include "RayIntersection.h"
+#include "Objects/PhysicalObject.h"
+#include "Resources/Voxels/Chunk.h"
+#include "Resources/Renderables/Lines.h"
+#include "Engine/Physic/RayIntersection.h"
 
 #include <queue>
 #include <list>

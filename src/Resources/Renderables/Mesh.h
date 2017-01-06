@@ -1,10 +1,7 @@
 #pragma once
 
-#include "Vertex.h"
-#include "Managers/GlBuffer.h"
-#include "Managers/VertexArray.h"
-#include "Managers/TextureManager.h"
 #include "Renderable.h"
+#include "Resources/Managers/TextureManager.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

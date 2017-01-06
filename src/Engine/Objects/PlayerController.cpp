@@ -61,6 +61,11 @@ PlayerController::OnUpdate()
 	ChangeBlocks();
 	Move();
 
+}
+
+void
+PlayerController::OnLateUpdate()
+{
 	_camera->SetPosition(_transform.GetWorldPosition());
 	_camera->Move(Vector3(0.0f, 0.6f, 0.0f));
 }
@@ -73,7 +78,7 @@ PlayerController::ChangeBlocks()
 	_octree->CheckRayCollision(&cameraRay, &rayInfo);
 
 	static float prevTime = 0;
-	if (Input::IsPressed("Attack1")) {
+	if (Input::IsHolded("Attack1")) {
 		if (Time::GetTime() - prevTime > 0.2f) {
 			prevTime = Time::GetTime();
 			if (rayInfo.CollisionFound()) {
@@ -93,7 +98,7 @@ PlayerController::ChangeBlocks()
 		Vector3::down
 	};
 
-	if (Input::IsPressed("Attack2")) {
+	if (Input::IsHolded("Attack2")) {
 		if (Time::GetTime() - prevTime > 0.2f) {
 			prevTime = Time::GetTime();
 			if (rayInfo.CollisionFound()) {

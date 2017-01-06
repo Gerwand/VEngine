@@ -6,3 +6,5 @@
 #include "Math/Vector4.h"
 #include "Math/Matrix4.h"
 #include "Math/Quaternion.h"
+#include "Math/Frustum.h"
+#include "Math/Plane.h"

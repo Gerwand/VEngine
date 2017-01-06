@@ -1,14 +1,8 @@
 ﻿#include "VEngine.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <random>
-#include "OctreeChunk.h"
 
 namespace vengine {
 
-bool debugDraw = false;
+bool debugDraw = true;
 
 
 
@@ -118,6 +112,7 @@ VEngine::InitResourceManagers()
 		new TextureManager;
 		new MeshManager;
 		new VoxelArrayManager;
+		new GameObjectManager;
 	}
 	catch (std::bad_alloc err) {
 		DestroyResourceManagers();
@@ -188,7 +183,7 @@ VEngine::LoadResources()
 	error = LoadTextures();
 	if (error)
 		return error;
-
+	LoadObjects();
 	LoadWorld();
 
 	return 0;
@@ -249,6 +244,45 @@ VEngine::LoadTextures()
 	return 0;
 }
 
+
+void
+VEngine::LoadObjects()
+{
+	/* Create meshes and VA of static objects */
+	VoxelMesh* mesh = new VoxelMesh;
+	mesh->Init("Sword");
+
+	int vaSword = voxelArrayManager.GetVoxelArray("VoxelSword");
+	voxelArrayManager.SetDimension(vaSword, swordDim.x, swordDim.y, swordDim.z);
+	voxelArrayManager.SetVoxels(vaSword, swordVoxels);
+	voxelArrayManager.SetVoxelSize(vaSword, swordSize);
+	voxelArrayManager.GenerateMesh(vaSword, mesh);
+	unsigned int swordMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Cube");
+	int cubeVox = voxelArrayManager.GetVoxelArray("Cube");
+	voxelArrayManager.SetDimension(cubeVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(cubeVox, cube);
+	voxelArrayManager.SetVoxelSize(cubeVox, cubeSize);
+	voxelArrayManager.GenerateMesh(cubeVox, mesh);
+	unsigned int cubeMesh = meshManager.AddMesh(mesh);
+
+	/* Objects initialization */
+	Transform transformMain;
+	transformMain.SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	/* Sword object initialization */
+	PhysicalObject* sword = new PhysicalObject("Sword");
+	sword->SetMesh(swordMesh);
+	sword->SetTransform(transformMain);
+	sword->GetCollider().SetPosition(transformMain.GetPosition());
+	int x, y, z;
+	voxelArrayManager.GetDimension(vaSword, &x, &y, &z);
+	sword->GetCollider().SetDimension(Vector3((float)x, (float)y, (float)z) * voxelArrayManager.GetVoxelSize(vaSword));
+
+	gameObjectManager.AddGameObject(sword);
+}
+
 void 
 VEngine::LoadWorld()
 {
@@ -257,54 +291,37 @@ VEngine::LoadWorld()
 	_world = new World("World");
 	_world->Rename("World");
 
-
-	VoxelMesh* mesh = new VoxelMesh;
-	mesh->Init("Sword");
-
-	int vaSword = voxelArrayManager.GetVoxelArray("VoxelSword");
-	voxelArrayManager.SetDimension(vaSword, swordSize.x, swordSize.y, swordSize.z);
-	voxelArrayManager.SetVoxels(vaSword, swordVoxels);
-	voxelArrayManager.SetVoxelSize(vaSword, 0.1f);
-	voxelArrayManager.GenerateMesh(vaSword, mesh);
-	unsigned int swordMesh = meshManager.AddMesh(mesh);
-
-	mesh = new VoxelMesh;
-	mesh->Init("Cube");
-	int cubeVox = voxelArrayManager.GetVoxelArray("Cube");
-	voxelArrayManager.SetDimension(cubeVox, cubeSize.x, cubeSize.y, cubeSize.z);
-	voxelArrayManager.SetVoxels(cubeVox, cube);
-	voxelArrayManager.SetVoxelSize(cubeVox, 1.0f);
-	voxelArrayManager.GenerateMesh(cubeVox, mesh);
-	unsigned int cubeMesh = meshManager.AddMesh(mesh);
-	
-	Transform transformMain, transformChild, transformPlayer;
-	transformMain.SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	/* Initialize player */
+	Transform transformPlayer;
 	transformPlayer.SetPosition(Vector3(4.0f, 50.0f, 4.0f));
-	transformChild.Set(Vector3(0.0f, 1.0f, 0.0f), Vector3(0.5f, 0.5f, 0.5f), Quaternion().SetRotationX(90.0f));
 
 	PlayerController* player = new PlayerController;
-	CameraFPP* camera = new CameraFPP;
+	CameraFPP* camera = new CameraFPP;	
 
 	player->SetCamera(camera);
 	_renderer.SetActiveCamera(camera);
+	
 	player->GetCollider().SetDimension(Vector3(0.5f, 1.5f, 0.5f));
 	player->AttachTo(_world);
 	player->SetTransform(transformPlayer);
 	player->SetOctree(&_octree);
-
-	PhysicalObject* sword = new PhysicalObject("Sword");
-	sword->SetMesh(swordMesh);
-	sword->AttachTo(_world);
-	sword->SetTransform(transformMain);
-	sword->GetCollider().SetPosition(transformMain.GetPosition());
-	
-	int x, y, z;
-	voxelArrayManager.GetDimension(vaSword, &x, &y, &z);
-	sword->GetCollider().SetDimension(Vector3((float)x, (float)y, (float)z) * voxelArrayManager.GetVoxelSize(vaSword));
-
-	_octree.Add(sword);
 	_octree.Add(player);
+	
+	/* Spawn objects */
+	Transform transform;
+	transform.SetPosition(Vector3(0.0f, 30.0f, 0.0f));
+	PhysicalObject* sword = (PhysicalObject *)gameObjectManager.Instantiate("Sword");
+	sword->SetTransform(transform);
+	sword->AttachTo(_world);
+	_octree.Add(sword);
 
+	transform.SetPosition(Vector3(0.0f, 50.0f, 0.0f));
+	sword = (PhysicalObject *)gameObjectManager.Instantiate("Sword");
+	sword->SetTransform(transform);
+	sword->AttachTo(_world);
+	_octree.Add(sword);
+
+	/* Generate terrain */
 	TerrainGenerator terrainGen(0, 5, 1);
 	terrainGen.SetSmoothness(256);
 	terrainGen.SetDetails(1);
@@ -314,7 +331,7 @@ VEngine::LoadWorld()
 	for (int z = 0; z < 16; ++z) {
 		for (int y = 0; y < 16; ++y) {
 			for (int x = 0; x < 16; ++x) {
-				Chunk* chunk = new Chunk(Vector3((x - 8.0f) * 16.0f, (y - 8.0f) * 16.0f, (z - 8.0f) * 16.0f));
+				Chunk* chunk = new Chunk(Vector3((x - 8.0f) * Chunk::dimension, (y - 8.0f) * Chunk::dimension, (z - 8.0f) * Chunk::dimension));
 				if(terrainGen.GetChunk(chunk))
 					_octree.Add(chunk);
 			}
@@ -337,7 +354,7 @@ VEngine::LoadWorld()
 		_octree.Add(swordChild);
 	}
 	*/
-	_octree.SetBoundingArea(BoundingBox(Vector3::zeroes, Vector3(16 * 16.0f)));
+	_octree.SetBoundingArea(BoundingBox(Vector3::zeroes, Vector3(16.0f * Chunk::dimension)));
 
 	_renderer.SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f), 0.5f);
 	_renderer.SetGlobalLightDir(Vector3(2.0f, 1.0f, 0.5f));
@@ -349,7 +366,6 @@ VEngine::Destroy()
 	DestroyWorld();
 	DestroyFileManagers();
 	DestroyResourceManagers();
-	//DestroyGLFWLibrary();
 }
 
 void
@@ -372,6 +388,7 @@ VEngine::DestroyResourceManagers()
 	delete textureManager.GetSingletonPointer();
 	delete meshManager.GetSingletonPointer();
 	delete voxelArrayManager.GetSingletonPointer();
+	delete gameObjectManager.GetSingletonPointer();
 }
 void
 VEngine::DestroyOtherManagers()
@@ -408,11 +425,11 @@ VEngine::Run()
 
 
 		_world->Update();
-		_world->LateUpdate();
-
+		_world->Physic();
 		_octree.UpdateTree();
 		_octree.Update();
 
+		_world->LateUpdate();
 		Draw();
 		_octree.Draw(&_renderer);
 		_world->Draw(&_renderer);

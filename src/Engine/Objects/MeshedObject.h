@@ -1,8 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Managers/MeshManager.h"
-#include "Time.h"
+#include "Resources/Managers/MeshManager.h"
 
 namespace vengine {
 

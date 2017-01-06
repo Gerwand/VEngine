@@ -1,9 +1,9 @@
 #pragma once
 
 #include "MeshedObject.h"
-#include "BoundingBox.h"
-#include "Lines.h"
-#include "CollisionInfo.h"
+#include "Engine/Physic/BoundingBox.h"
+#include "Resources/Renderables/Lines.h"
+#include "Engine/Physic/CollisionInfo.h"
 
 namespace vengine {
 
@@ -44,7 +44,7 @@ protected:
 	virtual void OnInit();
 	virtual void OnUpdate();
 	virtual void OnDraw(Renderer* renderer);
-	virtual void OnLateUpdate();
+	virtual void OnPhysic();
 
 	static Vector3 _gravityForce;
 private:

@@ -3,6 +3,7 @@
 #include "GameObject.h"
 
 namespace vengine {
+extern bool debugDraw;
 
 class World : public GameObject
 {
@@ -11,6 +12,8 @@ public:
 	World(const World& source);
 
 	virtual GameObject* Clone();
+protected:
+	virtual void OnUpdate();
 };
 
 inline
@@ -28,6 +31,13 @@ inline GameObject*
 World::Clone()
 {
 	return new World(*this);
+}
+
+inline void 
+World::OnUpdate()
+{
+	if (Input::IsPressed(GLFW_KEY_TAB))
+		debugDraw = !debugDraw;
 }
 
 }

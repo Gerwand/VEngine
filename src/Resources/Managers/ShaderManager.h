@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Handle.h"
+#include "Resources/Handle.h"
 #include "HandleManager.h"
 #include "Singleton.h"
-#include "Shader.h"
+#include "Resources/OGL/Shader.h"
 #include "ShaderFileManager.h"
 
 #include <string>

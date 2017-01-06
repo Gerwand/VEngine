@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Handle.h"
+#include "Resources/Handle.h"
 #include "HandleManager.h"
 #include "Singleton.h"
-#include "Texture.h"
+#include "Resources/Images/Texture.h"
 
 #include <string>
 #include <map>

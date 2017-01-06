@@ -1,8 +1,8 @@
 #pragma once
 
 #include "PhysicalObject.h"
-#include "RayIntersection.h"
-#include "Octree.h"
+#include "Engine/Physic/RayIntersection.h"
+#include "Engine/Octree.h"
 
 namespace vengine {
 
@@ -22,8 +22,6 @@ public:
 	float runModifier = 2.0f;
 	float jumpForce = 10.0f;
 	float digDistance = 5.0f;
-protected:
-
 private:
 	CameraFPP* _camera;
 	Voxel::Type _activeItem;
@@ -32,6 +30,7 @@ private:
 	RayIntersection rayInfo;
 
 	virtual void OnUpdate();
+	virtual void OnLateUpdate();
 	virtual void OnInit();
 	virtual void OnDraw(Renderer* renderer);
 	bool grounded = false;

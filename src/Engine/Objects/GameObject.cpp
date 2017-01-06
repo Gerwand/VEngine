@@ -87,6 +87,18 @@ GameObject::Update()
 		((GameObject*)_next)->Update();
 }
 
+void 
+GameObject::Physic()
+{
+	OnPhysic();
+
+	if (HasChild())
+		((GameObject*)_child)->Physic();
+
+	if (HasParent() && !IsLastChild())
+		((GameObject*)_next)->Physic();
+}
+
 void
 GameObject::LateUpdate()
 {

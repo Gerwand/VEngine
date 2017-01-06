@@ -1,6 +1,6 @@
 #pragma once
 #include "Assert.h"
-#include "Handle.h"
+#include "Resources/Handle.h"
 #include "Strcmp.h"
 
 #include <vector>

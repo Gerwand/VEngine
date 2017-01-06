@@ -1,40 +1,43 @@
 #pragma once
 
-#include <glad/glad.h>
-#include <GLFW/glfw3.h>
-
-#include <string>
-
 #include "Singleton.h"
 
-#include "Window.h"
-#include "Input.h"
+#include "IO/Window.h"
+#include "IO/Input.h"
 #include "KeyBindings.h"
+#include "VoxelModels.h"
 
-#include "Managers/ShaderManager.h"
-#include "Managers/GlProgramManager.h"
-#include "Managers/GlPipelineManager.h"
-#include "Managers/ShaderFileManager.h"
-#include "Managers/TextureManager.h"
-#include "Managers/MeshManager.h"
-#include "Managers/VoxelArrayManager.h"
+#include "Resources/Managers/ShaderManager.h"
+#include "Resources/Managers/GlProgramManager.h"
+#include "Resources/Managers/GlPipelineManager.h"
+#include "Resources/Managers/ShaderFileManager.h"
+#include "Resources/Managers/TextureManager.h"
+#include "Resources/Managers/MeshManager.h"
+#include "Resources/Managers/VoxelArrayManager.h"
+#include "Resources/Managers/GameObjectManager.h"
 
-#include "Managers/GlBuffer.h"
-#include "Managers/VertexArray.h"
 #include "Vertex.h"
 #include "Time.h"
 #include "VEMath.h"
 #include "CameraFPP.h"
-#include "Mesh.h"
-#include "VoxelMesh.h"
-#include "VoxelArray3D.h"
-#include "Engine/GameObject.h"
-#include "Engine/MeshedObject.h"
-#include "Engine/PhysicalObject.h"
-#include "Engine/PlayerController.h"
-#include "Engine/World.h"
+#include "Resources/Renderables/VoxelMesh.h"
+#include "Resources/Voxels/VoxelArray3D.h"
+#include "Objects/GameObject.h"
+#include "Objects/MeshedObject.h"
+#include "Objects/PhysicalObject.h"
+#include "Objects/PlayerController.h"
+#include "Objects/World.h"
 #include "Octree.h"
 #include "TerrainGenerator.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include <string>
+#include <fstream>
+#include <sstream>
+#include <iostream>
+#include <random>
 
 namespace vengine {
 
@@ -77,13 +80,13 @@ private:
 	int LoadShaders();
 	int LoadTextures();
 	int LoadInput();
+	void LoadObjects();
 	void LoadWorld();
-
+	
 	void Draw();
 
 	static void ErrorHandler(int error, const char* description);
 };
 
 #define vEngine Singleton<VEngine>::GetSingleton()
-//#define Time Engine.GetTime();
 }

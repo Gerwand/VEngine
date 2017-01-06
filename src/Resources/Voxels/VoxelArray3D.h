@@ -4,7 +4,7 @@
 
 #include "Math/Vector3.h"
 #include "Voxel.h"
-#include "VoxelMesh.h"
+#include "Resources/Renderables/VoxelMesh.h"
 
 namespace vengine {
 

@@ -10,21 +10,6 @@ MeshManager::~MeshManager()
 }
 
 MeshManager::HMesh
-MeshManager::GetMesh(const std::string& name)
-{
-	NameIndexInsertRc rc = _nameIndex.insert(std::make_pair(name, HMesh()));
-
-	//If this element is new
-	if (rc.second) {
-		Mesh* mesh = _meshes.Acquire(rc.first->second);
-		//if (shader->Init(name, type)) {
-		mesh->Init(name);
-	}
-
-	return (rc.first->second);
-}
-
-MeshManager::HMesh
 MeshManager::AddMesh(Mesh* source)
 {
 	NameIndexInsertRc rc = _nameIndex.insert(std::make_pair(source->GetName(), HMesh()));

@@ -1,15 +1,11 @@
 #pragma once
 
-#include "glad/glad.h"
-#include "GLFW/glfw3.h"
+#include "VEMath.h"
+#include "Resources/Managers/GlPipelineManager.h"
+#include "Physic/BoundingBox.h"
 
-
-#include "Frustum.h"
-#include "Math/Vector2.h"
-#include "Math/Vector3.h"
-#include "Math/Matrix4.h"
-#include "Managers/GlPipelineManager.h"
-#include "BoundingBox.h"
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
 
 namespace vengine {
 
