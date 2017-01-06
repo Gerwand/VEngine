@@ -1,18 +1,19 @@
 #pragma once
-//#define GLEW_STATIC
-//#include <GL/glew.h>
+
+#include "Assert.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 #include <string>
 
-#include "Assert.h"
 
 namespace vengine {
 class Window {
 public:
+	/* Initializes GLFW Window */
 	static void Init(int width, int height, const char* title);
+
 
 	static void SetWindowSize(int width, int height);
 	static void GetWindowSize(int *width, int *height);

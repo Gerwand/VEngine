@@ -1,8 +1,8 @@
 #pragma once
-#include "Vertex.h"
-#include "Managers/GlBuffer.h"
-#include "Managers/VertexArray.h"
-#include "Renderer.h"
+#include "Engine/Vertex.h"
+#include "Resources/OGL/GlBuffer.h"
+#include "Resources/OGL/VertexArray.h"
+#include "Engine/Renderer.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

@@ -16,11 +16,11 @@ public:
 
 	void Reset();
 
-	void Set(const Transform& other);
-	void Set(const Vector3& position, Vector3 scale, Quaternion rotation);
-	void SetPosition(const Vector3& position);
-	void SetScale(const Vector3& scale);
-	void SetRotation(const Quaternion& rotation);
+	const Transform& Set(const Transform& other);
+	const Transform& Set(const Vector3& position, Vector3 scale, Quaternion rotation);
+	const Transform& SetPosition(const Vector3& position);
+	const Transform& SetScale(const Vector3& scale);
+	const Transform& SetRotation(const Quaternion& rotation);
 	void SetParent(Transform* parent);
 
 	Vector3& GetPosition();
@@ -32,6 +32,7 @@ public:
 	const Vector3& GetScale() const;
 	const Quaternion& GetRotation() const;
 	const Vector3& GetWorldPosition();
+	Vector3 GetForward() const;
 
 	const Matrix4& GetModelMatrix();
 
@@ -62,37 +63,44 @@ inline Transform::Transform(const Transform& other)
 	Set(other);
 }
 
-inline void
+inline const Transform&
 Transform::Set(const Transform& other)
 {
 	_position = other._position;
 	_scale = other._scale;
 	_rotation = other._rotation;
+
+	return *this;
 }
 
-inline void
+inline const Transform&
 Transform::Set(const Vector3& position, Vector3 scale, Quaternion rotation)
 {
 	_position = position;
 	_scale = scale;
 	_rotation = rotation;
+
+	return *this;
 }
 
-inline void
+inline const Transform&
 Transform::SetPosition(const Vector3& position)
 {
 	_position = position;
+	return *this;
 }
 
-inline void
+inline const Transform&
 Transform::SetScale(const Vector3& scale)
 {
 	_scale = scale;
+	return *this;
 }
-inline void
+inline const Transform&
 Transform::SetRotation(const Quaternion& rotation)
 {
 	_rotation = rotation;
+	return *this;
 }
 
 inline Vector3&
@@ -154,11 +162,11 @@ Transform::SetParent(Transform* parent)
 inline const Vector3&
 Transform::GetWorldPosition()
 {
-	if (_parent != nullptr)
+	if (_parent != nullptr) 
 		_worldPosition = GetPosition() + _parent->GetPosition();
-	else
+	else 
 		_worldPosition = GetPosition();
-
+	
 	return _worldPosition;
 }
 
@@ -168,5 +176,12 @@ Transform::GetLastPosition() const
 	return _lastPosition;
 }
 
+inline Vector3 
+Transform::GetForward() const
+{
+	Vector3 forward = Vector3::forward;
+	Quaternion::RotatePoint(_rotation, &forward);
+	return forward;
+}
 
 }

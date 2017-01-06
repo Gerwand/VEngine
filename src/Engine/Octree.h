@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Engine/PhysicalObject.h"
-#include "Chunk.h"
-#include "Lines.h"
-#include "RayIntersection.h"
+#include "Objects/PhysicalObject.h"
+#include "Resources/Voxels/Chunk.h"
+#include "Resources/Renderables/Lines.h"
+#include "Engine/Physic/RayIntersection.h"
 
 #include <queue>
 #include <list>
@@ -21,9 +21,6 @@ typedef std::vector<CollisionInfo> CollisionsInfo;
 class Octree 
 {
 public:
-
-	
-
 	Octree();
 	Octree(const BoundingBox& area);
 	~Octree();
@@ -52,6 +49,7 @@ public:
 
 	void CheckRayCollision(Ray *ray, RayIntersection* intersectionInfo);
 
+	Octree* GetRoot();
 
 	std::string ToString(int lvl = 0);
 private:
@@ -154,5 +152,15 @@ Octree::IsRoot()
 	return _parent == nullptr;
 }
 
+inline Octree* 
+Octree::GetRoot()
+{
+	Octree* node = this;
+	while (!node->IsRoot()) {
+		node = node->_parent;
+	}
+
+	return node;
+}
 
 }

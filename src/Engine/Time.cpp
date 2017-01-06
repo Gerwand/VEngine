@@ -18,7 +18,7 @@ Time::Update()
 float
 Time::DeltaTime()
 {
-	return _deltaTime;
+	return _deltaTime > 1.0f ? 1.0f : _deltaTime;
 }
 
 }

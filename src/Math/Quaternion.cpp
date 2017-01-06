@@ -294,14 +294,26 @@ Quaternion::SetRotationZ(float angle)
 Quaternion&
 Quaternion::SetRotationEuler(float x, float y, float z)
 {
+	x = degToRad(x);
+	y = degToRad(y);
+	z = degToRad(z);
 	float cx = cos(x / 2.0f), cy = cos(y / 2.0f), cz = cos(z / 2.0f);
 	float sx = sin(x / 2.0f), sy = sin(y / 2.0f), sz = sin(z / 2.0f);
-	//Performance analysys - what is faster, multiplication or getting value from register?
-	w = sx*sy*sz + cx*cy*cz;
+
+	this->w = sx*sy*sz + cx*cy*cz;
+
+	/*
 	this->x = cy*cz*sz - cx*sy*sz;
 	this->y = cx*cz*sy + cy*sx*sz;
 	this->z = cx*cy*sz - cz*sx*sy;
+	*/
 
+	this->x = sx*cy*cz - cx*sy*sz;
+	this->y = cx*sy*cz + sx*cy*sz;
+	this->z = cx*cy*sz - sx*sy*cz;
+
+
+	Normalize();
 	return *this;
 }
 

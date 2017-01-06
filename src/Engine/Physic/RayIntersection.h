@@ -2,8 +2,8 @@
 
 #include "Ray.h"
 #include "BoundingBox.h"
-#include "Engine/PhysicalObject.h"
-#include "Chunk.h"
+#include "Engine/Objects/PhysicalObject.h"
+#include "Resources/Voxels/Chunk.h"
 
 namespace vengine {
 

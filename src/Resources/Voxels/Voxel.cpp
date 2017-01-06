@@ -37,7 +37,42 @@ const Voxel::AtlasCoords Voxel::_offsets[NUM_TYPES * 6] = {
 	{ 6, texsPerRow - 1 }, //EAST
 	{ 6, texsPerRow - 1 }, //WEST
 	{ 6, texsPerRow - 1 }, //TOP
-	{ 6, texsPerRow - 1 } //BOTTOM
+	{ 6, texsPerRow - 1 }, //BOTTOM
+	//CLOTH1
+	{ 7, texsPerRow - 1 }, //NORTH
+	{ 7, texsPerRow - 1 }, //SOUTH
+	{ 7, texsPerRow - 1 }, //EAST
+	{ 7, texsPerRow - 1 }, //WEST
+	{ 7, texsPerRow - 1 }, //TOP
+	{ 7, texsPerRow - 1 }, //BOTTOM
+	//CLOTH2
+	{ 8, texsPerRow - 1 }, //NORTH
+	{ 8, texsPerRow - 1 }, //SOUTH
+	{ 8, texsPerRow - 1 }, //EAST
+	{ 8, texsPerRow - 1 }, //WEST
+	{ 8, texsPerRow - 1 }, //TOP
+	{ 8, texsPerRow - 1 }, //BOTTOM
+	//BODY
+	{ 9, texsPerRow - 1 }, //NORTH
+	{ 9, texsPerRow - 1 }, //SOUTH
+	{ 9, texsPerRow - 1 }, //EAST
+	{ 9, texsPerRow - 1 }, //WEST
+	{ 9, texsPerRow - 1 }, //TOP
+	{ 9, texsPerRow - 1 }, //BOTTOM
+	//SKELETONFACE
+	{ 10, texsPerRow - 1 }, //NORTH
+	{ 11, texsPerRow - 1 }, //SOUTH
+	{ 11, texsPerRow - 1 }, //EAST
+	{ 11, texsPerRow - 1 }, //WEST
+	{ 11, texsPerRow - 1 }, //TOP
+	{ 11, texsPerRow - 1 }, //BOTTOM
+	//SKELETON
+	{ 11, texsPerRow - 1 }, //NORTH
+	{ 11, texsPerRow - 1 }, //SOUTH
+	{ 11, texsPerRow - 1 }, //EAST
+	{ 11, texsPerRow - 1 }, //WEST
+	{ 11, texsPerRow - 1 }, //TOP
+	{ 11, texsPerRow - 1 } //BOTTOM
 };
 
 Voxel::Voxel() : _type(NONE)

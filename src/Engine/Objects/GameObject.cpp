@@ -1,13 +1,9 @@
 #include "GameObject.h"
 
 namespace vengine {
-
+const DebugConfig* GameObject::debugConfig;
 unsigned int GameObject::_nextID;
 GameObject::GameObjects GameObject::_destroyedObjects;
-
-#ifdef VE_DEBUG
-extern bool debugDraw;
-#endif
 
 GameObject::GameObject(const std::string& name)
 {
@@ -87,6 +83,18 @@ GameObject::Update()
 		((GameObject*)_next)->Update();
 }
 
+void 
+GameObject::Physic()
+{
+	OnPhysic();
+
+	if (HasChild())
+		((GameObject*)_child)->Physic();
+
+	if (HasParent() && !IsLastChild())
+		((GameObject*)_next)->Physic();
+}
+
 void
 GameObject::LateUpdate()
 {
@@ -101,6 +109,9 @@ GameObject::LateUpdate()
 
 void
 GameObject::Destroy(GameObject* gameObject) {
+	if (gameObject->_destroyed)
+		return;
+
 	gameObject->OnDestroy();
 
 	if (gameObject->HasChild())
@@ -109,6 +120,16 @@ GameObject::Destroy(GameObject* gameObject) {
 	gameObject->Detach();
 	gameObject->_destroyed = true;
 	GameObject::_destroyedObjects.push_back(gameObject);
+}
+
+void
+GameObject::HandleDestroyed()
+{
+	for (GameObjects::iterator it = _destroyedObjects.begin(); it != _destroyedObjects.end(); ++it) {
+		delete (*it);
+	}
+
+	_destroyedObjects.clear();
 }
 
 void 
@@ -158,7 +179,7 @@ GameObject::LateDraw(Renderer* renderer)
 void 
 GameObject::OnLateDraw(Renderer* renderer) {
 #ifdef VE_DEBUG
-	if (debugDraw) {
+	if(debugConfig->drawPositions) {
 		Points centers;
 		centers.Init();
 

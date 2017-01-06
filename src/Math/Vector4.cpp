@@ -21,6 +21,7 @@ Vector4::Vector4()
 {
 }
 
+
 Vector4::Vector4(float value) : x(value), y(value), z(value), w(value)
 {
 

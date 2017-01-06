@@ -1,8 +1,9 @@
 #pragma once
 
 #include "PhysicalObject.h"
-#include "RayIntersection.h"
-#include "Octree.h"
+#include "Engine/Physic/RayIntersection.h"
+#include "Engine/Octree.h"
+#include "Resources/Managers/GameObjectManager.h"
 
 namespace vengine {
 
@@ -11,25 +12,36 @@ public:
 	PlayerController(const std::string& name = "Player");
 	PlayerController(const PlayerController& source);
 
-	virtual ~PlayerController();
-
 	virtual GameObject* Clone();
 
 	void SetCamera(CameraFPP* camera);
 	void SetOctree(Octree* octree);
+	void SetArm(GameObject* arm);
 
 	float speed = 5.0f;
 	float runModifier = 2.0f;
-	float jumpForce = 10.0f;
+	float jumpForce = 20.0f;
 	float digDistance = 5.0f;
-protected:
-
 private:
+	enum Tools {
+		NONE,
+		SWORD,
+		PICKAXE,
+		DIRT,
+		GRASS,
+		WOOD,
+		STONE
+	};
+
 	CameraFPP* _camera;
 	Voxel::Type _activeItem;
 	Lines _voxLines;
 	Octree* _octree;
 	RayIntersection rayInfo;
+
+	GameObject *_arm;
+
+	Tools _tool;
 
 	virtual void OnUpdate();
 	virtual void OnInit();
@@ -38,6 +50,10 @@ private:
 
 	void Move();
 	void ChangeBlocks();
+	void ChooseTool();
+	void AttachTool();
+
+	static std::string toolNames[7];
 };
 
 
@@ -46,6 +62,9 @@ PlayerController::PlayerController(const std::string& name) : PhysicalObject(nam
 {
 	_camera = nullptr;
 	_octree = nullptr;
+	_mass = 2.0f;
+	_bounciness = 0.0f;
+	_tool = NONE;
 }
 
 inline
@@ -56,12 +75,7 @@ PlayerController::PlayerController(const PlayerController& source) : PhysicalObj
 
 	_camera = source._camera;
 	_octree = source._octree;
-}
-
-inline
-PlayerController::~PlayerController()
-{
-	delete _camera;
+	_tool = source._tool;
 }
 
 inline GameObject*
@@ -80,6 +94,12 @@ inline void
 PlayerController::SetOctree(Octree* octree)
 {
 	_octree = octree;
+}
+
+inline void 
+PlayerController::SetArm(GameObject* arm)
+{
+	_arm = arm;
 }
 
 }

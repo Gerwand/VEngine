@@ -488,7 +488,13 @@ Octree::Insert(PhysicalObject* object)
 	}
 	else if (IsRoot()) {
 		/* Inform about item being outside game range, and as for now do nothing */
-		assert(false, "Item %s out of playable area: %s", object->GetName().c_str(), object->GetTransform().GetPosition().ToString().c_str());
+		if (object->CompareTag("Player")) {
+			assert(false, "%s out of playable area: %s", object->GetName().c_str(), object->GetTransform().GetPosition().ToString().c_str());
+			object->SetTransform(Transform().SetPosition(Vector3(0.0f, 50.0f, 0.0f)));
+			Insert(object);			
+		}
+		else
+			GameObject::Destroy(object);
 	}
 } 
 
@@ -579,18 +585,14 @@ Octree::Draw(Renderer* renderer)
 {
 	CameraFPP *camera = renderer->GetActiveCamera();
 
-	if (!camera->IsVisibleBig(_area)) {
-		//std::cout << std::endl << "Node not visible: " << _area.GetPosition() << _area.GetDimension() << std::endl;
+	if (!camera->IsVisibleSmall(_area)) {
 		return;
 	}
 
 	if (_chunk != nullptr) {
-		/* There should not be any empty chunk, bo just to make sure, just draw it */
-		if (!_chunk->IsEmpty()) {
-			assert(_chunkMesh != nullptr, "%s mesh not existing", _chunk->GetName().c_str());
-			renderer->SetModelMatrix(_chunk->GetModelMatrix());
-			_chunkMesh->Draw(renderer);
-		}
+		assert(_chunkMesh != nullptr, "%s mesh not existing", _chunk->GetName().c_str());
+		renderer->SetModelMatrix(_chunk->GetModelMatrix());
+		_chunkMesh->Draw(renderer);
 	}
 
 
@@ -675,7 +677,7 @@ Octree::DrawDebug(Renderer* renderer)
 	boxes.Init();
 	AddLines(&lines);
 
-	boxes.SetColor(Vector3(240 / 255.0f, 230 / 255.0f, 140 / 255.0f));
+	boxes.SetColor(Vector3(0.0f, 0.0f, 0.0f));
 
 	for (std::vector<Vector3>::iterator it = lines.begin(); it < lines.end();) {
 		const Vector3& start = *it;
@@ -750,7 +752,7 @@ Octree::CheckRayCollision(Ray *ray, RayIntersection* intersectionInfo)
 
 	bool fitted = false;
 
-	while (!fitted && !ray->HasEnded()) {
+	while (!fitted && !ray->HasEnded() && !intersectionInfo->CollisionFound()) {
 		Vector3 rayPos = ray->GetCurrentPosition();
 		if (_area.IsContaining(rayPos)) {
 			if (HasChild())

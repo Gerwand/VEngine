@@ -1,16 +1,6 @@
 ﻿#include "VEngine.h"
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <iostream>
-#include <random>
-#include "OctreeChunk.h"
 
 namespace vengine {
-
-bool debugDraw = false;
-
-
 
 VEngine::VEngine() {}
 VEngine::~VEngine()
@@ -41,6 +31,7 @@ VEngine::Init(const std::string& gameTitle)
 		printf("Cannot initialize file managers. Error code: %d", error);
 		goto callbacks_err;
 	}
+	std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	error = InitGLFWCallbacks();
 	if (error) {
@@ -86,7 +77,13 @@ int
 VEngine::InitLocalResources()
 {
 	_renderer.Init();
-
+#ifdef VE_DEBUG
+	_menuGui = new Canvas(Vector4(0.0f, 0.0f, 0.0f, 0.7f));
+	GameObject::debugConfig = &_debugConfig;
+	_debugConfig.drawColliders = false;
+	_debugConfig.drawOctree = false;
+	_debugConfig.drawPositions = false;
+#endif
 	return 0;
 }
 
@@ -118,6 +115,7 @@ VEngine::InitResourceManagers()
 		new TextureManager;
 		new MeshManager;
 		new VoxelArrayManager;
+		new GameObjectManager;
 	}
 	catch (std::bad_alloc err) {
 		DestroyResourceManagers();
@@ -188,7 +186,7 @@ VEngine::LoadResources()
 	error = LoadTextures();
 	if (error)
 		return error;
-
+	LoadObjects();
 	LoadWorld();
 
 	return 0;
@@ -214,16 +212,27 @@ VEngine::LoadShaders()
 
 	error = _renderer.AddShader("VertexVoxel", "Shaders/Voxel.vert", Shader::VERTEX, Renderer::VOXEL);
 	if (error) {
-		std::cout << "Adding failed for VertexSimple - Shaders/Simple.vert" << std::endl;
+		std::cout << "Adding failed for VertexVoxel - Shaders/Simple.vert" << std::endl;
 		return error;
 	}
 
 	error = _renderer.AddShader("FragVoxel", "Shaders/Voxel.frag", Shader::FRAGMENT, Renderer::VOXEL);
 	if (error) {
-		std::cout << "Adding failed for FragSimple - Shaders/Simple.frag" << std::endl;
+		std::cout << "Adding failed for FragVoxel - Shaders/Simple.frag" << std::endl;
 		return error;
 	}
 
+	error = _renderer.AddShader("VertexGUI", "Shaders/GUI.vert", Shader::VERTEX, Renderer::GUI);
+	if (error) {
+		std::cout << "Adding failed for VertexGUI - Shaders/GUI.vert" << std::endl;
+		return error;
+	}
+
+	error = _renderer.AddShader("FragGUI", "Shaders/GUI.frag", Shader::FRAGMENT, Renderer::GUI);
+	if (error) {
+		std::cout << "Adding failed for FragGUI - Shaders/GUI.frag" << std::endl;
+		return error;
+	}
 	return 0;
 }
 
@@ -249,98 +258,250 @@ VEngine::LoadTextures()
 	return 0;
 }
 
-void 
-VEngine::LoadWorld()
+
+void
+VEngine::LoadObjects()
 {
-	_renderer.SetClearColor(Vector3(135 / 255.0f, 191 / 255.0f, 255/255.0f));
-
-	_world = new World("World");
-	_world->Rename("World");
-
-
+	/* Create meshes and VA of prototypes objects */
 	VoxelMesh* mesh = new VoxelMesh;
 	mesh->Init("Sword");
-
 	int vaSword = voxelArrayManager.GetVoxelArray("VoxelSword");
-	voxelArrayManager.SetDimension(vaSword, swordSize.x, swordSize.y, swordSize.z);
+	voxelArrayManager.SetDimension(vaSword, swordDim.x, swordDim.y, swordDim.z);
 	voxelArrayManager.SetVoxels(vaSword, swordVoxels);
-	voxelArrayManager.SetVoxelSize(vaSword, 0.1f);
+	voxelArrayManager.SetVoxelSize(vaSword, swordSize);
 	voxelArrayManager.GenerateMesh(vaSword, mesh);
 	unsigned int swordMesh = meshManager.AddMesh(mesh);
 
 	mesh = new VoxelMesh;
-	mesh->Init("Cube");
-	int cubeVox = voxelArrayManager.GetVoxelArray("Cube");
-	voxelArrayManager.SetDimension(cubeVox, cubeSize.x, cubeSize.y, cubeSize.z);
-	voxelArrayManager.SetVoxels(cubeVox, cube);
-	voxelArrayManager.SetVoxelSize(cubeVox, 1.0f);
-	voxelArrayManager.GenerateMesh(cubeVox, mesh);
-	unsigned int cubeMesh = meshManager.AddMesh(mesh);
-	
-	Transform transformMain, transformChild, transformPlayer;
-	transformMain.SetPosition(Vector3(0.0f, 30.0f, 0.0f));
-	transformPlayer.SetPosition(Vector3(4.0f, 50.0f, 4.0f));
-	transformChild.Set(Vector3(0.0f, 1.0f, 0.0f), Vector3(0.5f, 0.5f, 0.5f), Quaternion().SetRotationX(90.0f));
+	mesh->Init("Pickaxe");
+	int vaPick = voxelArrayManager.GetVoxelArray("Pickaxe");
+	voxelArrayManager.SetDimension(vaPick, pickDim.x, pickDim.y, pickDim.z);
+	voxelArrayManager.SetVoxels(vaPick, pickVoxels);
+	voxelArrayManager.SetVoxelSize(vaPick, pickSize);
+	voxelArrayManager.GenerateMesh(vaPick, mesh);
+	unsigned int pickMesh = meshManager.AddMesh(mesh);
 
-	PlayerController* player = new PlayerController;
+	mesh = new VoxelMesh;
+	mesh->Init("Dirt");
+	int dirtVox = voxelArrayManager.GetVoxelArray("Dirt");
+	voxelArrayManager.SetDimension(dirtVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(dirtVox, dirt);
+	voxelArrayManager.SetVoxelSize(dirtVox, cubeSize);
+	voxelArrayManager.GenerateMesh(dirtVox, mesh);
+	unsigned int dirtMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Grass");
+	int grassVox = voxelArrayManager.GetVoxelArray("Grass");
+	voxelArrayManager.SetDimension(grassVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(grassVox, grass);
+	voxelArrayManager.SetVoxelSize(grassVox, cubeSize);
+	voxelArrayManager.GenerateMesh(grassVox, mesh);
+	unsigned int grassMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Wood");
+	int woodVox = voxelArrayManager.GetVoxelArray("Wood");
+	voxelArrayManager.SetDimension(woodVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(woodVox, wood);
+	voxelArrayManager.SetVoxelSize(woodVox, cubeSize);
+	voxelArrayManager.GenerateMesh(woodVox, mesh);
+	unsigned int woodMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Stone");
+	int stoneVox = voxelArrayManager.GetVoxelArray("Stone");
+	voxelArrayManager.SetDimension(stoneVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(stoneVox, stone);
+	voxelArrayManager.SetVoxelSize(stoneVox, cubeSize);
+	voxelArrayManager.GenerateMesh(stoneVox, mesh);
+	unsigned int stoneMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Arm");
+	int armVox = voxelArrayManager.GetVoxelArray("Arm");
+	voxelArrayManager.SetDimension(armVox, armDim.x, armDim.y, armDim.z);
+	voxelArrayManager.SetVoxels(armVox, armVoxels);
+	voxelArrayManager.SetVoxelSize(armVox, armSize);
+	voxelArrayManager.GenerateMesh(armVox, mesh);
+	unsigned int armMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("Skeleton");
+	int skelVox = voxelArrayManager.GetVoxelArray("Skeleton");
+	voxelArrayManager.SetDimension(skelVox, skelDim.x, skelDim.y, skelDim.z);
+	voxelArrayManager.SetVoxels(skelVox, skelVoxels);
+	voxelArrayManager.SetVoxelSize(skelVox, skelSize);
+	voxelArrayManager.GenerateMesh(skelVox, mesh);
+	unsigned int skelMesh = meshManager.AddMesh(mesh);
+
+	mesh = new VoxelMesh;
+	mesh->Init("SkeletonHead");
+	int skelHeadVox = voxelArrayManager.GetVoxelArray("SkeletonHead");
+	voxelArrayManager.SetDimension(skelHeadVox, cubeDim.x, cubeDim.y, cubeDim.z);
+	voxelArrayManager.SetVoxels(skelHeadVox, skeletonHead);
+	voxelArrayManager.SetVoxelSize(skelHeadVox, skelHeadSize);
+	voxelArrayManager.GenerateMesh(skelHeadVox, mesh);
+	unsigned int skelHeadMesh = meshManager.AddMesh(mesh);
+
+	/* Objects initialization */
+	Transform transformMain;
+
+	/* Sword mesh */
+	transformMain.SetPosition(Vector3(0.075f, 0.1f, 0.0f));
+	MeshedObject* swordObject = new MeshedObject("Sword");
+	swordObject->SetMesh(swordMesh);
+	swordObject->SetTransform(transformMain);
+
+	/* Projectile */
+	transformMain.SetPosition(Vector3(0.075f, 0.1f, 0.0f));
+	Projectile* projectile = new Projectile("Projectile");
+	projectile->SetMesh(swordMesh);
+	projectile->SetTransform(transformMain);
+	projectile->SetCollider(BoundingBox(Vector3::zeroes, Vector3(0.1f)));
+
+	/* Pickaxe mesh */
+	transformMain.SetPosition(Vector3(0.075f, 0.09f, 0.0f));
+	MeshedObject* pickObject = new MeshedObject("Pickaxe");
+	pickObject->SetMesh(pickMesh);
+	pickObject->SetTransform(transformMain);
+
+	/* Dirt mesh */
+	transformMain.SetPosition(Vector3(0.075f, 0.05f, 0.0f));
+	transformMain.SetRotation(Quaternion().SetRotationX(45.0f).SetRotationY(45.0f));
+	MeshedObject* dirtObject = new MeshedObject("Dirt");
+	dirtObject->SetMesh(dirtMesh);
+	dirtObject->SetTransform(transformMain);
+
+	/* Grass mesh */
+	MeshedObject* grassObject = new MeshedObject("Grass");
+	grassObject->SetMesh(grassMesh);
+	grassObject->SetTransform(transformMain);
+
+	/* Wood mesh */
+	MeshedObject* woodObject = new MeshedObject("Wood");
+	woodObject->SetMesh(woodMesh);
+	woodObject->SetTransform(transformMain);
+
+	/* Stone mesh */
+	MeshedObject* stoneObject = new MeshedObject("Stone");
+	stoneObject->SetMesh(stoneMesh);
+	stoneObject->SetTransform(transformMain);
+
+	/* Player arm mesh */
+	transformMain.SetPosition(Vector3(0.27f, -0.15f, 0.1f));
+	transformMain.SetRotation(Quaternion().SetRotationZ(30.0f));
+	MeshedObject* armObject = new MeshedObject("Arm");
+	armObject->SetMesh(armMesh);
+	armObject->SetTransform(transformMain);
+
+	/* Enemy */
+	transformMain.SetPosition(Vector3(0.0f, 10.0f, 0.0f));
+	transformMain.SetRotation(Quaternion::identity);
+	Enemy* enemyObject = new Enemy("Enemy");
+	enemyObject->SetMesh(skelMesh);
+	enemyObject->SetTransform(transformMain);
+	enemyObject->SetCollider(BoundingBox(transformMain.GetPosition(),
+										 Vector3((float)skelDim.x, (float)skelDim.y, (float)skelDim.z) * skelSize));
+
+	/*  Enemy's Head */
+	transformMain.SetPosition(Vector3(0.0f, 0.90f, -0.2f));
+	transformMain.SetRotation(Quaternion::identity);
+	EnemyHead* enemyHead = new EnemyHead("EnemyHead");
+	enemyHead->SetMesh(skelHeadMesh);
+	enemyHead->SetTransform(transformMain);
+	enemyHead->AttachTo(enemyObject);
+
+	/* Add objects to manager */
+	gameObjectManager.AddGameObject(swordObject);
+	gameObjectManager.AddGameObject(projectile);
+	gameObjectManager.AddGameObject(pickObject);
+	gameObjectManager.AddGameObject(dirtObject);
+	gameObjectManager.AddGameObject(grassObject);
+	gameObjectManager.AddGameObject(woodObject);
+	gameObjectManager.AddGameObject(stoneObject);
+	gameObjectManager.AddGameObject(armObject);
+	gameObjectManager.AddGameObject(enemyObject);
+}
+
+void 
+VEngine::LoadWorld()
+{
+	/* Initialize renderer*/
 	CameraFPP* camera = new CameraFPP;
-
-	player->SetCamera(camera);
+	_renderer.SetClearColor(Vector3(135 / 255.0f, 191 / 255.0f, 255 / 255.0f));
 	_renderer.SetActiveCamera(camera);
+	_renderer.SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f), 0.5f);
+	_renderer.SetGlobalLightDir(Vector3(2.0f, 1.0f, 0.5f));
+
+	/* Create world */
+	_world = new World("World");
+	_world->Rename("World");
+
+	/* Initialize player */
+	Transform transformPlayer;
+	transformPlayer.SetPosition(Vector3(4.0f, 50.0f, 4.0f));
+	PlayerController* player = new PlayerController;
+	player->SetCamera(camera);
+	player->SetTag("Player");
 	player->GetCollider().SetDimension(Vector3(0.5f, 1.5f, 0.5f));
 	player->AttachTo(_world);
 	player->SetTransform(transformPlayer);
 	player->SetOctree(&_octree);
 
-	PhysicalObject* sword = new PhysicalObject("Sword");
-	sword->SetMesh(swordMesh);
-	sword->AttachTo(_world);
-	sword->SetTransform(transformMain);
-	sword->GetCollider().SetPosition(transformMain.GetPosition());
+	/* And player's head */
+	PlayerHead* playerHead = new PlayerHead;
+	playerHead->SetCamera(camera);
+	playerHead->SetTag("PlayerHead");
+	playerHead->SetTransform(Transform().SetPosition(Vector3(0.0f, 0.6f, 0.0f)));
+	playerHead->AttachTo(player);
 	
-	int x, y, z;
-	voxelArrayManager.GetDimension(vaSword, &x, &y, &z);
-	sword->GetCollider().SetDimension(Vector3((float)x, (float)y, (float)z) * voxelArrayManager.GetVoxelSize(vaSword));
+	/* Add arm */
+	MeshedObject* arm = (MeshedObject *)gameObjectManager.Instantiate("Arm");
+	arm->AttachTo(playerHead);
+	player->SetArm(arm);
 
-	_octree.Add(sword);
-	_octree.Add(player);
+	/* Spawn one enemy */
+	Enemy* enemyObject = (Enemy *)gameObjectManager.Instantiate("Enemy");
+	enemyObject->AttachTo(_world);
+	enemyObject->SetPlayer(player);
+	EnemyHead* eHead = (EnemyHead *)(enemyObject->GetChild());
+	eHead->SetPlayer(player);
 
+	/* Generate terrain */
 	TerrainGenerator terrainGen(0, 5, 1);
 	terrainGen.SetSmoothness(256);
 	terrainGen.SetDetails(1);
 	terrainGen.SetSpread(32);
-	terrainGen.SetSeed(58230947u);
-
+	terrainGen.SetSeed(312538u);
 	for (int z = 0; z < 16; ++z) {
 		for (int y = 0; y < 16; ++y) {
 			for (int x = 0; x < 16; ++x) {
-				Chunk* chunk = new Chunk(Vector3((x - 8.0f) * 16.0f, (y - 8.0f) * 16.0f, (z - 8.0f) * 16.0f));
+				Chunk* chunk = new Chunk(Vector3((x - 8.0f) * Chunk::dimension, (y - 8.0f) * Chunk::dimension, (z - 8.0f) * Chunk::dimension));
 				if(terrainGen.GetChunk(chunk))
 					_octree.Add(chunk);
 			}
 		}
 	}
 
-	/*
-	srand(1299);
-	for (int i = 0; i < 10; ++i) {
-		Vector3 pos((float)(rand() % 1000), (float)(rand() % 100) + 200, (float)(rand() % 1000));
-		pos -= 50.0f;
-		pos *= 0.1f;
-		Transform transf;
-		transf.SetPosition(pos);
 
-		PhysicalObject* swordChild = (PhysicalObject *)GameObject::Instantiate(sword);
-		swordChild->AttachTo(_world);
-		swordChild->SetTransform(transf);
+#ifdef VE_DEBUG
+	/* Add GUI */
+	_octButton = new ToggleButton(Vector2(50.0f, 50.0f), Vector2(200.0f, 100.0f), Vector4(1.0f, 0.0f, 0.0f, 0.8f));
+	_colButton = new ToggleButton(Vector2(50.0f, 200.0f), Vector2(200.0f, 100.0f), Vector4(0.0f, 0.0f, 1.0f, 0.8f));
+	_posButton = new ToggleButton(Vector2(50.0f, 350.0f), Vector2(200.0f, 100.0f), Vector4(1.0f, 1.0f, 0.0f, 0.8f));
+	_wirButton = new ToggleButton(Vector2(50.0f, 500.0f), Vector2(200.0f, 100.0f), Vector4(0.0f, 1.0f, 0.0f, 0.8f));
 
-		_octree.Add(swordChild);
-	}
-	*/
-	_octree.SetBoundingArea(BoundingBox(Vector3::zeroes, Vector3(16 * 16.0f)));
+	_menuGui->AddButton(_octButton);
+	_menuGui->AddButton(_colButton);
+	_menuGui->AddButton(_posButton);
+	_menuGui->AddButton(_wirButton);
+#endif
 
-	_renderer.SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f), 0.5f);
-	_renderer.SetGlobalLightDir(Vector3(2.0f, 1.0f, 0.5f));
+	/* Initialize Octree */
+	_octree.Add(player);
+	_octree.Add(enemyObject);
+	_octree.SetBoundingArea(BoundingBox(Vector3::zeroes, Vector3(16.0f * Chunk::dimension)));
 }
 
 void
@@ -349,12 +510,12 @@ VEngine::Destroy()
 	DestroyWorld();
 	DestroyFileManagers();
 	DestroyResourceManagers();
-	//DestroyGLFWLibrary();
 }
 
 void
 VEngine::DestroyWorld()
 {
+	delete _menuGui;
 	delete _world;
 }
 
@@ -372,6 +533,7 @@ VEngine::DestroyResourceManagers()
 	delete textureManager.GetSingletonPointer();
 	delete meshManager.GetSingletonPointer();
 	delete voxelArrayManager.GetSingletonPointer();
+	delete gameObjectManager.GetSingletonPointer();
 }
 void
 VEngine::DestroyOtherManagers()
@@ -392,8 +554,6 @@ VEngine::GetRenderer()
 	return _renderer;
 }
 
-
-
 void
 VEngine::Run()
 {
@@ -406,26 +566,45 @@ VEngine::Run()
 		Time::Update();
 		Input::UpdateMouseOffset();
 
+#ifdef VE_DEBUG
+		if (Input::GetCursorMode()) {
+			if (_menuGui->Update()) {
+				_debugConfig.drawOctree = _octButton->GetValue();
+				_debugConfig.drawColliders = _colButton->GetValue();
+				_debugConfig.drawPositions = _posButton->GetValue();
+				Mesh::SetWired(_wirButton->GetValue());
+			}
+		}
+#endif
 
 		_world->Update();
-		_world->LateUpdate();
-
+		_world->Physic();
 		_octree.UpdateTree();
 		_octree.Update();
+
+		_world->LateUpdate();
+
+		GameObject::HandleDestroyed();
 
 		Draw();
 		_octree.Draw(&_renderer);
 		_world->Draw(&_renderer);
 		_world->LateDraw(&_renderer);
 
-		if (debugDraw) {
+#ifdef VE_DEBUG
+		if (_debugConfig.drawOctree) {
 			_octree.DrawDebug(&_renderer);
 		}
+		if(Input::GetCursorMode())
+			_menuGui->Draw(&_renderer);
+#endif	
 
 		Input::UpdateInput();
 		Window::HandleWindow();
 
-		std::cout << "\rFPS: " << 1.0f / Time::DeltaTime() << "\tPosition: " << _renderer.GetActiveCamera()->GetPosition();
+#ifdef VE_DEBUG
+		std::cout << "\rFPS: " << 1.0f / Time::DeltaTime() << "\tPosition:" << _renderer.GetActiveCamera()->GetPosition();
+#endif
 
 		if (Input::IsPressed("Exit")) {
 			Window::Close();

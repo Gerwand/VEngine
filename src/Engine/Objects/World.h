@@ -1,8 +1,10 @@
 #pragma once
 
-#include "GameObject.h"
+#include "PhysicalObject.h"
+#include "Engine/Octree.h"
 
 namespace vengine {
+extern bool debugDraw;
 
 class World : public GameObject
 {
@@ -11,6 +13,10 @@ public:
 	World(const World& source);
 
 	virtual GameObject* Clone();
+
+protected:
+	
+	virtual void OnUpdate();
 };
 
 inline
@@ -28,6 +34,16 @@ inline GameObject*
 World::Clone()
 {
 	return new World(*this);
+}
+
+inline void 
+World::OnUpdate()
+{
+	if (Input::IsPressed(GLFW_KEY_TAB))
+		if (Input::GetCursorMode())
+			Input::DisableCursor();
+		else
+			Input::EnableCursor();
 }
 
 }

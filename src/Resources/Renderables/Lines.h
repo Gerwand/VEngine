@@ -10,15 +10,15 @@ public:
 	Lines();
 
 
-	void SetColor(const Vector3& color);
-	const Vector3& GetColor() const;
+	void SetColor(const Vector4& color);
+	const Vector4& GetColor() const;
 	void AddLine(const Vector3& start, const Vector3& end);
-	void AddLine(const Vector3& start, const Vector3& end, const Vector3& color);
+	void AddLine(const Vector3& start, const Vector3& end, const Vector4& color);
 
 	virtual void Draw(Renderer* renderer);
 
 protected:
-	Vector3 _color;
+	Vector4 _color;
 
 	virtual void FillInfo(RenderInfo* info);
 };
@@ -26,12 +26,12 @@ protected:
 
 
 inline void 
-Lines::SetColor(const Vector3& color)
+Lines::SetColor(const Vector4& color)
 {
 	_color = color;
 }
 
-inline const Vector3& 
+inline const Vector4& 
 Lines::GetColor() const
 {
 	return _color;

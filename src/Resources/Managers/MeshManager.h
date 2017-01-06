@@ -3,7 +3,7 @@
 
 #include "HandleManager.h"
 #include "Singleton.h"
-#include "Mesh.h"
+#include "Resources/Renderables/Mesh.h"
 
 #include <string>
 #include <map>

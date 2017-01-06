@@ -1,9 +1,9 @@
 #pragma once
 
-#include "Handle.h"
+#include "Resources/Handle.h"
 #include "HandleManager.h"
 #include "Singleton.h"
-#include "GlPipeline.h"
+#include "Resources/OGL/GlPipeline.h"
 #include "GlProgramManager.h"
 
 #include <string>

@@ -3,13 +3,6 @@
 
 namespace vengine {
 
-MeshedObject::MeshedObject(const std::string& name) : GameObject(name), _mesh(0)
-{
-}
-
-MeshedObject::MeshedObject(const MeshedObject& source) : GameObject(source), _mesh(source._mesh)
-{
-}
 
 void
 MeshedObject::OnDraw(Renderer *renderer)

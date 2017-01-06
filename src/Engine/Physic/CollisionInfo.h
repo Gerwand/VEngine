@@ -1,8 +1,8 @@
 #pragma once
 
+#include "Engine/Objects/GameObject.h"
+#include "Resources/Voxels/Chunk.h"
 
-#include "Engine/GameObject.h"
-#include "Chunk.h"
 namespace vengine {
 union Directions {
 	Directions() : directions(0) {};

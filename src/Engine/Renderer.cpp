@@ -216,36 +216,37 @@ Renderer::DepthTestDisable()
 void 
 Renderer::Draw(const RenderInfo& info, ShadersIndexes mode)
 {
-	if (info.wired) {
-		if (!IsEnabled(WIRED, mode)) {
-			programManager.SetUniform(_fragShaders[mode], "wired", GlProgram::FRAGMENT, 1);
-			ToggleState(WIRED, mode);
-			glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-		}
-		SetWireColor(info.color);
-	}
-	else {
-		if (IsEnabled(WIRED, mode)) {
-			programManager.SetUniform(_fragShaders[mode], "wired", GlProgram::FRAGMENT, 0);
-			ToggleState(WIRED, mode);		
-			glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-		}
-
-		if (info.textured) {
+	if (mode != GUI) {
+		if (info.wired) {
 			if (!IsEnabled(WIRED, mode)) {
-				programManager.SetUniform(_fragShaders[mode], "textured", GlProgram::FRAGMENT, 1);
-				ToggleState(TEXTURED, mode);
+				programManager.SetUniform(_fragShaders[mode], "wired", GlProgram::FRAGMENT, 1);
+				ToggleState(WIRED, mode);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 			}
-			SetTexture(info.tex);
+			SetWireColor(info.color);
 		}
 		else {
 			if (IsEnabled(WIRED, mode)) {
-				programManager.SetUniform(_fragShaders[mode], "textured", GlProgram::FRAGMENT, 0);
-				ToggleState(TEXTURED, mode);
+				programManager.SetUniform(_fragShaders[mode], "wired", GlProgram::FRAGMENT, 0);
+				ToggleState(WIRED, mode);
+				glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+			}
+
+			if (info.textured) {
+				if (!IsEnabled(WIRED, mode)) {
+					programManager.SetUniform(_fragShaders[mode], "textured", GlProgram::FRAGMENT, 1);
+					ToggleState(TEXTURED, mode);
+				}
+				SetTexture(info.tex);
+			}
+			else {
+				if (IsEnabled(WIRED, mode)) {
+					programManager.SetUniform(_fragShaders[mode], "textured", GlProgram::FRAGMENT, 0);
+					ToggleState(TEXTURED, mode);
+				}
 			}
 		}
 	}
-
 
 
 	if (pipelineManager.GetProgram(_pipe, GlProgram::VERTEX) != _vertShaders[mode])
@@ -272,6 +273,8 @@ Renderer::UpdateProjection()
 		glViewport(0, 0, w, h);
 		for (int i = 0; i < _shadersNumber; ++i)
 			programManager.SetUniform(_vertShaders[i], "projection", GlProgram::VERTEX, _projMatrix);
+
+		programManager.SetUniform(_vertShaders[GUI], "projection", GlProgram::VERTEX, Matrix4::GetOrtho(0.0f, (float)w, (float)h, 0.0f, -1.0f, 1.0f));
 	}
 }
 

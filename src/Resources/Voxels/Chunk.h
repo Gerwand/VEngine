@@ -2,6 +2,7 @@
 
 #include "VoxelArray3D.h"
 #include "Math/Matrix4.h"
+
 namespace vengine {
 
 class Chunk : private VoxelArray3D {

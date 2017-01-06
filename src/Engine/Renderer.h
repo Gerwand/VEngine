@@ -2,13 +2,13 @@
 
 #include "VEMath.h"
 
-#include "Managers/ShaderManager.h"
-#include "Managers/GlProgramManager.h"
-#include "Managers/GlPipelineManager.h"
-#include "Managers/TextureManager.h"
+#include "Resources/Managers/ShaderManager.h"
+#include "Resources/Managers/GlProgramManager.h"
+#include "Resources/Managers/GlPipelineManager.h"
+#include "Resources/Managers/TextureManager.h"
 #include "RenderInfo.h"
 #include "CameraFPP.h"
-#include "Window.h"
+#include "IO/Window.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -16,13 +16,15 @@
 #include <vector>
 #include <string>
 #include <iostream>
+
 namespace vengine {
 
 class Renderer {
 public:
 	enum ShadersIndexes {
-		STANDARD = 0,
-		VOXEL = 1
+		STANDARD,
+		VOXEL,
+		GUI 
 	};
 
 	void Init();
@@ -57,15 +59,12 @@ public:
 	void Draw(const RenderInfo& info, ShadersIndexes mode);
 
 private:
-
-
 	enum ShadersModes {
 		TEXTURED = 0x01u,
 		WIRED = 0x02u
 	};
 
-
-	static const int _shadersNumber = 2;
+	static const int _shadersNumber = 3;
 	static int _rendererNumber;
 
 	unsigned int _pipe;

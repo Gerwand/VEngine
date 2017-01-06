@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PerlinNoise.h"
-#include "Voxel.h"
-#include "Chunk.h"
+#include "Math/PerlinNoise.h"
+#include "Resources/Voxels/Voxel.h"
+#include "Resources/Voxels/Chunk.h"
 
 namespace vengine {
 
