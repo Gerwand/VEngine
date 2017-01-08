@@ -58,6 +58,10 @@ PlayerController::OnUpdate()
 {
 	PhysicalObject::OnUpdate();
 	assert(_octree != nullptr, "Octree pointer is null!");
+	
+	if (Input::GetCursorMode())
+		return;
+
 	ChangeBlocks();
 	Move();
 
@@ -159,7 +163,7 @@ PlayerController::Move()
 
 	if (_grounded) {
 		if (Input::IsHolded("Jump")) {
-			AddForce(Vector3::up * jumpForce/_mass);
+			AddForce(Vector3::up * jumpForce);
 		}
 	}
 }

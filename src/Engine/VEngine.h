@@ -20,7 +20,10 @@
 #include "Time.h"
 #include "VEMath.h"
 #include "CameraFPP.h"
+#include "Canvas.h"
+#include "Resources/UI/ToggleButton.h"
 #include "Resources/Renderables/VoxelMesh.h"
+#include "Resources/Renderables/GUIElement.h"
 #include "Resources/Voxels/VoxelArray3D.h"
 #include "Objects/GameObject.h"
 #include "Objects/MeshedObject.h"
@@ -28,6 +31,7 @@
 #include "Objects/PlayerController.h"
 #include "Objects/World.h"
 #include "Octree.h"
+#include "DebugConfig.h"
 #include "TerrainGenerator.h"
 
 #include <glad/glad.h>
@@ -61,6 +65,13 @@ private:
 	std::string _gameTitle;
 	GameObject* _world;
 	Octree _octree;
+	Canvas* _menuGui;
+#ifdef VE_DEBUG
+	DebugConfig _debugConfig;
+#endif
+	ToggleButton* _octButton;
+	ToggleButton* _colButton;
+	ToggleButton* _posButton;
 
 	void DestroyWorld();
 	void DestroyOtherManagers();

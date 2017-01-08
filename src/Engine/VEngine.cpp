@@ -2,10 +2,6 @@
 
 namespace vengine {
 
-bool debugDraw = true;
-
-
-
 VEngine::VEngine() {}
 VEngine::~VEngine()
 {
@@ -35,6 +31,7 @@ VEngine::Init(const std::string& gameTitle)
 		printf("Cannot initialize file managers. Error code: %d", error);
 		goto callbacks_err;
 	}
+	std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION);
 
 	error = InitGLFWCallbacks();
 	if (error) {
@@ -80,6 +77,11 @@ int
 VEngine::InitLocalResources()
 {
 	_renderer.Init();
+	_menuGui = new Canvas(Vector4(0.0f, 0.0f, 0.0f, 0.7f));
+	GameObject::debugConfig = &_debugConfig;
+	_debugConfig.drawColliders = false;
+	_debugConfig.drawOctree = false;
+	_debugConfig.drawPositions = false;
 
 	return 0;
 }
@@ -209,16 +211,27 @@ VEngine::LoadShaders()
 
 	error = _renderer.AddShader("VertexVoxel", "Shaders/Voxel.vert", Shader::VERTEX, Renderer::VOXEL);
 	if (error) {
-		std::cout << "Adding failed for VertexSimple - Shaders/Simple.vert" << std::endl;
+		std::cout << "Adding failed for VertexVoxel - Shaders/Simple.vert" << std::endl;
 		return error;
 	}
 
 	error = _renderer.AddShader("FragVoxel", "Shaders/Voxel.frag", Shader::FRAGMENT, Renderer::VOXEL);
 	if (error) {
-		std::cout << "Adding failed for FragSimple - Shaders/Simple.frag" << std::endl;
+		std::cout << "Adding failed for FragVoxel - Shaders/Simple.frag" << std::endl;
 		return error;
 	}
 
+	error = _renderer.AddShader("VertexGUI", "Shaders/GUI.vert", Shader::VERTEX, Renderer::GUI);
+	if (error) {
+		std::cout << "Adding failed for VertexGUI - Shaders/GUI.vert" << std::endl;
+		return error;
+	}
+
+	error = _renderer.AddShader("FragGUI", "Shaders/GUI.frag", Shader::FRAGMENT, Renderer::GUI);
+	if (error) {
+		std::cout << "Adding failed for FragGUI - Shaders/GUI.frag" << std::endl;
+		return error;
+	}
 	return 0;
 }
 
@@ -299,6 +312,7 @@ VEngine::LoadWorld()
 	CameraFPP* camera = new CameraFPP;	
 
 	player->SetCamera(camera);
+	player->SetTag("Player");
 	_renderer.SetActiveCamera(camera);
 	
 	player->GetCollider().SetDimension(Vector3(0.5f, 1.5f, 0.5f));
@@ -337,23 +351,13 @@ VEngine::LoadWorld()
 			}
 		}
 	}
+	_octButton = new ToggleButton(Vector2(50.0f, 50.0f), Vector2(200.0f, 100.0f), Vector4(0.1f, 0.2f, 1.0f, 0.8f));
+	_colButton = new ToggleButton(Vector2(50.0f, 200.0f), Vector2(200.0f, 100.0f), Vector4(0.1f, 0.2f, 1.0f, 0.8f));
+	_posButton = new ToggleButton(Vector2(50.0f, 350.0f), Vector2(200.0f, 100.0f), Vector4(0.1f, 0.2f, 1.0f, 0.8f));
 
-	/*
-	srand(1299);
-	for (int i = 0; i < 10; ++i) {
-		Vector3 pos((float)(rand() % 1000), (float)(rand() % 100) + 200, (float)(rand() % 1000));
-		pos -= 50.0f;
-		pos *= 0.1f;
-		Transform transf;
-		transf.SetPosition(pos);
-
-		PhysicalObject* swordChild = (PhysicalObject *)GameObject::Instantiate(sword);
-		swordChild->AttachTo(_world);
-		swordChild->SetTransform(transf);
-
-		_octree.Add(swordChild);
-	}
-	*/
+	_menuGui->AddButton(_octButton);
+	_menuGui->AddButton(_colButton);
+	_menuGui->AddButton(_posButton);
 	_octree.SetBoundingArea(BoundingBox(Vector3::zeroes, Vector3(16.0f * Chunk::dimension)));
 
 	_renderer.SetAmbientLight(Vector3(1.0f, 1.0f, 1.0f), 0.5f);
@@ -371,6 +375,7 @@ VEngine::Destroy()
 void
 VEngine::DestroyWorld()
 {
+	delete _menuGui;
 	delete _world;
 }
 
@@ -409,7 +414,14 @@ VEngine::GetRenderer()
 	return _renderer;
 }
 
+struct Character {
+	GLuint     TextureID;  // ID handle of the glyph texture
+	Vector2 Size;       // Size of glyph
+	Vector2 Bearing;    // Offset from baseline to left/top of glyph
+	GLuint     Advance;    // Offset to advance to next glyph
+};
 
+std::map<GLchar, Character> Characters;
 
 void
 VEngine::Run()
@@ -423,6 +435,13 @@ VEngine::Run()
 		Time::Update();
 		Input::UpdateMouseOffset();
 
+		if (Input::GetCursorMode()) {
+			if (_menuGui->Update()) {
+				_debugConfig.drawOctree = _octButton->GetValue();
+				_debugConfig.drawColliders = _colButton->GetValue();
+				_debugConfig.drawPositions = _posButton->GetValue();
+			}
+		}
 
 		_world->Update();
 		_world->Physic();
@@ -430,15 +449,22 @@ VEngine::Run()
 		_octree.Update();
 
 		_world->LateUpdate();
+
+		GameObject::HandleDestroyed();
+
 		Draw();
 		_octree.Draw(&_renderer);
 		_world->Draw(&_renderer);
 		_world->LateDraw(&_renderer);
 
-		if (debugDraw) {
+#ifdef VE_DEBUG
+		if (_debugConfig.drawOctree) {
 			_octree.DrawDebug(&_renderer);
 		}
-
+#endif
+		if(Input::GetCursorMode())
+			_menuGui->Draw(&_renderer);
+		
 		Input::UpdateInput();
 		Window::HandleWindow();
 

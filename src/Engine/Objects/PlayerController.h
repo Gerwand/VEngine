@@ -20,7 +20,7 @@ public:
 
 	float speed = 5.0f;
 	float runModifier = 2.0f;
-	float jumpForce = 10.0f;
+	float jumpForce = 20.0f;
 	float digDistance = 5.0f;
 private:
 	CameraFPP* _camera;
@@ -45,6 +45,8 @@ PlayerController::PlayerController(const std::string& name) : PhysicalObject(nam
 {
 	_camera = nullptr;
 	_octree = nullptr;
+	_mass = 2.0f;
+	_bounciness = 0.0f;
 }
 
 inline

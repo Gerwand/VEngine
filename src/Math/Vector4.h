@@ -52,7 +52,7 @@ public:
 	*	@param source vector with x, y and z values.
 	*	@param w attribute w of the vector.
 	*/
-	Vector4(const Vector3& source, float w);
+	Vector4(const Vector3& source, float w = 1.0f);
 
 	/**
 	*	Copy operator.

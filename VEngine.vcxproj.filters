@@ -97,6 +97,12 @@
     <Filter Include="Header Files\Resources\Voxels">
       <UniqueIdentifier>{4eccbc05-5325-43da-8185-498c47de62af}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Resources\UI">
+      <UniqueIdentifier>{8f73a9fd-e0d3-4741-a012-2c0608c0e5f2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Resources\UI">
+      <UniqueIdentifier>{4434db19-460b-44e8-8d6a-7685bb971e66}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Assert.h">
@@ -291,6 +297,24 @@
     <ClInclude Include="src\Resources\Managers\GameObjectManager.h">
       <Filter>Header Files\Resources\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="src\Resources\Renderables\GUIElement.h">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Canvas.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\UI\Button.h">
+      <Filter>Header Files\Resources\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\DebugConfig.h">
+      <Filter>Header Files\Engine</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\UI\ToggleButton.h">
+      <Filter>Header Files\Resources\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Resources\Font.h">
+      <Filter>Header Files\Resources</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Others\glad.c">
@@ -437,6 +461,9 @@
     <ClCompile Include="src\Resources\Managers\GameObjectManager.cpp">
       <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="src\Resources\Renderables\GUIElement.cpp">
+      <Filter>Header Files\Resources\Renderables</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Simple.frag">
@@ -453,6 +480,18 @@
     </None>
     <None Include="Renderer.cd">
       <Filter>Resource Files</Filter>
+    </None>
+    <None Include="Shaders\GUI.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="Shaders\GUI.vert">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="fonts\Text.frag">
+      <Filter>Source Files\Shaders</Filter>
+    </None>
+    <None Include="fonts\Text.vert">
+      <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

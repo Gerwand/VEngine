@@ -14,6 +14,8 @@ public:
 	virtual GameObject* Clone();
 protected:
 	virtual void OnUpdate();
+
+
 };
 
 inline
@@ -37,7 +39,11 @@ inline void
 World::OnUpdate()
 {
 	if (Input::IsPressed(GLFW_KEY_TAB))
-		debugDraw = !debugDraw;
+		if (Input::GetCursorMode())
+			Input::DisableCursor();
+		else
+			Input::EnableCursor();
+		 //debugDraw = !debugDraw;
 }
 
 }

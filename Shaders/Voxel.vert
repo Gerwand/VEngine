@@ -4,7 +4,7 @@
 layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 normals;
 layout (location = 2) in vec2 texCoord;
-layout (location = 3) in vec3 color;
+layout (location = 3) in vec4 color;
 layout (location = 4) in uvec2 texOffset;
 
 layout(location = 6) out VsOut {
@@ -27,7 +27,7 @@ void main()
 {
    gl_Position = projection * view * model * vec4(position, 1.0);
    //gl_Position = vec4(position, 1.0);
-   vsOut.color = vec4(color, 1.0);
+   vsOut.color = color;
    vsOut.texCoord = texCoord;
    vsOut.texOffset = texOffset;
 

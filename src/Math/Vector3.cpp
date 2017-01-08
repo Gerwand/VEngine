@@ -47,6 +47,10 @@ Vector3::Vector3(const Vector3& source) :
 {
 }
 
+Vector3::Vector3(const Vector2& source, float z) :
+	x(source.x), y(source.y), z(z)
+{
+}
 /**************************************************************************
 *
 *								  Operators

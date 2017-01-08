@@ -22,8 +22,9 @@ namespace vengine {
 class Renderer {
 public:
 	enum ShadersIndexes {
-		STANDARD = 0,
-		VOXEL = 1
+		STANDARD,
+		VOXEL,
+		GUI 
 	};
 
 	void Init();
@@ -58,15 +59,12 @@ public:
 	void Draw(const RenderInfo& info, ShadersIndexes mode);
 
 private:
-
-
 	enum ShadersModes {
 		TEXTURED = 0x01u,
 		WIRED = 0x02u
 	};
 
-
-	static const int _shadersNumber = 2;
+	static const int _shadersNumber = 3;
 	static int _rendererNumber;
 
 	unsigned int _pipe;

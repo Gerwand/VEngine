@@ -489,6 +489,12 @@ Octree::Insert(PhysicalObject* object)
 	else if (IsRoot()) {
 		/* Inform about item being outside game range, and as for now do nothing */
 		assert(false, "Item %s out of playable area: %s", object->GetName().c_str(), object->GetTransform().GetPosition().ToString().c_str());
+		if (object->CompareTag("Player")) {
+			object->SetTransform(Transform().SetPosition(Vector3(0.0f, 50.0f, 0.0f)));
+			Insert(object);			
+		}
+		else
+			GameObject::Destroy(object);
 	}
 } 
 

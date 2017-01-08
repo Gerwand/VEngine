@@ -1,13 +1,9 @@
 #include "GameObject.h"
 
 namespace vengine {
-
+const DebugConfig* GameObject::debugConfig;
 unsigned int GameObject::_nextID;
 GameObject::GameObjects GameObject::_destroyedObjects;
-
-#ifdef VE_DEBUG
-extern bool debugDraw;
-#endif
 
 GameObject::GameObject(const std::string& name)
 {
@@ -123,6 +119,15 @@ GameObject::Destroy(GameObject* gameObject) {
 	GameObject::_destroyedObjects.push_back(gameObject);
 }
 
+void
+GameObject::HandleDestroyed()
+{
+	for (GameObjects::iterator it = _destroyedObjects.begin(); it != _destroyedObjects.end(); ++it)
+		delete (*it);
+
+	_destroyedObjects.clear();
+}
+
 void 
 GameObject::AttachTo(Node* parent)
 {
@@ -170,7 +175,7 @@ GameObject::LateDraw(Renderer* renderer)
 void 
 GameObject::OnLateDraw(Renderer* renderer) {
 #ifdef VE_DEBUG
-	if (debugDraw) {
+	if(debugConfig->drawPositions) {
 		Points centers;
 		centers.Init();
 

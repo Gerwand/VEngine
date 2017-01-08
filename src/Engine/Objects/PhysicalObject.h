@@ -24,6 +24,7 @@ public:
 
 	void AddForce(const Vector3& force);
 	virtual void OnCollision(const CollisionInfo& collision);
+	void SetTransform(const Transform& transform);
 
 	virtual GameObject* Clone();
 protected:
@@ -37,8 +38,7 @@ protected:
 	float _mass = 1;
 
 	float _terrainFriction = 2;
-
-	float _bounciness = 0;
+	float _bounciness = 0.1f;
 	bool _grounded = false;
 
 	virtual void OnInit();
@@ -108,5 +108,12 @@ protected:
 		_transform.SetPosition(camera->GetPosition() + 5.0f * camera->GetDirection());
 	}
 };
+
+inline void
+PhysicalObject::SetTransform(const Transform& transform)
+{
+	GameObject::SetTransform(transform);
+	_collider.SetPosition(_transform.GetWorldPosition());
+}
 
 }

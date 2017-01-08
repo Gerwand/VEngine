@@ -7,6 +7,7 @@
 #include "Resources/Renderables/Lines.h"
 #include "Engine/IO/Input.h"
 #include "Engine/Time.h"
+#include "Engine/DebugConfig.h"
 
 #include <string>
 
@@ -53,8 +54,10 @@ public:
 	virtual void Detach();
 
 	static void Destroy(GameObject* gameObject);
+	static void HandleDestroyed();
 	static GameObject* Instantiate(GameObject* gameObject);
 
+	static const DebugConfig* debugConfig;
 protected:
 	unsigned int _id;
 	static unsigned int _nextID;

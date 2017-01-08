@@ -21,9 +21,6 @@ typedef std::vector<CollisionInfo> CollisionsInfo;
 class Octree 
 {
 public:
-
-	
-
 	Octree();
 	Octree(const BoundingBox& area);
 	~Octree();
@@ -52,6 +49,7 @@ public:
 
 	void CheckRayCollision(Ray *ray, RayIntersection* intersectionInfo);
 
+	Octree* GetRoot();
 
 	std::string ToString(int lvl = 0);
 private:
@@ -154,5 +152,15 @@ Octree::IsRoot()
 	return _parent == nullptr;
 }
 
+inline Octree* 
+Octree::GetRoot()
+{
+	Octree* node = this;
+	while (!node->IsRoot()) {
+		node = node->_parent;
+	}
+
+	return node;
+}
 
 }

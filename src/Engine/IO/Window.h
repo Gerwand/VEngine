@@ -11,7 +11,9 @@
 namespace vengine {
 class Window {
 public:
+	/* Initializes GLFW Window */
 	static void Init(int width, int height, const char* title);
+
 
 	static void SetWindowSize(int width, int height);
 	static void GetWindowSize(int *width, int *height);

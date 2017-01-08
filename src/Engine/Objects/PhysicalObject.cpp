@@ -2,7 +2,6 @@
 
 namespace vengine {
 Vector3 PhysicalObject::_gravityForce = Vector3::down * 9.81f;
-extern bool debugDraw;
 
 PhysicalObject::PhysicalObject(const std::string& name) :
 	MeshedObject(name),
@@ -45,33 +44,34 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 	if (collision.GetOtherObject() == this)
 		return;
 
+	Vector3 newPos = _transform.GetPosition();
+	const Vector3 dir = _transform.GetPosition() - _transform.GetLastPosition();
+	const Vector3& last = _transform.GetLastPosition();
 
 	if (collision.HasCollidedWithTerrain()) {
 		const Directions& dirs = collision.GetHittedDirections();
 
-		const Vector3 dir = _transform.GetPosition() - _transform.GetLastPosition();
-		const Vector3& last = _transform.GetLastPosition();
 		if (collision.HasCollidedWithTerrain(CollisionInfo::BOTTOM | CollisionInfo::TOP)) {
 			_velocity.y =  -_velocity.y * _bounciness;
-			_transform.GetPosition().y = last.y;
+			newPos.y = last.y;
 		}
 
 		if (collision.HasCollidedWithTerrain(CollisionInfo::NORTH ) && dir.z < 0.0) {
 			_velocity.z =  -_velocity.z * _bounciness;
-			_transform.GetPosition().z = last.z;
+			newPos.z = last.z;
 		}
 		else if (collision.HasCollidedWithTerrain(CollisionInfo::SOUTH ) && dir.z > 0.0) {
 			_velocity.z =  -_velocity.z * _bounciness;
-			_transform.GetPosition().z = last.z;
+			newPos.z = last.z;
 		}
 
 		if (collision.HasCollidedWithTerrain(CollisionInfo::EAST) && dir.x < 0.0) {
 			_velocity.x = -_velocity.z * _bounciness;
-			_transform.GetPosition().x = last.x;
+			newPos.x = last.x;
 		}
 		else if (collision.HasCollidedWithTerrain(CollisionInfo::WEST ) && dir.x > 0.0) {
 			_velocity.x = -_velocity.z * _bounciness;
-			_transform.GetPosition().x = last.x;
+			newPos.x = last.x;
 		}
 
 		_grounded = false;
@@ -82,16 +82,34 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 	if (collision.HasCollidedWithObject()) {
 		PhysicalObject* other = (PhysicalObject *)collision.GetOtherObject();
 		assert(other != nullptr, "Other object is null");
+
+		const Vector3 relPos = other->GetCollider().GetPosition() - _collider.GetPosition();
+
+		if (dir.x * relPos.x >= 0.0f) {
+			newPos.x = last.x;
+			other->_velocity.x += _velocity.x;
+			_velocity.x = 0.0f;
+		}
+		if (dir.y * relPos.y >= 0.0f) {
+			newPos.y = last.y;
+			other->_velocity.y += _velocity.y;
+			_velocity.y = 0.0f;
+		}
+		if (dir.z * relPos.z >= 0.0f) {
+			newPos.z = last.z;
+			other->_velocity.z += _velocity.z;
+			_velocity.z = 0.0f;
+		}
 		//const Vector3 dir = _transform.GetLastPosition() - _transform.GetPosition();
 		const Vector3 dirO = other->_transform.GetPosition() - other->_transform.GetLastPosition();
 
 			//_velocity += other->_mass * dirO * Time::DeltaTime();
 			//other->_velocity = _mass * dir * Time::DeltaTime();
-			_transform.SetPosition(_transform.GetLastPosition());
+			//_transform.SetPosition(_transform.GetLastPosition());
 	}
 	
 	
-	//_transform.SetPosition(_transform.GetLastPosition());
+	_transform.SetPosition(newPos);
 	_collider.SetPosition(_transform.GetWorldPosition());
 }
 
@@ -136,7 +154,7 @@ PhysicalObject::OnDraw(Renderer* renderer)
 	MeshedObject::OnDraw(renderer);
 
 #ifdef VE_DEBUG
-	if (debugDraw) {
+	if (debugConfig->drawColliders) {
 		Lines boxes;
 		std::vector<Vector3> lines;
 		boxes.Init();

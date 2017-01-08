@@ -1,10 +1,10 @@
 #pragma once
 
+#include "Vector2.h"
+#include "MathFunctions.h"
 
 #include <math.h>
 #include <string>
-
-#include "MathFunctions.h"
 
 namespace vengine {
 /**
@@ -43,6 +43,8 @@ public:
 	*	@param source vector to be copied.
 	*/
 	Vector3(const Vector3& source);
+
+	Vector3(const Vector2& source, float z);
 
 	/**
 	*	Copy operator.

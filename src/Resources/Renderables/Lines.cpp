@@ -2,7 +2,7 @@
 
 namespace vengine {
 
-Lines::Lines() : Renderable(), _color(1.0f, 1.0f, 1.0f)
+Lines::Lines() : Renderable(), _color(1.0f, 1.0f, 1.0f, 1.0f)
 {
 }
 
@@ -13,7 +13,7 @@ Lines::AddLine(const Vector3& start, const Vector3& end)
 }
 
 void 
-Lines::AddLine(const Vector3& start, const Vector3& end, const Vector3& color)
+Lines::AddLine(const Vector3& start, const Vector3& end, const Vector4& color)
 {
 	int vertNumber = _vertices.size();
 	_vertices.push_back({ start, Vector3::zeroes, Vector2::zeroes, 0, 0, _color });

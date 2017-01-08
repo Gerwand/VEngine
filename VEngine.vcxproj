@@ -162,6 +162,8 @@
   <ItemGroup>
     <ClInclude Include="src\Assert.h" />
     <ClInclude Include="src\Engine\CameraFPP.h" />
+    <ClInclude Include="src\Engine\Canvas.h" />
+    <ClInclude Include="src\Engine\DebugConfig.h" />
     <ClInclude Include="src\Engine\IO\Input.h" />
     <ClInclude Include="src\Engine\IO\Window.h" />
     <ClInclude Include="src\Engine\Objects\GameObject.h" />
@@ -193,6 +195,7 @@
     <ClInclude Include="src\Math\Vector2.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Math\Vector4.h" />
+    <ClInclude Include="src\Resources\Font.h" />
     <ClInclude Include="src\Resources\Handle.h" />
     <ClInclude Include="src\Resources\Images\Texture.h" />
     <ClInclude Include="src\Resources\IO\File.h" />
@@ -211,11 +214,14 @@
     <ClInclude Include="src\Resources\OGL\GlProgram.h" />
     <ClInclude Include="src\Resources\OGL\Shader.h" />
     <ClInclude Include="src\Resources\OGL\VertexArray.h" />
+    <ClInclude Include="src\Resources\Renderables\GUIElement.h" />
     <ClInclude Include="src\Resources\Renderables\Lines.h" />
     <ClInclude Include="src\Resources\Renderables\Mesh.h" />
     <ClInclude Include="src\Resources\Renderables\Points.h" />
     <ClInclude Include="src\Resources\Renderables\Renderable.h" />
     <ClInclude Include="src\Resources\Renderables\VoxelMesh.h" />
+    <ClInclude Include="src\Resources\UI\Button.h" />
+    <ClInclude Include="src\Resources\UI\ToggleButton.h" />
     <ClInclude Include="src\Resources\Voxels\Chunk.h" />
     <ClInclude Include="src\Resources\Voxels\Voxel.h" />
     <ClInclude Include="src\Resources\Voxels\VoxelArray3D.h" />
@@ -266,6 +272,7 @@
     <ClCompile Include="src\Resources\OGL\GlProgram.cpp" />
     <ClCompile Include="src\Resources\OGL\Shader.cpp" />
     <ClCompile Include="src\Resources\OGL\VertexArray.cpp" />
+    <ClCompile Include="src\Resources\Renderables\GUIElement.cpp" />
     <ClCompile Include="src\Resources\Renderables\Lines.cpp" />
     <ClCompile Include="src\Resources\Renderables\Mesh.cpp" />
     <ClCompile Include="src\Resources\Renderables\Points.cpp" />
@@ -276,7 +283,11 @@
     <ClCompile Include="src\Resources\Voxels\VoxelArray3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fonts\Text.vert" />
+    <None Include="fonts\Text.frag" />
     <None Include="Renderer.cd" />
+    <None Include="Shaders\GUI.frag" />
+    <None Include="Shaders\GUI.vert" />
     <None Include="Shaders\Simple.frag">
       <FileType>Document</FileType>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>

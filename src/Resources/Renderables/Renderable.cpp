@@ -99,7 +99,7 @@ Renderable::ActivateAttributes()
 	_vao.ActivateBinded(POSITION, 3, GL_FLOAT, sizeof(Vertex), (GLvoid*)0);
 	_vao.ActivateBinded(NORMALS, 3, GL_FLOAT, sizeof(Vertex), (GLvoid*)offsetof(Vertex, normal));
 	_vao.ActivateBinded(TEXTURE, 3, GL_FLOAT, sizeof(Vertex), (GLvoid*)offsetof(Vertex, texUV));
-	_vao.ActivateBinded(COLOR, 3, GL_FLOAT, sizeof(Vertex), (GLvoid*)offsetof(Vertex, color));
+	_vao.ActivateBinded(COLOR, 4, GL_FLOAT, sizeof(Vertex), (GLvoid*)offsetof(Vertex, color));
 }
 
 void

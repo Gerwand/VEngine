@@ -131,7 +131,8 @@ Window::IsOpened()
 void 
 Window::HandleWindow()
 {
-	glfwSwapInterval(0);
+	_resized = false;
+	glfwSwapInterval(1);
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
 }
@@ -152,13 +153,7 @@ Window::Close()
 bool 
 Window::SizeChanged()
 {
-	if (_resized) {
-		_resized = false;
-		return true;
-	}
-	else {
-		return false;
-	}
+	return (_resized);
 }
 
 void
