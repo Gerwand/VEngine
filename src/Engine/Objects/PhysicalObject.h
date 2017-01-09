@@ -12,7 +12,6 @@ namespace vengine {
 class PhysicalObject : public MeshedObject
 {
 public:
-	/
 	PhysicalObject(const std::string& name = "PhysicalObject");
 	PhysicalObject(const PhysicalObject& source);
 
