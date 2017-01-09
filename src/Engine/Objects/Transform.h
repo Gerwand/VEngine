@@ -32,6 +32,7 @@ public:
 	const Vector3& GetScale() const;
 	const Quaternion& GetRotation() const;
 	const Vector3& GetWorldPosition();
+	Vector3 GetForward() const;
 
 	const Matrix4& GetModelMatrix();
 
@@ -161,11 +162,11 @@ Transform::SetParent(Transform* parent)
 inline const Vector3&
 Transform::GetWorldPosition()
 {
-	if (_parent != nullptr)
+	if (_parent != nullptr) 
 		_worldPosition = GetPosition() + _parent->GetPosition();
-	else
+	else 
 		_worldPosition = GetPosition();
-
+	
 	return _worldPosition;
 }
 
@@ -175,5 +176,12 @@ Transform::GetLastPosition() const
 	return _lastPosition;
 }
 
+inline Vector3 
+Transform::GetForward() const
+{
+	Vector3 forward = Vector3::forward;
+	Quaternion::RotatePoint(_rotation, &forward);
+	return forward;
+}
 
 }

@@ -29,6 +29,10 @@
 #include "Objects/MeshedObject.h"
 #include "Objects/PhysicalObject.h"
 #include "Objects/PlayerController.h"
+#include "Objects/Projectile.h"
+#include "Objects/PlayerHead.h"
+#include "Objects/Enemy.h"
+#include "Objects/Enemyhead.h"
 #include "Objects/World.h"
 #include "Octree.h"
 #include "DebugConfig.h"
@@ -66,12 +70,14 @@ private:
 	GameObject* _world;
 	Octree _octree;
 	Canvas* _menuGui;
+
 #ifdef VE_DEBUG
 	DebugConfig _debugConfig;
 #endif
 	ToggleButton* _octButton;
 	ToggleButton* _colButton;
 	ToggleButton* _posButton;
+	ToggleButton* _wirButton;
 
 	void DestroyWorld();
 	void DestroyOtherManagers();

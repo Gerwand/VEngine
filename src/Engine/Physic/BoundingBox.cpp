@@ -185,36 +185,6 @@ BoundingBox::IsContaining(const BoundingBox& boundingBox) const
 	return true;
 }
 
-
-bool
-BoundingBox::IsIntersected(const BoundingBox& boundingBox) const
-{
-
-	/*
-	
-	
-	const Vector3 &otherMin = boundingBox._min;
-	const Vector3 &otherMax = boundingBox._max;
-	Vector3 pts[8] = {
-		Vector3(otherMin.x, otherMin.y, otherMin.z),
-		Vector3(otherMin.x, otherMin.y, otherMax.z),
-		Vector3(otherMin.x, otherMax.y, otherMin.z),
-		Vector3(otherMin.x, otherMax.y, otherMax.z),
-		Vector3(otherMax.x, otherMin.y, otherMin.z),
-		Vector3(otherMax.x, otherMin.y, otherMax.z),
-		Vector3(otherMax.x, otherMax.y, otherMin.z),
-		Vector3(otherMax.x, otherMax.y, otherMax.z)
-	};
-
-	for (int i = 0; i < 8; ++i) {
-		if (IsContaining(pts[i]))
-			return true;
-	}
-
-	return false;
-	*/
-}
-
 bool 
 BoundingBox::IsColliding(const BoundingBox& other) const
 {

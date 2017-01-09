@@ -166,11 +166,15 @@
     <ClInclude Include="src\Engine\DebugConfig.h" />
     <ClInclude Include="src\Engine\IO\Input.h" />
     <ClInclude Include="src\Engine\IO\Window.h" />
+    <ClInclude Include="src\Engine\Objects\Enemy.h" />
+    <ClInclude Include="src\Engine\Objects\EnemyHead.h" />
     <ClInclude Include="src\Engine\Objects\GameObject.h" />
     <ClInclude Include="src\Engine\Objects\MeshedObject.h" />
     <ClInclude Include="src\Engine\Objects\Node.h" />
     <ClInclude Include="src\Engine\Objects\PhysicalObject.h" />
     <ClInclude Include="src\Engine\Objects\PlayerController.h" />
+    <ClInclude Include="src\Engine\Objects\PlayerHead.h" />
+    <ClInclude Include="src\Engine\Objects\Projectile.h" />
     <ClInclude Include="src\Engine\Objects\Transform.h" />
     <ClInclude Include="src\Engine\Objects\World.h" />
     <ClInclude Include="src\Engine\Octree.h" />
@@ -225,7 +229,6 @@
     <ClInclude Include="src\Resources\Voxels\Chunk.h" />
     <ClInclude Include="src\Resources\Voxels\Voxel.h" />
     <ClInclude Include="src\Resources\Voxels\VoxelArray3D.h" />
-    <ClInclude Include="src\Resources\Voxels\VoxelModels.h" />
     <ClInclude Include="src\Singleton.h" />
     <ClInclude Include="src\Strcmp.h" />
     <ClInclude Include="src\VEMath.h" />
@@ -240,6 +243,7 @@
     <ClCompile Include="src\Engine\Objects\Node.cpp" />
     <ClCompile Include="src\Engine\Objects\PhysicalObject.cpp" />
     <ClCompile Include="src\Engine\Objects\PlayerController.cpp" />
+    <ClCompile Include="src\Engine\Objects\PlayerHead.cpp" />
     <ClCompile Include="src\Engine\Objects\Transform.cpp" />
     <ClCompile Include="src\Engine\Octree.cpp" />
     <ClCompile Include="src\Engine\Physic\BoundingBox.cpp" />

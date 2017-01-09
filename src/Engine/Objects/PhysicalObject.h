@@ -6,10 +6,13 @@
 #include "Engine/Physic/CollisionInfo.h"
 
 namespace vengine {
-
+/*
+* Extends functionality of the meshed objects, adding very basic physic and AABB collider.
+*/
 class PhysicalObject : public MeshedObject
 {
 public:
+	/
 	PhysicalObject(const std::string& name = "PhysicalObject");
 	PhysicalObject(const PhysicalObject& source);
 
@@ -34,7 +37,7 @@ protected:
 	Vector3 _velocity;
 	Vector3 _acceleration;
 	Vector3 _colliderOffset;
-
+	
 	float _mass = 1;
 
 	float _terrainFriction = 2;

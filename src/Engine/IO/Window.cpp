@@ -132,7 +132,7 @@ void
 Window::HandleWindow()
 {
 	_resized = false;
-	glfwSwapInterval(1);
+	glfwSwapInterval(0);
 	glfwSwapBuffers(_window);
 	glfwPollEvents();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
-#include "GameObject.h"
+#include "PhysicalObject.h"
+#include "Engine/Octree.h"
 
 namespace vengine {
 extern bool debugDraw;
@@ -12,10 +13,10 @@ public:
 	World(const World& source);
 
 	virtual GameObject* Clone();
+
 protected:
+	
 	virtual void OnUpdate();
-
-
 };
 
 inline
@@ -43,7 +44,6 @@ World::OnUpdate()
 			Input::DisableCursor();
 		else
 			Input::EnableCursor();
-		 //debugDraw = !debugDraw;
 }
 
 }

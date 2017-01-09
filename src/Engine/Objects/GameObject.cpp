@@ -109,6 +109,9 @@ GameObject::LateUpdate()
 
 void
 GameObject::Destroy(GameObject* gameObject) {
+	if (gameObject->_destroyed)
+		return;
+
 	gameObject->OnDestroy();
 
 	if (gameObject->HasChild())
@@ -122,8 +125,9 @@ GameObject::Destroy(GameObject* gameObject) {
 void
 GameObject::HandleDestroyed()
 {
-	for (GameObjects::iterator it = _destroyedObjects.begin(); it != _destroyedObjects.end(); ++it)
+	for (GameObjects::iterator it = _destroyedObjects.begin(); it != _destroyedObjects.end(); ++it) {
 		delete (*it);
+	}
 
 	_destroyedObjects.clear();
 }

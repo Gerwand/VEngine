@@ -183,7 +183,7 @@ VoxelArray3D::GenerateMesh(VoxelMesh* mesh)
 							current = NULL;
 
 						//Merge blocks
-						if (current != NULL && earlier != NULL && !earlier->IsTransparent() &&  !current->IsTransparent())
+						if (current != NULL && earlier != NULL && !earlier->IsTransparent() && !current->IsTransparent())
 							mask[n++] = NULL;
 						else
 							mask[n++] = front ? earlier : current;

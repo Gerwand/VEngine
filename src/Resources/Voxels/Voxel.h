@@ -23,7 +23,12 @@ public:
 		WOOD,
 		STONE,
 		LEAFS,
-		NUM_TYPES = LEAFS
+		CLOTH1,
+		CLOTH2,
+		BODY,
+		SKELETONFACE,
+		SKELETON,
+		NUM_TYPES = SKELETON
 	};
 
 	Voxel();

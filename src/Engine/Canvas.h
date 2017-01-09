@@ -16,7 +16,7 @@ public:
 	Canvas(const Vector4& backgroundColor = Vector4(0.0f, 0.0f, 0.0f, 1.0f));
 	~Canvas();
 
-	void AddButton(Button* button);
+	void AddButton(Button* button, int layer = 9);
 	void Draw(Renderer* renderer);
 
 	bool Update();
@@ -47,10 +47,10 @@ Canvas::~Canvas()
 }
 
 inline void
-Canvas::AddButton(Button* button)
+Canvas::AddButton(Button* button, int layer)
 {
 	_buttons.push_back(button);
-	_guiButtons.AddRectangle(button->GetPosition(), button->GetSize(), button->GetColor());
+	_guiButtons.AddRectangle(button->GetPosition(), button->GetSize(), button->GetColor(), layer);
 }
 
 inline void

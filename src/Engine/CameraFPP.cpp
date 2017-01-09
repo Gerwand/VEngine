@@ -133,7 +133,6 @@ CameraFPP::GetViewMatrix()
 		_viewMatrix = Matrix4::GetLookAt(_position, _position + front, up);
 		_moved = false;
 
-		_viewFrustum.SetPosition(_position, front, up, right);
 		_viewFrustum.Set(_projectionMatrix * _viewMatrix);
 	}
 	return _viewMatrix;

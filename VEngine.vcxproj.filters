@@ -240,9 +240,6 @@
     <ClInclude Include="src\Resources\Voxels\VoxelArray3D.h">
       <Filter>Header Files\Resources\Voxels</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\Voxels\VoxelModels.h">
-      <Filter>Header Files\Resources\Voxels</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\IO\Window.h">
       <Filter>Header Files\Engine\IO</Filter>
     </ClInclude>
@@ -314,6 +311,18 @@
     </ClInclude>
     <ClInclude Include="src\Resources\Font.h">
       <Filter>Header Files\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\PlayerHead.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\Projectile.h">
+      <Filter>Header Files\Resources\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\EnemyHead.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\Enemy.h">
+      <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -463,6 +472,9 @@
     </ClCompile>
     <ClCompile Include="src\Resources\Renderables\GUIElement.cpp">
       <Filter>Header Files\Resources\Renderables</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Engine\Objects\PlayerHead.cpp">
+      <Filter>Source Files\Engine\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
