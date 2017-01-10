@@ -585,7 +585,7 @@ Octree::Draw(Renderer* renderer)
 {
 	CameraFPP *camera = renderer->GetActiveCamera();
 
-	if (!camera->IsVisibleSmall(_area)) {
+	if (!camera->IsVisible(_area)) {
 		return;
 	}
 
@@ -1158,18 +1158,18 @@ Octree::CheckTerrainIntersections(PhysicalObject* object, CollisionInfo* info)
 void 
 Octree::Insert(const Voxel& voxel, Vector3 coordinates)
 {
-	/*
-	* We want to insert chunk as deep as we can, they will not change as dynamically
-	* as physical objects, and it will be easier to check collisions that way.
-	*/
+	BoundingBox box(coordinates + Vector3(0.5f, 0.5f, 0.5f), Vector3(1.0f, 1.0f, 1.0f));
+
+	for (PhysicalObjects::iterator it = _objects.begin(); it != _objects.end(); ++it)
+		if ((*it)->GetCollider().IsColliding(box))
+			return;
+
 	if (IsSmallestLeaf()) {
 		if (_chunk == nullptr)
 			_chunk = new Chunk(_area.GetMinimas());
 
 		if (_chunk->Get(coordinates).IsEmpty())
 			_chunk->Set(coordinates, voxel.GetType());
-		else
-			std::cout << "\nBusy\n";
 		return;
 	}
 
@@ -1213,7 +1213,6 @@ Octree::Insert(const Voxel& voxel, Vector3 coordinates)
 			assert(false, "Vox out of bound of the octree");
 	}
 	else if (IsRoot()) {
-		/* Inform about chunk being outside game range, and as for now do nothing */
 		assert(false, "Vox out of playable area");
 	}
 }

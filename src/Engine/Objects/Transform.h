@@ -8,52 +8,83 @@
 
 namespace vengine {
 
+/*
+* Transform represents local object transformations: scale, rotation and transformation.
+* It also delivers modeling matrices.
+*/
 class Transform {
-	friend class GameObject;
+	friend class GameObject; /* We are giving acces to this class to GameObejct, to simplify configuration of the transform */
 public:
+	/* Default constructor, setting identity rotation, location at (0,0,0) and (1,1,1) scale. */
 	Transform();
+	/* Copies location, rotation and scale from the other object, however, parent of the transform is not copied */
 	Transform(const Transform& other);
 
+	/* Resets position, rotation and scale to default values setted by constructor */
 	void Reset();
 
+	/* Copies location, rotation and scale from the other object */
 	const Transform& Set(const Transform& other);
+	/* Sets local position, scale and rotation */
 	const Transform& Set(const Vector3& position, Vector3 scale, Quaternion rotation);
+	/* Set local position */
 	const Transform& SetPosition(const Vector3& position);
+	/* Set local scale */
 	const Transform& SetScale(const Vector3& scale);
+	/* Set local rotation using quaternion */
 	const Transform& SetRotation(const Quaternion& rotation);
+
+	/*
+	* Set parent of the object - parent's transformations will be added to object transformations,
+	* required for hierarchical objects.
+	*/
 	void SetParent(Transform* parent);
 
+	/* Get local position */
 	Vector3& GetPosition();
-	Vector3& GetScale();
-	Quaternion& GetRotation();
-	
 	const Vector3& GetPosition() const;
-	const Vector3& GetLastPosition() const;
-	const Vector3& GetScale() const;
-	const Quaternion& GetRotation() const;
-	const Vector3& GetWorldPosition();
-	Vector3 GetForward() const;
 
+	/* Get local scale */
+	Vector3& GetScale();
+	const Vector3& GetScale() const;
+
+	/* Get local rotation */
+	Quaternion& GetRotation();
+	const Quaternion& GetRotation() const;
+	
+	/* Get last object's local position */
+	const Vector3& GetLastPosition() const;
+
+	/* Get object's position in world coordinates */
+	const Vector3& GetWorldPosition();
+
+	/* Get model matrix representing global transform of the object - result of the multiplication with all parents */
 	const Matrix4& GetModelMatrix();
 
+	/* Recalculate model matrix of the object */
 	void UpdateMatrix();
+
+	/* Compare two Transforms checking their current transform */
 	bool operator==(const Transform& other);
 private:
-	Vector3 _position;
-	Vector3 _scale;
-	Quaternion _rotation;
-	Vector3 _lastPosition;
-	Vector3 _lastScale;
-	Quaternion _lastRotation;
+	Vector3 _position;		/* Local position of the object */
+	Vector3 _scale;			/* Scale of the object */
+	Quaternion _rotation;	/* Rotation of the object */
 
-	Vector3 _worldPosition;
+	/* Used for checking if matrices have to be recalculated */
+	Vector3 _lastPosition;		/* Last position of the object */
+	Vector3 _lastScale;			/* Last scale of the object */
+	Quaternion _lastRotation;	/* Last rotation of the object */
 
-	Matrix4 _modelMatrix;
-	Matrix4 _localModelMatrix;
+	Vector3 _worldPosition; /* Global position of the object */
 
-	Transform* _parent;
-	bool _recalculated;
+	Matrix4 _modelMatrix;	/* Model matrix which is result of multiplication with all parents */
+	Matrix4 _localModelMatrix; /* Local model matrix, stored to preserve some operations if the object is static */
 
+	Transform* _parent;	/* Parent transform of the object */
+	bool _recalculated; /* Indicates that model matrix has been recalculated */
+
+	/* Used after updating all object's matrices in the hierarchy, to indicate, that matrices are actual */
 	void ResetState();
 };
 
@@ -142,6 +173,7 @@ Transform::GetRotation() const
 inline bool
 Transform::operator==(const Transform& other)
 {
+	/* We want to compare only current values */
 	return (_position == other._position &&
 			_scale == other._scale &&
 			_rotation == other._rotation);
@@ -162,8 +194,9 @@ Transform::SetParent(Transform* parent)
 inline const Vector3&
 Transform::GetWorldPosition()
 {
+	/* If we have parent, we must add all transforms up to the root */
 	if (_parent != nullptr) 
-		_worldPosition = GetPosition() + _parent->GetPosition();
+		_worldPosition = Vector3(_parent->GetModelMatrix() * GetPosition());
 	else 
 		_worldPosition = GetPosition();
 	
@@ -174,14 +207,6 @@ inline const Vector3&
 Transform::GetLastPosition() const
 {
 	return _lastPosition;
-}
-
-inline Vector3 
-Transform::GetForward() const
-{
-	Vector3 forward = Vector3::forward;
-	Quaternion::RotatePoint(_rotation, &forward);
-	return forward;
 }
 
 }

@@ -25,14 +25,8 @@ PhysicalObject::PhysicalObject(const PhysicalObject& source) : MeshedObject(sour
 void 
 PhysicalObject::OnInit()
 {
-	_collider.SetPosition(_transform.GetWorldPosition());
+	_collider.SetPosition(_transform.GetWorldPosition() + _colliderOffset);
 	_transform.UpdateMatrix();
-}
-
-void 
-PhysicalObject::OnUpdate()
-{
-
 }
 
 void 
@@ -87,25 +81,16 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 
 		if (dir.x * relPos.x >= 0.0f) {
 			newPos.x = last.x;
-			other->_velocity.x += _velocity.x;
 			_velocity.x = 0.0f;
 		}
 		if (dir.y * relPos.y >= 0.0f) {
 			newPos.y = last.y;
-			other->_velocity.y += _velocity.y;
 			_velocity.y = 0.0f;
 		}
 		if (dir.z * relPos.z >= 0.0f) {
 			newPos.z = last.z;
-			other->_velocity.z += _velocity.z;
 			_velocity.z = 0.0f;
 		}
-		//const Vector3 dir = _transform.GetLastPosition() - _transform.GetPosition();
-		const Vector3 dirO = other->_transform.GetPosition() - other->_transform.GetLastPosition();
-
-			//_velocity += other->_mass * dirO * Time::DeltaTime();
-			//other->_velocity = _mass * dir * Time::DeltaTime();
-			//_transform.SetPosition(_transform.GetLastPosition());
 	}
 	
 	

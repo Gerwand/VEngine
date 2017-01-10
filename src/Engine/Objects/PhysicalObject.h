@@ -12,44 +12,78 @@ namespace vengine {
 class PhysicalObject : public MeshedObject
 {
 public:
+	/* Constructor that is initializing physical properties of the object and setting it's name */
 	PhysicalObject(const std::string& name = "PhysicalObject");
+	/* Copy constructor, used for cloning obejcts */
 	PhysicalObject(const PhysicalObject& source);
 
+	/* Set AABB collider for the object */
 	void SetCollider(const BoundingBox& collider);
+	/* Get current AABB collider of the object */
 	const BoundingBox& GetCollider() const;
 	BoundingBox& GetCollider();
+
+	/* Set collider's offset from the center of the object */
 	void SetColliderOffset(const Vector3& offset);
 
-	bool HasChanged();
+	/* Check if object's position has changed since last Update */
+	bool HasChanged() const;
+	/*
+	* Set that object is static - physic is not apllied to static objects and collision checks are skipped in handler,
+	* however, collision still can be handled in inheritated class
+	*/
 	void SetStatic(bool isStatic);
-	bool IsStatic();
+	/* Checks if object is static */
+	bool IsStatic() const;
 
+	/* Add force vector to the object. Heavier objects requires higher mass */
 	void AddForce(const Vector3& force);
-	virtual void OnCollision(const CollisionInfo& collision);
+
+	/* Set mass of the object */
+	void SetMass(float mass);
+	/* Set bounciness of the object */
+	void SetBounciness(float bounciness);
+	/* Set bounciness of the object */
+	void SetFriction(float friction);
+	/* Get mass of the object */
+	float GetMass() const;
+	/* Get bounciness of the object */
+	float GetBounciness() const;
+	/* Get friction of the object */
+	float GetFriction() const;
+
+	/* Set new transform of the object and updates position of the bounding box, because AABB uses global positioning */
 	void SetTransform(const Transform& transform);
 
-	virtual GameObject* Clone();
+	/* Used for enabling calling Instantiate */
+	virtual GameObject* Clone() const;
+	/* Handler for collision detections */
+	virtual void OnCollision(const CollisionInfo& collision);
 protected:
-	BoundingBox _collider;
-	bool _isStatic;
+	BoundingBox _collider;			/* AABB collider */
+	bool _isStatic;					/* Indicates that object is static or not */
 
-	Vector3 _velocity;
-	Vector3 _acceleration;
-	Vector3 _colliderOffset;
+	Vector3 _velocity;				/* Velocity of the object*/
+	Vector3 _acceleration;			/* Temporary acceleration, will be zeroes after applying physic */
+	Vector3 _colliderOffset;		/* Offset of the AABB from the center of the object */
 	
-	float _mass = 1;
+	float _mass = 1.0f;				/* Mass of the object */
+	float _terrainFriction = 2.0f;	/* Indicates friction - will be applied to grounded objects slowing theirs speed */
+	float _bounciness = 0.1f;		/* Bounciness - how much velocity will be preserved after bumping from terrain */
 
-	float _terrainFriction = 2;
-	float _bounciness = 0.1f;
-	bool _grounded = false;
+	bool _grounded = false;			/* Indicates that object is standing on the ground */
 
-	virtual void OnInit();
-	virtual void OnUpdate();
+	/* It is setting initial position of the collider depending of the object and updating transform's matrix. */
+	virtual void OnInit(); 
+	/* If proper debug option is enabled, it is drawing collider around object */
 	virtual void OnDraw(Renderer* renderer);
+	/* Applies physic to the non static objects */
 	virtual void OnPhysic();
 
+	/* Value for gravity force that will be applied to each non static physical object each frame */
 	static Vector3 _gravityForce;
 private:
+	/* Calculating velocity of the object and adding gravity force */
 	void UpdatePhysic();
 };
 
@@ -72,8 +106,9 @@ PhysicalObject::GetCollider()
 }
 
 inline bool 
-PhysicalObject::HasChanged()
+PhysicalObject::HasChanged() const
 {
+	/* If object is static we are assuming it has not changed. Else, check if position changed. */
 	return _isStatic ? false : _transform.GetLastPosition() != _transform.GetPosition();
 }
 
@@ -84,13 +119,13 @@ PhysicalObject::SetStatic(bool isStatic)
 }
 
 inline bool 
-PhysicalObject::IsStatic()
+PhysicalObject::IsStatic() const
 {
 	return _isStatic;
 }
 
 inline GameObject* 
-PhysicalObject::Clone()
+PhysicalObject::Clone() const
 {
 	return new PhysicalObject(*this);
 }
@@ -101,21 +136,47 @@ PhysicalObject::SetColliderOffset(const Vector3& offset)
 	_colliderOffset = offset;
 }
 
-
-class TO : public PhysicalObject {
-public:
-	CameraFPP *camera;
-protected:
-	void OnUpdate() {
-		_transform.SetPosition(camera->GetPosition() + 5.0f * camera->GetDirection());
-	}
-};
-
 inline void
 PhysicalObject::SetTransform(const Transform& transform)
 {
 	GameObject::SetTransform(transform);
 	_collider.SetPosition(_transform.GetWorldPosition());
+}
+
+inline void
+PhysicalObject::SetMass(float mass)
+{
+	_mass = mass;
+}
+
+inline float 
+PhysicalObject::GetMass() const
+{
+	return _mass;
+}
+
+inline void 
+PhysicalObject::SetBounciness(float bounciness)
+{
+	_bounciness = bounciness;
+}
+
+inline float
+PhysicalObject::GetBounciness() const
+{
+	return _bounciness;
+}
+
+inline void
+PhysicalObject::SetFriction(float friction)
+{
+	_terrainFriction = friction;
+}
+
+inline float
+PhysicalObject::GetFriction() const
+{
+	return _terrainFriction;
 }
 
 }

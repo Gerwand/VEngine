@@ -6,7 +6,10 @@ VEngine engine;
 
 int main()
 {
-	engine.Init("VEngine");
+	if (engine.Init("VEngine")) {
+		std::cout << "\nInit failed!\n";
+		return VE_FAULT;
+	}
 
 	if (engine.Load()) {
 		return VE_FAULT;

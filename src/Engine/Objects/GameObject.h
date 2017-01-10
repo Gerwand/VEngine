@@ -46,7 +46,7 @@ public:
 	*
 	* @return reference to object's transform
 	*/
-	const Transform& GetTransform();
+	const Transform& GetTransform() const;
 
 	/*
 	* Renames first part of the name of the object. The second one will be object's ID.
@@ -122,10 +122,10 @@ public:
 	void LateDraw(Renderer* renderer);
 
 	/* Checks if object was checked to be destroyed at the end of the frame */
-	bool IsDestroyed();
+	bool IsDestroyed() const;
 
 	/* Clones this object. If inheritated, should return allocated object through new operator with copied data */
-	virtual GameObject* Clone() = 0;
+	virtual GameObject* Clone() const = 0;
 
 	/* Overloaded Node function for updating Transform parent */
 	void AttachTo(Node* parent);
@@ -232,7 +232,7 @@ GameObject::IsVisible()
 }
 
 inline bool
-GameObject::IsDestroyed()
+GameObject::IsDestroyed() const
 {
 	return _destroyed;
 }
@@ -246,7 +246,7 @@ GameObject::SetTransform(const Transform& transform)
 }
 
 inline const Transform& 
-GameObject::GetTransform()
+GameObject::GetTransform() const
 {
 	return _transform;
 }

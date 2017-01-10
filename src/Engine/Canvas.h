@@ -10,12 +10,23 @@ namespace vengine {
 
 typedef std::vector<Button *> Buttons;
 
+/*
+* Simple class containing background of the GUI and few buttons 
+*/
 class Canvas
 {
 public:
+	/* Default constructor setting background color */
 	Canvas(const Vector4& backgroundColor = Vector4(0.0f, 0.0f, 0.0f, 1.0f));
+	/* Destroys all buttons in the canvas */
 	~Canvas();
 
+	/* 
+	* Add new button to the canvas.
+	* 
+	* @param button pointer to button allocated by new operator
+	* @param layer on which layer gui should be draw, from -9 to 9.
+	*/
 	void AddButton(Button* button, int layer = 9);
 	void Draw(Renderer* renderer);
 

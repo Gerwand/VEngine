@@ -1,7 +1,8 @@
 #include "PlayerController.h"
 
 namespace vengine {
-std::string PlayerController::toolNames[7]{
+/* Tool names for game objects that are stored in gameObjectManager */
+std::string PlayerController::_toolNames[7]{
 	"Sword",
 	"Pickaxe",
 	"Dirt",
@@ -15,9 +16,9 @@ PlayerController::OnDraw(Renderer* renderer)
 {
 	PhysicalObject::OnDraw(renderer);
 
-	if (rayInfo.CollisionFound()) {
-		Chunk* hitCh = rayInfo.GetCollidedChunk();
-		const Vector3& coord = rayInfo.GetVoxelCoordinates();
+	if (_rayInfo.CollisionFound()) {
+		Chunk* hitCh = _rayInfo.GetCollidedChunk();
+		const Vector3& coord = _rayInfo.GetVoxelCoordinates();
 		_voxLines.ClearVertices();
 		_voxLines.SetColor(Vector3(0.1f, 0.1f, 0.1f));
 		_voxLines.AddLine(Vector3(coord.x - 0.001f, coord.y - 0.001f, coord.z - 0.001f),
@@ -64,7 +65,6 @@ PlayerController::OnInit()
 void 
 PlayerController::OnUpdate()
 {
-	PhysicalObject::OnUpdate();
 	assert(_octree != nullptr, "Octree pointer is null!");
 	
 	if (Input::GetCursorMode())
@@ -112,7 +112,7 @@ PlayerController::AttachTool() {
 	if (_tool == NONE)
 		return;
 
-	const std::string& name = toolNames[_tool - 1];
+	const std::string& name = _toolNames[_tool - 1];
 	GameObject* tool = gameObjectManager.Instantiate(name);
 	_arm->Attach(tool);
 }
@@ -121,9 +121,9 @@ PlayerController::AttachTool() {
 void
 PlayerController::ChangeBlocks()
 {
-	rayInfo = RayIntersection();
-	Ray cameraRay(_camera->GetPosition(), _camera->GetDirection(), digDistance);
-	_octree->CheckRayCollision(&cameraRay, &rayInfo);
+	_rayInfo = RayIntersection();
+	Ray cameraRay(_camera->GetPosition(), _camera->GetDirection(), _digDistance);
+	_octree->CheckRayCollision(&cameraRay, &_rayInfo);
 
 	static float prevTime = 0;
 	static Vector3 planes[6] = {
@@ -138,8 +138,8 @@ PlayerController::ChangeBlocks()
 	if (Input::IsHolded("Attack1")) {
 		if (Time::GetTime() - prevTime > 0.2f) {
 			prevTime = Time::GetTime();
-			Chunk* hitCh = rayInfo.GetCollidedChunk();
-			const Vector3& coord = rayInfo.GetVoxelCoordinates();
+			Chunk* hitCh = _rayInfo.GetCollidedChunk();
+			const Vector3& coord = _rayInfo.GetVoxelCoordinates();
 			Quaternion quat1, quat2;
 			PhysicalObject* projectile;
 			Transform transform;
@@ -156,7 +156,7 @@ PlayerController::ChangeBlocks()
 				_octree->Add(projectile);
 				break;
 			case PICKAXE:
-				if (rayInfo.CollisionFound()) {
+				if (_rayInfo.CollisionFound()) {
 					hitCh->Set(coord, Voxel::NONE);
 				}
 				break;
@@ -164,7 +164,7 @@ PlayerController::ChangeBlocks()
 			case WOOD:
 			case STONE:
 			case GRASS:
-				if (rayInfo.CollisionFound()) {
+				if (_rayInfo.CollisionFound()) {
 					float dots[6];
 					for (int i = 0; i < 6; ++i) {
 						dots[i] = Vector3::Dot(cameraRay.GetDirection(), planes[i]);
@@ -201,23 +201,23 @@ PlayerController::Move()
 
 	float run = 1.0f;
 	if (Input::IsHolded("Walk"))
-		run = runModifier;
+		run = _runModifier;
 
 	if (Input::IsHolded("Forward"))
-		_transform.GetPosition() += front * speed * run * Time::DeltaTime();
+		_transform.GetPosition() += front * _speed * run * Time::DeltaTime();
 
 	if (Input::IsHolded("Back"))
-		_transform.GetPosition() += -front * speed * run * Time::DeltaTime();
+		_transform.GetPosition() += -front * _speed * run * Time::DeltaTime();
 
 	if (Input::IsHolded("Right"))
-		_transform.GetPosition() += right * speed * run * Time::DeltaTime();
+		_transform.GetPosition() += right * _speed * run * Time::DeltaTime();
 
 	if (Input::IsHolded("Left"))
-		_transform.GetPosition() += -right * speed * run * Time::DeltaTime();
+		_transform.GetPosition() += -right * _speed * run * Time::DeltaTime();
 
 	if (_grounded) {
 		if (Input::IsHolded("Jump")) {
-			AddForce(Vector3::up * jumpForce);
+			AddForce(Vector3::up * _jumpForce);
 		}
 	}
 }

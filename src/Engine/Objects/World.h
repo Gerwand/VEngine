@@ -12,7 +12,7 @@ public:
 	World(const std::string& name = "World");
 	World(const World& source);
 
-	virtual GameObject* Clone();
+	virtual GameObject* Clone() const;
 
 protected:
 	
@@ -31,7 +31,7 @@ World::World(const World& source) : GameObject(source)
 
 
 inline GameObject* 
-World::Clone()
+World::Clone() const
 {
 	return new World(*this);
 }

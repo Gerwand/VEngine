@@ -11,7 +11,7 @@ public:
 	Enemy(const std::string& name = "Enemy");
 	Enemy(const Enemy& source);
 
-	virtual GameObject* Clone();
+	virtual GameObject* Clone() const;
 
 	void SetPlayer(GameObject* player);
 
@@ -32,7 +32,7 @@ Enemy::Enemy(const Enemy& source) : PhysicalObject(source)
 }
 
 inline GameObject*
-Enemy::Clone()
+Enemy::Clone() const
 {
 	return new Enemy(*this);
 }

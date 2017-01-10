@@ -72,13 +72,13 @@ CameraFPP::RotateVertical(float angle)
 }
 
 float
-CameraFPP::GetHorizontal()
+CameraFPP::GetHorizontal() const
 {
 	return _orientation.x;
 }
 
 float
-CameraFPP::GetVertical()
+CameraFPP::GetVertical() const
 {
 	return _orientation.y;
 }
@@ -163,7 +163,7 @@ CameraFPP::PerspectiveChanged()
 }
 
 bool
-CameraFPP::IsVisibleSmall(const BoundingBox& boundary)
+CameraFPP::IsVisible(const BoundingBox& boundary)
 {
 
 
@@ -180,32 +180,9 @@ CameraFPP::IsVisibleSmall(const BoundingBox& boundary)
 	return true;
 }
 
-bool
-CameraFPP::IsVisibleBig(const BoundingBox& boundary)
-{
-	for (int i = 0; i < Frustum::NUM_OF_PLANES; i++) {
-		const Plane& plane = _viewFrustum.GetPlane(i);
-
-
-		Vector3 pVert, nVert;
-		boundary.GetPVertex(&pVert, plane.GetNormal());
-		boundary.GetNVertex(&nVert, plane.GetNormal());
-
-
-		float dist1 = plane.Distance(pVert);
-		float dist2 = plane.Distance(nVert);
-		bool close = dist1  > 0.0f;
-		bool aways = dist2 > 0.0f;
-
-		if (!close && !aways)
-			return false;
-	}
-
-	return true;
-}
 
 const Vector3& 
-CameraFPP::GetDirection()
+CameraFPP::GetDirection() const
 {
 	return _viewDirection;
 }

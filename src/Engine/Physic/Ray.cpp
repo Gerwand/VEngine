@@ -75,7 +75,7 @@ Ray::Advance(float t)
 }
 
 const Vector3& 
-Ray::GetCurrentPosition()
+Ray::GetCurrentPosition() const
 {
 	return _current;
 }

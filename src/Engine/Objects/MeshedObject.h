@@ -16,7 +16,7 @@ public:
 	*
 	* @param name first part for the name of the object
 	*/
-	MeshedObject(const std::string& name = "Object");
+	MeshedObject(const std::string& name = "MeshedObject");
 	/*
 	* Copying constructor.
 	*
@@ -42,11 +42,11 @@ public:
 	*
 	* @return Pointer to the cloned object.
 	*/
-	virtual GameObject* Clone();
+	virtual GameObject* Clone() const;
 protected:
 	unsigned int _mesh;	/* Mesh handle from mesh manager */
 
-	/* Draw mesh */
+	/* Draw mesh with proper renderer object */
 	virtual void OnDraw(Renderer *renderer);
 };
 
@@ -71,7 +71,7 @@ MeshedObject::GetMesh()
 }
 
 inline GameObject* 
-MeshedObject::Clone()
+MeshedObject::Clone() const
 {
 	return new MeshedObject(*this);
 }

@@ -14,7 +14,7 @@ public:
 	EnemyHead(const std::string& name = "EnemyHead");
 	EnemyHead(const EnemyHead& source);
 
-	virtual GameObject* Clone();
+	virtual GameObject* Clone() const;
 
 	void SetPlayer(GameObject* player);
 
@@ -36,7 +36,7 @@ EnemyHead::EnemyHead(const EnemyHead& source) : MeshedObject(source)
 }
 
 inline GameObject*
-EnemyHead::Clone()
+EnemyHead::Clone() const
 {
 	return new EnemyHead(*this);
 }

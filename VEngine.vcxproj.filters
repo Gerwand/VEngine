@@ -315,13 +315,13 @@
     <ClInclude Include="src\Engine\Objects\PlayerHead.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Objects\Projectile.h">
-      <Filter>Header Files\Resources\Managers</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Objects\EnemyHead.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Engine\Objects\Enemy.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Engine\Objects\Projectile.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
   </ItemGroup>

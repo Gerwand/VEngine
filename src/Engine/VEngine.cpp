@@ -28,7 +28,7 @@ VEngine::Init(const std::string& gameTitle)
 
 	error = InitWindow();
 	if (error) {
-		printf("Cannot initialize file managers. Error code: %d", error);
+		printf("Cannot initialize Window. Error code: %d", error);
 		goto callbacks_err;
 	}
 	std::cout << glGetString(GL_SHADING_LANGUAGE_VERSION);

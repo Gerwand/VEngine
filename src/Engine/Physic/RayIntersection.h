@@ -7,54 +7,68 @@
 
 namespace vengine {
 
+/*
+* Class keeping information about ray's collisions with terrain (currently).
+*/
 class RayIntersection {
 public:
+	/* Initialize collision info's with nullptrs */
 	RayIntersection();
 
-	//bool TestIntersection(const Ray& ray, PhysicalObject* object);
+	/*
+	* Test intersection with chunk by shooting ray, until:
+	*  1. Collision with voxel occurs
+	*  2. Ray will exceed chunk's coordinates range
+	*  3. Ray will end
+	*
+	* @return True if collision has been detected, else false
+	*/
 	bool TestIntersection(Ray* ray, Chunk* chunk);
-
-	//bool IsSourceInside(const Ray& ray, const BoundingBox& box);
 	
-	bool CollisionFound();
-	Chunk* GetCollidedChunk();
-	const Vector3& GetVoxelCoordinates();
+	/* Check if any collision has been found */
+	bool CollisionFound() const;
+
+	/* Get chunk that collided with ray */
+	Chunk* GetCollidedChunk() const;
+	/* Get collided voxel world coordinates */
+	const Vector3& GetVoxelCoordinates() const;
 private:
-	PhysicalObject* _hitted;
-	Chunk* _hittedChunk;
-	Vector3 _voxelCoordinates;
+	Ray* _ray;					/* Pointer to the ray that had been tested */
+	Chunk* _hittedChunk;		/* Pointer to the chunk that had been */
+	Vector3 _voxelCoordinates;  /* Collided voxel world coordinates */
 };
 
 inline Chunk*
-RayIntersection::GetCollidedChunk()
+RayIntersection::GetCollidedChunk() const
 {
 	return _hittedChunk;
 }
 
 inline const Vector3&
-RayIntersection::GetVoxelCoordinates()
+RayIntersection::GetVoxelCoordinates() const
 {
 	return _voxelCoordinates;
 }
 
 inline bool 
-RayIntersection::CollisionFound()
+RayIntersection::CollisionFound() const
 {
-	return _hitted != nullptr || _hittedChunk != nullptr;
+	return _hittedChunk != nullptr;
 }
 
 inline
 RayIntersection::RayIntersection() : _voxelCoordinates(Vector3::zeroes)
 {
-	_hitted = nullptr;
 	_hittedChunk = nullptr;
+	_ray = nullptr;
 }
 
 inline bool
 RayIntersection::TestIntersection(Ray* ray, Chunk* chunk)
 {
 	assert(chunk != nullptr, "Trying to check collision with null chunk");
-
+	assert(ray != nullptr, "Trying shoot null ray");
+	_ray = ray;
 	
 	Vector3 prevPos = Vector3(-1.0f);
 	

@@ -90,7 +90,9 @@ Window::CreateWindowedFullScreen()
 		glfwWindowHint(GLFW_GREEN_BITS, mode->greenBits);
 		glfwWindowHint(GLFW_BLUE_BITS, mode->blueBits);
 		glfwWindowHint(GLFW_REFRESH_RATE, mode->refreshRate);
-		GLFWwindow* window = glfwCreateWindow(mode->width, mode->height, _title, monitor, NULL);
+		_window = glfwCreateWindow(mode->width, mode->height, _title, monitor, NULL);
+		_width = mode->width;
+		_height = mode->height;
 		return IsValid();
 	}
 	return false;
