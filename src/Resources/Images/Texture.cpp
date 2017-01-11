@@ -39,7 +39,8 @@ int
 Texture::LoadTexture(const std::string& path)
 {
 	assert(IsValid(), "Cannot load texture for unitialized handle");
-	unsigned int flags = SOIL_FLAG_INVERT_Y | SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MIPMAPS |
+	unsigned int flags = SOIL_FLAG_INVERT_Y |
+		SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MIPMAPS |
 		SOIL_FLAG_COMPRESS_TO_DXT | SOIL_FLAG_TEXTURE_REPEATS;
 	int rc = SOIL_load_OGL_texture(path.c_str(), SOIL_LOAD_AUTO, _handle, flags);
 	if (rc = 0)

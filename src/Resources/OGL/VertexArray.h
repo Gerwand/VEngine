@@ -1,8 +1,5 @@
 #pragma once
 
-//#define GLEW_STATIC
-//#include <GL/glew.h>
-
 #include "Errors.h"
 #include "Assert.h"
 
@@ -35,11 +32,8 @@ public:
 	operator GLuint() const;
 
 private:
-	//typedef std::map<GLuint, GLuint> AttributeBindings;
-
 	GLuint _handle;
 	bool _binded;
-	//AttributeBindings _attrBind;
 };
 
 }

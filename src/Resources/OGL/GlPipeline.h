@@ -1,7 +1,5 @@
 #pragma once
 
-//#define GLEW_STATIC
-//#include <GL/glew.h>
 #include "GlProgram.h"
 #include "Errors.h"
 #include "Assert.h"

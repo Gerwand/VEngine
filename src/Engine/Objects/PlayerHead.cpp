@@ -21,7 +21,6 @@ void
 PlayerHead::OnLateUpdate()
 {
 	_camera->SetPosition(_transform.GetWorldPosition());
-	//_camera->Move(Vector3(0.0f, 0.0f, 0.0f));
 }
 
 

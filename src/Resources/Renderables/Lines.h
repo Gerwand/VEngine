@@ -37,6 +37,4 @@ Lines::GetColor() const
 	return _color;
 }
 
-
-
 }

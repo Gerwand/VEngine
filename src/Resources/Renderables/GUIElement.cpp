@@ -19,9 +19,9 @@ GUIElement::AddRectangle(const Vector2& start, const Vector2& dimension, Vector4
 	_vertices.push_back({ pts[2], Vector3::zeroes, Vector2::zeroes, 0, 0, color });
 	_vertices.push_back({ pts[3], Vector3::zeroes, Vector2::zeroes, 0, 0, color });
 
-	_indices.push_back(vertNumber);
-	_indices.push_back(vertNumber + 1);
 	_indices.push_back(vertNumber + 3);
+	_indices.push_back(vertNumber + 1);
+	_indices.push_back(vertNumber);
 	_indices.push_back(vertNumber + 3);
 	_indices.push_back(vertNumber + 2);
 	_indices.push_back(vertNumber + 1);

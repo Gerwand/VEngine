@@ -100,22 +100,6 @@ VoxelArray3D::Get(const Vector3& coords) const
 	return _voxels[index];
 }
 
-/*
-void
-VoxelArray3D::SetTypes(unsigned char ***types)
-{
-	//It will be called only when loading model, so it does
-	//not have to be very fast
-	int index = 0;
-	for (int z = 0; z < _sz; ++z) {
-		for (int y = 0; y < _sy; ++y) {
-			for (int x = 0; x < _sx; ++x) {
-				_voxels[index++] = Voxel(types[z][y][x]);
-			}
-		}
-	}
-}
-*/
 
 void
 VoxelArray3D::SetTypes(unsigned char *types)
@@ -143,78 +127,78 @@ VoxelArray3D::GenerateMesh(VoxelMesh* mesh)
 			const Voxel** mask = new const Voxel*[_dimension[u] * _dimension[v]];
 			memset(mask, NULL, _dimension[u] * _dimension[v] * sizeof(Voxel *));
 			int coords[3] = { 0, 0, 0 };
-			//This arrays helps to determine next plane from which
-			//face for comparision will be get
+			/* This arrays helps to determine next plane for face comparision */
 			int next[3] = { 0, 0, 0 };
 			next[dir] = 1;
 
 			Voxel::Side face;
-			//Determine which face to use
+			/* Determine which face to use - it can also be used if voxels could be rotated */
 			switch (dir) {
-			//Axis X
+			/* Axis X */
 			case 0:
 				face = front ? Voxel::EAST : Voxel::WEST;
 				break;
-			//Axis Y
+			/* Axis Y */
 			case 1:
 				face = front ? Voxel::TOP: Voxel::BOTTOM;
 				break;
-			//Axis Z
+			/* Axis Z */
 			case 2:
 				face = front ? Voxel::NORTH : Voxel::SOUTH;
 				break;
 			}
 
-			//For each layer
+			/* For each layer */
 			coords[dir] = -1;
 			while (coords[dir] < _dimension[dir]) {
 
-				//Creating mask
+				/* Creating mask */
 				int n = 0;
 				for (coords[v] = 0; coords[v] < _dimension[v]; coords[v]++) {
 					for (coords[u] = 0; coords[u] < _dimension[u]; coords[u]++) {
-						const Voxel* earlier = (coords[dir] >= 0) ? &Get(coords[0], coords[1], coords[2]): NULL;
+						/* Get earlier and current layer, we must be careful to do not exceed voxel array size */
+						const Voxel* earlier = (coords[dir] >= 0) ? &Get(coords[0], coords[1], coords[2]): nullptr;
 						const Voxel* current = (coords[dir] < _dimension[dir] - 1) ?
-							&Get(coords[0] + next[0], coords[1] + next[1], coords[2] + next[2]) : NULL;
+							&Get(coords[0] + next[0], coords[1] + next[1], coords[2] + next[2]) : nullptr;
 
-						if (earlier != NULL && earlier->IsEmpty())
-							earlier = NULL;
-						if (current != NULL && current->IsEmpty())
-							current = NULL;
+						/* If object is air, store it as nullptr */
+						if (earlier != nullptr && earlier->IsEmpty())
+							earlier = nullptr;
+						if (current != nullptr && current->IsEmpty())
+							current = nullptr;
 
-						//Merge blocks
-						if (current != NULL && earlier != NULL && !earlier->IsTransparent() && !current->IsTransparent())
-							mask[n++] = NULL;
+						/* Merge blocks if it is possible */
+						if (current != nullptr && earlier != nullptr && !earlier->IsTransparent() && !current->IsTransparent())
+							mask[n++] = nullptr;
 						else
 							mask[n++] = front ? earlier : current;
-
-
 					}
 				}
 
 				coords[dir]++;
 
-				//Mask
+				/* Create layers from mask */
 				n = 0;
 				int w, h;
 				for (int i = 0; i < _dimension[v]; i++) {
 					for (int j = 0; j < _dimension[u]; ) {
 
-						if (mask[n] != NULL) {
+						if (mask[n] != nullptr) {
 							total_quads += 1;
-							//Width first
+							/* Width first, chosing different order can give different result, example: letter T, depending on order it can be meshed with 2 or 3 quads */
 							for (w = 1; j + w < _dimension[u]; ++w) {
 								int index = n + w;
-								if (mask[index] == NULL || *mask[index] != *mask[n])
+								/* If faces are different, we cannot merge them */
+								if (mask[index] == nullptr || *mask[index] != *mask[n])
 									break;
 							}
 
-							//Height
+							/* Height */
 							bool finish = false;
 							for (h = 1; i + h < _dimension[v]; h++) {
 								for (int k = 0; k < w; k++) {
 									int index = n + k + h * _dimension[u];
-									if (mask[index] == NULL || *mask[index] != *mask[n]) {
+									if (mask[index] == nullptr || *mask[index] != *mask[n]) {
 										finish = true;
 										break;
 									}
@@ -232,19 +216,23 @@ VoxelArray3D::GenerateMesh(VoxelMesh* mesh)
 							du[u] = w;
 							dv[v] = h;
 
+							/* Create points for the quad */
 							Vector3 p0 = Vector3(float(coords[0]), float(coords[1]), float(coords[2])),
 								p1 = Vector3(float(coords[0] + du[0]), float(coords[1] + du[1]), float(coords[2] + du[2])),
 								p2 = Vector3(float(coords[0] + du[0] + dv[0]), float(coords[1] + du[1] + dv[1]), float(coords[2] + du[2] + dv[2])),
 								p3 = Vector3(float(coords[0] + dv[0]), float(coords[1] + dv[1]), float(coords[2] + dv[2]));
 
+							/* Push quad into the mesh */
 							InsertQuad(mesh, *mask[n], face, front, w, h,
 									   p0, p1, p2, p3);
-							//Removing used elements
+
+							/* Removing used elements */
 							for (int l = 0; l < h; ++l) {
 								for (int k = 0; k < w; ++k) {
 									mask[n + k + l * _dimension[u]] = NULL;
 								}
 							}
+							/* Advance */
 							j += w;
 							n += w;
 						}
@@ -277,6 +265,7 @@ VoxelArray3D::InsertQuad(VoxelMesh* mesh, const Voxel& voxel, Voxel::Side side, 
 	Indices indices(6);
 	int indicesOffset = mesh->GetVertices().size();
 
+	/* Order used for culling faces */
 	if (front) {
 		indices[0] = indicesOffset + 2; indices[1] = indicesOffset + 3, indices[2] = indicesOffset;
 		indices[3] = indicesOffset; indices[4] = indicesOffset + 1, indices[5] = indicesOffset + 2;
@@ -286,12 +275,13 @@ VoxelArray3D::InsertQuad(VoxelMesh* mesh, const Voxel& voxel, Voxel::Side side, 
 		indices[3] = indicesOffset + 2; indices[4] = indicesOffset + 1, indices[5] = indicesOffset;
 	}
 
-
+	/* Calculate position. Model should be in center of the voxel array and add info about voxel size */
 	vertices[0].position = p0 * _voxelSize - _center;
 	vertices[1].position = p1 * _voxelSize - _center;
 	vertices[2].position = p2 * _voxelSize - _center;
 	vertices[3].position = p3 * _voxelSize - _center;
 
+	/* Set normals depending on the side */
 	switch (side) {
 	case Voxel::NORTH:
 		for(int i = 0; i < 4; ++i)
@@ -321,6 +311,7 @@ VoxelArray3D::InsertQuad(VoxelMesh* mesh, const Voxel& voxel, Voxel::Side side, 
 	unsigned char type = voxel.GetType();
 
 	int u, v;
+	/* Get texture location in the atlas for the given type */
 	voxel.GetAtlasLocation(side, &u, &v);
 
 
@@ -329,6 +320,7 @@ VoxelArray3D::InsertQuad(VoxelMesh* mesh, const Voxel& voxel, Voxel::Side side, 
 		vertices[i].atlasOffset[1] = v;
 	}
 
+	/* For EAST and WEST u v must be setted in different way or they will be flipped */
 	bool yAxe = side == Voxel::EAST || side == Voxel::WEST;
 
 	vertices[0].texUV.Set(0.0f, 0.0f);

@@ -29,7 +29,6 @@ Points::FillInfo(RenderInfo* info)
 	info->wired = false;
 	info->textured = false;
 	info->drawType =  GL_POINTS;
-	//info->depthEnabled = false;
 }
 
 void

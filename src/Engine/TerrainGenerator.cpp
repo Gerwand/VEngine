@@ -101,11 +101,6 @@ TerrainGenerator::GetChunk(Chunk* source)
 
 			height = (height + (rough * detail)) * _spread + _seaOffset;
 			heightMap[z][x] = (int)height;
-			/*
-			float height = _perlinGenerator.GetNoise((offset.x + x) / _smoothness, (offset.z + z) / _smoothness, 0.2f);
-			height = (height + 1) * _seaOffset / 2.0f;
-			heightMap[z][x] = (int)height;
-			*/
 		}
 	}
 

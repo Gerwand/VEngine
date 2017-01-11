@@ -3,8 +3,7 @@
 #include "Errors.h"
 #include "Assert.h"
 #include "VEMath.h"
-//#define GLEW_STATIC
-//#include <GL/glew.h>
+#include "Strcmp.h"
 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
@@ -13,7 +12,6 @@
 #include <string>
 #include <vector>
 #include <map>
-#include "Strcmp.h"
 
 namespace vengine {
 

@@ -3,7 +3,6 @@
 
 namespace vengine {
 
-
 void
 MeshedObject::OnDraw(Renderer *renderer)
 {

@@ -12,9 +12,8 @@
 namespace vengine {
 
 /**
-*	Class representating GL Programs manager for managing GlPrograms.
+*	Class representating GLPipeline manager for managing GlPipelines.
 *	It inheritances from class Singleton, so only one object of this class can exist at any time.
-*	It it highly advisable to create instance of singleton ShaderManager before using this class.
 */
 class GlPipelineManager : public Singleton<GlPipelineManager>
 {

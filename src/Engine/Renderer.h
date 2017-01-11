@@ -19,20 +19,32 @@
 
 namespace vengine {
 
+/*
+* Renderer class is used for rendering vertices binded by Renderable resources, and for managing
+* uniforms and resources. Can use multiple shaders for rendering. Currently Standard, Voxel and GUI
+*/
 class Renderer {
 public:
 	enum ShadersIndexes {
-		STANDARD,
-		VOXEL,
-		GUI 
+		STANDARD,	/* Used for rendering standart objects */
+		VOXEL,		/* used for rendering obejcts created from voxels */
+		GUI			/* Used for rendering GUI */
 	};
 
+	/* Initializes resources, prepares pipeline */
 	void Init();
+	/* Deletes all used resources */
 	void Delete();
 
+	/*
+	* Loads shader from the file and adds both: loads it to the programManager and loads it as shader of given type.
+	* Additionaly, it must specified what type of shader it is - vertex or fragment
+	*/
 	int AddShader(const std::string& name, const std::string& path, Shader::ShaderType type, ShadersIndexes destination);
+	/* Same as above function, however it loads shader from shader manager */
 	int AddShader(const std::string& name, Shader::ShaderType type, ShadersIndexes destination);
 
+	/* Set model matrix for next draw */
 	Renderer& SetModelMatrix(const Matrix4& model);
 
 	const Matrix4& GetProjectionMatrix() const;
@@ -40,22 +52,30 @@ public:
 
 	void SetClearColor(const Vector3& color);
 
+	/*
+	* Depending on how many tiles are stored in one row of the atlas texture, this should be set in normalized values.
+	* If there are 16 tiles on each rowe, it must be 1/16.
+	*/
 	void SetAtlasTileSize(float tileSize);
 
 	void SetAmbientLight(const Vector3& color, float strength);
 	void SetGlobalLightDir(const Vector3& dir);
 
+	/* Update view matrix basing on active camera */
 	void UpdateView();
+	/* Update projection matrix basing on active camera */
 	void UpdateProjection();
+
 	Renderer& SetActiveCamera(CameraFPP* camera);
 	CameraFPP* GetActiveCamera() const;
 
+	/* Set default values for next draw and clear buffers */
 	void ClearBuffers();
 
 	void DepthTestEnable();
-
 	void DepthTestDisable();
 
+	/* Draw earlier binded vertices using given shader. */
 	void Draw(const RenderInfo& info, ShadersIndexes mode);
 
 private:

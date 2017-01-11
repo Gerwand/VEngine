@@ -309,9 +309,6 @@
     <ClInclude Include="src\Resources\UI\ToggleButton.h">
       <Filter>Header Files\Resources\UI</Filter>
     </ClInclude>
-    <ClInclude Include="src\Resources\Font.h">
-      <Filter>Header Files\Resources</Filter>
-    </ClInclude>
     <ClInclude Include="src\Engine\Objects\PlayerHead.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
@@ -328,21 +325,6 @@
   <ItemGroup>
     <ClCompile Include="src\Others\glad.c">
       <Filter>Source Files\Other sources</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\OGL\GlBuffer.cpp">
-      <Filter>Header Files\Resources\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\OGL\GlPipeline.cpp">
-      <Filter>Header Files\Resources\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\OGL\GlProgram.cpp">
-      <Filter>Header Files\Resources\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\OGL\Shader.cpp">
-      <Filter>Header Files\Resources\OpenGL</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Resources\OGL\VertexArray.cpp">
-      <Filter>Header Files\Resources\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Engine\IO\Window.cpp">
       <Filter>Source Files\Engine\IO</Filter>
@@ -470,11 +452,26 @@
     <ClCompile Include="src\Resources\Managers\GameObjectManager.cpp">
       <Filter>Source Files\Resources\Managers</Filter>
     </ClCompile>
-    <ClCompile Include="src\Resources\Renderables\GUIElement.cpp">
-      <Filter>Header Files\Resources\Renderables</Filter>
-    </ClCompile>
     <ClCompile Include="src\Engine\Objects\PlayerHead.cpp">
       <Filter>Source Files\Engine\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlBuffer.cpp">
+      <Filter>Source Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlPipeline.cpp">
+      <Filter>Source Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\GlProgram.cpp">
+      <Filter>Source Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\Shader.cpp">
+      <Filter>Source Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\OGL\VertexArray.cpp">
+      <Filter>Source Files\Resources\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Resources\Renderables\GUIElement.cpp">
+      <Filter>Source Files\Resources\Renderables</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

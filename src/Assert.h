@@ -24,7 +24,6 @@ static bool assertFun(bool condition, const char* message, int line, const char*
 			switch (c) {
 				case 'e':
 				case 'E':
-					//Engine.Destroy();
 					exit(1);
 				case 'i':
 				case 'I':

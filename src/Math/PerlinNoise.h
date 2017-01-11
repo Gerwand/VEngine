@@ -13,7 +13,6 @@ public:
 
 	void SetSeed(unsigned int seed);
 
-
 	float GetNoise(float x, float y, float z);
 
 private:

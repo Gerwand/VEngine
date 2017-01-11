@@ -201,7 +201,6 @@
     <ClInclude Include="src\Math\Vector2.h" />
     <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Math\Vector4.h" />
-    <ClInclude Include="src\Resources\Font.h" />
     <ClInclude Include="src\Resources\Handle.h" />
     <ClInclude Include="src\Resources\Images\Texture.h" />
     <ClInclude Include="src\Resources\IO\File.h" />

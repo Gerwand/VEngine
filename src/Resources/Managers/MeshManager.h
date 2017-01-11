@@ -36,11 +36,7 @@ public:
 	HMesh GetMesh(const std::string& name);
 
 	HMesh AddMesh(Mesh* source);
-
-
 	void DeleteMesh(HMesh hmesh);
-
-
 	void DeleteAllMeshes();
 
 	void Draw(HMesh hmesh, Renderer* renderer);
@@ -53,7 +49,7 @@ public:
 
 private:
 	HMeshManager _meshes;	/* Manager for handles.					*/
-	NameIndex _nameIndex;				/* Map associating names with handles.	*/
+	NameIndex _nameIndex;	/* Map associating names with handles.	*/
 };
 
 /* Define for easier access to manager, like global variable. */

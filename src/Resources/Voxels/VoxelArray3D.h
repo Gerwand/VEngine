@@ -24,7 +24,6 @@ public:
 
 	const std::string& GetName() const;
 
-	//void SetTypes(unsigned char ***types);
 	void SetTypes(unsigned char *types);
 
 	void SetDimension(int x, int y, int z);

@@ -23,8 +23,6 @@ protected:
 	virtual void FillInfo(RenderInfo* info);
 };
 
-
-
 inline void
 Points::SetColor(const Vector3& color)
 {
@@ -36,7 +34,5 @@ Points::GetColor() const
 {
 	return _color;
 }
-
-
 
 }

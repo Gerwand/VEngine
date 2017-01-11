@@ -12,7 +12,6 @@
 
 namespace vengine {
 
-
 class Mesh : public Renderable 
 {
 public:

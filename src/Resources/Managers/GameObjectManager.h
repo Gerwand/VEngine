@@ -12,18 +12,13 @@ namespace vengine {
 class GameObjectManager : public Singleton<GameObjectManager>
 {
 public:
-
 	struct ObjectTag {};
-
 	typedef Handle<ObjectTag> HObject;
+
 private:
-
 	typedef HandleManager<GameObject, HObject> HObjectManager;
-
 	typedef std::map<std::string, HObject, istring_less> NameIndex;
-
 	typedef std::pair<typename NameIndex::iterator, bool> NameIndexInsertRc;
-
 
 public:
 	~GameObjectManager();
@@ -31,7 +26,6 @@ public:
 	HObject AddGameObject(GameObject* source);
 
 	void DeleteGameObject(HObject hmesh);
-
 	void DeleteAllGameObjects();
 
 	GameObject* Instantiate(HObject object);
@@ -39,7 +33,7 @@ public:
 
 private:
 	HObjectManager _objects;	/* Manager for handles.					*/
-	NameIndex _nameIndex;				/* Map associating names with handles.	*/
+	NameIndex _nameIndex;		/* Map associating names with handles.	*/
 };
 
 /* Define for easier access to manager, like global variable. */

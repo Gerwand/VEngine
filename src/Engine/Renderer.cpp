@@ -15,7 +15,7 @@ Renderer::Init()
 	_activeCamera = NULL;
 	_clearColor = { 1.0f, 1.0f, 1.0f };
 	_pipe = pipelineManager.GetPipeline("renderer" + std::to_string(++_rendererNumber));
-	//pipelineManager.BindPipeline(_pipe);
+
 	glPointSize(40.0f);
 }
 
@@ -194,7 +194,7 @@ Renderer::ClearBuffers()
 	glClearColor(_clearColor.r, _clearColor.g, _clearColor.b, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glEnable(GL_DEPTH_TEST);
-	//glEnable(GL_CULL_FACE);
+	glEnable(GL_CULL_FACE);
 	glCullFace(GL_BACK);
 	glEnable(GL_BLEND);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);

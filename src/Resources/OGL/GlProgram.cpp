@@ -183,16 +183,6 @@ GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, GLuint va
 GLint
 GlProgram::GetUniformLocation(const std::string& name, Stage stage)
 {
-	//UniformsRC rc = _uniforms.insert(std::make_pair(name, 0));
-
-	//If this element is new
-	//if (rc.second) {
-		GLint loc = glGetUniformLocation(_handle, name.c_str());
-		return loc;
-	//	assert(loc >= 0, "Unknown uniform name %s", name.c_str());
-		//rc.first->second = loc;
-	//}
-
-	//return (rc.first->second);
+	return glGetUniformLocation(_handle, name.c_str());
 }
 }

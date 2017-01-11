@@ -195,10 +195,7 @@ File::GetFileSize() const
 std::string
 File::GetStrMode(unsigned int mode)
 {
-	//In case number of argument will extend, we can keep mask argument
-	//const int mask = APPEND | READ | WRITE;
 	std::string result;
-
 
 	switch (mode) {
 	case APPEND:
