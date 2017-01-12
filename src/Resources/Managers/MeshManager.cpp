@@ -40,7 +40,7 @@ void
 MeshManager::DeleteMesh(HMesh hmesh)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle.");
+	assert(mesh != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(mesh->GetName());
 	_meshes.Release(hmesh);
@@ -59,7 +59,7 @@ void
 MeshManager::Draw(HMesh hmesh, Renderer* renderer)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle %u.", hmesh.GetHandle());
+	assert(mesh != nullptr, "Invalid handle %u.", hmesh.GetHandle());
 
 	mesh->Draw(renderer);
 }
@@ -68,7 +68,7 @@ void
 MeshManager::AddVertices(HMesh hmesh, const Vertices& vertices, const Indices& indices)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle %u.", hmesh.GetHandle());
+	assert(mesh != nullptr, "Invalid handle %u.", hmesh.GetHandle());
 
 	mesh->AddVertices(vertices, indices);
 }
@@ -77,7 +77,7 @@ void
 MeshManager::SetTextured(HMesh hmesh, bool textured)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle %u.", hmesh.GetHandle());
+	assert(mesh != nullptr, "Invalid handle %u.", hmesh.GetHandle());
 
 	mesh->SetTextured(textured);
 }
@@ -86,7 +86,7 @@ void
 MeshManager::SetTexture(HMesh hmesh, unsigned int tex)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle %u.", hmesh.GetHandle());
+	assert(mesh != nullptr, "Invalid handle %u.", hmesh.GetHandle());
 
 	mesh->SetTexture(tex);
 }
@@ -95,7 +95,7 @@ void
 MeshManager::SetTexture(HMesh hmesh, const std::string& texName)
 {
 	Mesh* mesh = _meshes.GetItem(hmesh);
-	assert(mesh != NULL, "Invalid handle %u.", hmesh.GetHandle());
+	assert(mesh != nullptr, "Invalid handle %u.", hmesh.GetHandle());
 
 	mesh->SetTexture(texName);
 }

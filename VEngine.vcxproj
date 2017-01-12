@@ -288,8 +288,6 @@
     <ClCompile Include="src\Resources\Voxels\VoxelArray3D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="fonts\Text.vert" />
-    <None Include="fonts\Text.frag" />
     <None Include="Renderer.cd" />
     <None Include="Shaders\GUI.frag" />
     <None Include="Shaders\GUI.vert" />

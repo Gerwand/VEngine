@@ -49,35 +49,43 @@
 
 namespace vengine {
 
+/*
+* VEngine - Voxel Engine is the class that manages all components and synchronizes them. 
+* It is loading all resources and all objects. 
+*/
 class VEngine : public Singleton<VEngine>
 {
 public:
-	VEngine();
+	/* Destructor is destroying all allocated resources */
 	~VEngine();
 
+	/* Initializes all resources and sets game title */
 	int Init(const std::string& gameTitle);
-	Renderer& GetRenderer();
 
+	/* Load all resources needed for the game */
 	int Load();
 
+	/* Destroy all resources */
 	void Destroy();
 
+	/* Run main loop. It will initalize objects at first. */
 	void Run();
 
 private:
-	Renderer _renderer;
-	std::string _gameTitle;
-	GameObject* _world;
-	Octree _octree;
-	Canvas* _menuGui;
+	Renderer _renderer;		/* Used for rendering objects */
+	std::string _gameTitle;	/* Title of the game */
+	GameObject* _world;		/* This object represents scene - all game objects will be attached to this */
+	Octree _octree;			/* Octree used for collision checking and sorting physical objects and chunks */
+	Canvas* _menuGui;		/* Canvas storing GUI for stering debugging options */
 
 #ifdef VE_DEBUG
-	DebugConfig _debugConfig;
+	DebugConfig _debugConfig; /* Configuration for debug drawing */
 #endif
-	ToggleButton* _octButton;
-	ToggleButton* _colButton;
-	ToggleButton* _posButton;
-	ToggleButton* _wirButton;
+
+	ToggleButton* _octButton;	/* Button for drawing octree boundaries */
+	ToggleButton* _colButton;	/* Button for drawing colliders boundaries */
+	ToggleButton* _posButton;	/* Button for drawing positions of the objects */
+	ToggleButton* _wirButton;	/* Button for drawing objects as wireframe */
 
 	void DestroyWorld();
 	void DestroyOtherManagers();
@@ -100,9 +108,11 @@ private:
 	void LoadObjects();
 	void LoadWorld();
 	
+	/* Routine that is preparing everything for drawing */
 	void Draw();
 
 	static void ErrorHandler(int error, const char* description);
+	Renderer& GetRenderer();
 };
 
 #define vEngine Singleton<VEngine>::GetSingleton()

@@ -8,6 +8,7 @@
 
 namespace vengine {
 
+/* Class representing voxel array in 3 dimensions.*/
 class VoxelArray3D {
 public:
 	VoxelArray3D();
@@ -24,27 +25,35 @@ public:
 
 	const std::string& GetName() const;
 
+	/* Set voxel array from unsigned char array. Dimension of the voxel array must be defined before calling this funtion. */
 	void SetTypes(unsigned char *types);
 
+	/* Set dimension of the Voxel Array */
 	void SetDimension(int x, int y, int z);
+
+	/* Size in world units of each voxel. */
 	void SetVoxelSize(float size);
 
 	void GetDimension(int *x, int *y, int *z) const;
 	float GetVoxelSize() const;
 
+	/* Generate mesh for the voxel array and save it into voxel mesh object. All existing vertices inside this object will be deleted */
 	void GenerateMesh(VoxelMesh* mesh);
 
+	/* Check if VoxelArray is containing only empty voxels */
 	bool IsEmpty();
+	/* Check if voxel arrah has been initialized properly and have proper size  */
 	bool IsValid() const;
 
+	/* Get center of the voxel array */
 	const Vector3& GetCenter();
 
 protected:
-	std::string _name;
-	Voxel* _voxels;
-	float _voxelSize;
-	int _numElements;
-	bool _empty;
+	std::string _name; 
+	Voxel* _voxels;		/* 1D Array containing all voxels for better cache managing */
+	float _voxelSize;	/* Size of each voxel */
+	int _numElements;	/* Total number of voxels */
+	bool _empty;		/* If we did not created any quads during generating mesh, voxel array is empty. */
 
 	union {
 		int _dimension[3];
@@ -55,8 +64,9 @@ protected:
 		};
 	};
 
-	Vector3 _center;
+	Vector3 _center; /* Center of the voxel array */
 
+	/* Insert quad with given properties into the mesh */
 	void InsertQuad(VoxelMesh* mesh, const Voxel& voxel, Voxel::Side side, bool front, int w, int h,
 					const Vector3& p1, const Vector3& p2, const Vector3& p3, const Vector3& p4);
 };

@@ -16,6 +16,7 @@ PlayerController::OnDraw(Renderer* renderer)
 {
 	PhysicalObject::OnDraw(renderer);
 
+	/* If ray hit someting, we must draw box around this voxel */
 	if (_rayInfo.CollisionFound()) {
 		Chunk* hitCh = _rayInfo.GetCollidedChunk();
 		const Vector3& coord = _rayInfo.GetVoxelCoordinates();
@@ -106,12 +107,14 @@ void
 PlayerController::AttachTool() {
 	assert(_arm != nullptr, "Arm is null!");
 
+	/* If there is something in the arm, destroy it. */
 	if (_arm->HasChild())
 		GameObject::Destroy((GameObject *)_arm->GetChild());
 
 	if (_tool == NONE)
 		return;
 
+	/* Get proper tool and attach it to the arm */
 	const std::string& name = _toolNames[_tool - 1];
 	GameObject* tool = gameObjectManager.Instantiate(name);
 	_arm->Attach(tool);
@@ -122,11 +125,13 @@ void
 PlayerController::ChangeBlocks()
 {
 	_rayInfo = RayIntersection();
+	/* Create ray depending on looking direction */
 	Ray cameraRay(_camera->GetPosition(), _camera->GetDirection(), _digDistance);
 	_octree->CheckRayCollision(&cameraRay, &_rayInfo);
 
-	static float prevTime = 0;
-	static Vector3 planes[6] = {
+
+	/* Static planes for checking where to build block */
+	static const Vector3 planes[6] = {
 		Vector3::forward,
 		Vector3::backward,
 		Vector3::right,
@@ -135,27 +140,44 @@ PlayerController::ChangeBlocks()
 		Vector3::down
 	};
 
+	/* Used to reduce speed of digging/placing to 5 times every each second */
+	static float prevTime = 0;
 	if (Input::IsHolded("Attack1")) {
+
 		if (Time::GetTime() - prevTime > 0.2f) {
+			/* Update time */
 			prevTime = Time::GetTime();
+
+			/* Initialize variables */
 			Chunk* hitCh = _rayInfo.GetCollidedChunk();
 			const Vector3& coord = _rayInfo.GetVoxelCoordinates();
 			Quaternion quat1, quat2;
 			PhysicalObject* projectile;
 			Transform transform;
+			Vector3 dir;
 			switch (_tool) {
 			case SWORD:
+				/* If there is sword in the arm, we want to throw it */
 				projectile = (PhysicalObject *)gameObjectManager.Instantiate("Projectile");
+
+				/* Sword should point in the same direction that the camera is */
 				quat1.SetRotation(-_camera->GetVertical() + 90.0f, Vector3::forward);
 				quat2.SetRotation(-_camera->GetHorizontal(), Vector3::up);
+
 				transform.SetRotation(quat2*quat1);
 				transform.SetPosition(_camera->GetPosition());
+				/* Setup transformations of the projectile */
 				projectile->SetTransform(transform);
+				/* And attach it to the world */
 				projectile->AttachTo(GetRoot());
+
+				/* Add force! */
 				projectile->AddForce(_camera->GetDirection() * 20.0f);
+				/* And add to the octree for collision checks*/
 				_octree->Add(projectile);
 				break;
 			case PICKAXE:
+				/* If we hit something, we want to delete things */
 				if (_rayInfo.CollisionFound()) {
 					hitCh->Set(coord, Voxel::NONE);
 				}
@@ -165,11 +187,17 @@ PlayerController::ChangeBlocks()
 			case STONE:
 			case GRASS:
 				if (_rayInfo.CollisionFound()) {
+					/* If we are building something, we want first to determine where to place next voxel */
 					float dots[6];
+
+					/* We are creating dot products with player distance from the voxel and all planes */
+					dir = (coord + Vector3(0.5f)) - cameraRay.GetStart();
 					for (int i = 0; i < 6; ++i) {
-						dots[i] = Vector3::Dot(cameraRay.GetDirection(), planes[i]);
+						dots[i] = Vector3::Dot(dir, planes[i]);
 					}
+
 					float minimum = 1;
+					/* We are looking for minimal dot product. It will be the closes opposite direction to player->voxel direction */
 					int ind = 0;
 					for (int i = 0; i < 6; ++i) {
 						if (dots[i] < 0.0f && dots[i] < minimum) {
@@ -180,6 +208,7 @@ PlayerController::ChangeBlocks()
 
 					Vector3 constraintLow = hitCh->GetOffset();
 					Vector3 constraintHigh = constraintLow + (float)(Chunk::dimension - 1);
+					/* We want to place block in opposite direction to player->voxel direction */
 					Vector3 newCoords = coord + planes[ind];
 					_octree->Insert(Voxel(_tool - 2), newCoords);
 					break;
@@ -192,10 +221,12 @@ PlayerController::ChangeBlocks()
 void
 PlayerController::Move()
 {
+	/* 0 Angle if at +x, so it will be front */
 	Vector3 front = Vector3::right;
-
+	/* We want to rotate front direction accordint to horizontal rotation. We must conjugate it because xz plane is different than xy */
 	Quaternion::RotatePoint(Quaternion().SetRotationY(_camera->GetHorizontal()).Conjugate(), &front);
 
+	/* Same for right vector for strafing */
 	Vector3 right = front;
 	Quaternion::RotatePoint(Quaternion().SetRotationY(-90.0f), &right);
 
@@ -215,6 +246,7 @@ PlayerController::Move()
 	if (Input::IsHolded("Left"))
 		_transform.GetPosition() += -right * _speed * run * Time::DeltaTime();
 
+	/* If player is grounded, we can jump */
 	if (_grounded) {
 		if (Input::IsHolded("Jump")) {
 			AddForce(Vector3::up * _jumpForce);

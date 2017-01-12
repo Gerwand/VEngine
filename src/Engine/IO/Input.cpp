@@ -35,14 +35,18 @@ Input::UpdateInput()
 void
 Input::Init(const char** names, const int *codes, int bindCount)
 {
+	/* Put all key names into the map */
 	for (int i = 0; i < bindCount; ++i) {
 		_keyNames.insert(std::make_pair(*names, *codes));
 		++names;
 		++codes;
 	}
+
+	/* Reserve space for text buffer, because it will be constant, so we can spare some allocations */
 	_textBuffer.reserve(MAX_BUF_LEN);
 	ClearTextBuffer();
 
+	/* Set default callbacks. */
 	glfwSetMouseButtonCallback(Window::GetGLFWWindow(), MouseButtonHandler);
 	glfwSetCursorPosCallback(Window::GetGLFWWindow(), MouseMoveHandler);
 }
@@ -70,6 +74,7 @@ Input::SetMode(InputMode mode) {
 void
 Input::TextKeyHandler(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+	/* Read special character for the buffer */
 	switch (key) {
 	case GLFW_KEY_ENTER:
 		if (action == PRESS) {

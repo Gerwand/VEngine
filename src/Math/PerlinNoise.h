@@ -6,7 +6,9 @@
 #include <algorithm>
 
 namespace vengine {
-class PerlinNoise {
+/* Generator of the perlins noise. Source: http://mrl.nyu.edu/~perlin/noise/ */
+class PerlinNoise
+{
 public:
 	PerlinNoise();
 	PerlinNoise(unsigned int seed);

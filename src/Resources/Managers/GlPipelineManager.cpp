@@ -34,7 +34,7 @@ void
 GlPipelineManager::DeletePipeline(HPipeline hpipeline)
 {
 	GlPipeline* pipeline = _pipelines.GetItem(hpipeline);
-	assert(pipeline != NULL, "Invalid handle.");
+	assert(pipeline != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(pipeline->GetName());
 	_pipelines.Release(hpipeline);
@@ -55,7 +55,7 @@ GLuint
 GlPipelineManager::GetGlHandle(HPipeline hpipeline)
 {
 	GlPipeline* pipeline = _pipelines.GetItem(hpipeline);
-	assert(pipeline != NULL, "Invalid handle.");
+	assert(pipeline != nullptr, "Invalid handle.");
 
 	return *pipeline;
 }
@@ -65,7 +65,7 @@ void
 GlPipelineManager::BindPipeline(HPipeline hpipeline)
 {
 	GlPipeline* pipeline = _pipelines.GetItem(hpipeline);
-	assert(pipeline != NULL, "Invalid handle.");
+	assert(pipeline != nullptr, "Invalid handle.");
 
 	if (_active != hpipeline || programManager.GetActive() != 0) {
 		programManager.UnbindProgram();
@@ -78,10 +78,9 @@ void
 GlPipelineManager::ChangeStage(HPipeline hpipeline, GlProgramManager::HProgram hprogram, GLbitfield stages)
 {
 	GlPipeline* pipeline = _pipelines.GetItem(hpipeline);
-	assert(pipeline != NULL, "Invalid pipeline handle.");
+	assert(pipeline != nullptr, "Invalid pipeline handle.");
 
 	GLuint programHandle = programManager.GetGlHandle(hprogram);
-	assert(programHandle != NULL, "Invalid program handle.");
 
 	pipeline->ChangeStage(programHandle, stages);
 }
@@ -90,7 +89,7 @@ GLuint
 GlPipelineManager::GetProgram(HPipeline hpipeline, GlProgram::Stage stage)
 {
 	GlPipeline* pipeline = _pipelines.GetItem(hpipeline);
-	assert(pipeline != NULL, "Invalid handle.");
+	assert(pipeline != 0, "Invalid handle.");
 
 	return pipeline->GetProgram(stage);
 }

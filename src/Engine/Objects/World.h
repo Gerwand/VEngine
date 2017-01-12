@@ -6,6 +6,7 @@
 namespace vengine {
 extern bool debugDraw;
 
+/* Simple class that is represeting world */
 class World : public GameObject
 {
 public:
@@ -16,6 +17,7 @@ public:
 
 protected:
 	
+	/* This method is used hiding and showin cursor with TAB */
 	virtual void OnUpdate();
 };
 

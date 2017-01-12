@@ -20,7 +20,6 @@ uniform bool textured;
 // Texture samplers
 uniform sampler2D tex1;
 
-
 uniform vec3 globalLightDir; 
 
 uniform vec3 ambientLightColor;
@@ -33,8 +32,9 @@ void main()
     vec4 diffuse = vec4(diff * ambientLightColor, 1.0);
 
 
-	if (wired)
+	if (wired) {
 		color = vec4(wireColor, 1.0f);
+	}
 	else if (textured) {
 		vec2 resultUV;
 		resultUV.x = (vsOut.texOffset.x * tileSize) + mod(vsOut.texCoord.x, 1.0) * (tileSize);

@@ -9,6 +9,7 @@
 
 namespace vengine {
 
+/* Class similar to other obejct managers, containing prototypes of the objects. */
 class GameObjectManager : public Singleton<GameObjectManager>
 {
 public:
@@ -23,12 +24,15 @@ private:
 public:
 	~GameObjectManager();
 
+	/* Add given object to the gameObjectManager. Returns handle for the object */
 	HObject AddGameObject(GameObject* source);
 
-	void DeleteGameObject(HObject hmesh);
+	void DeleteGameObject(HObject hobject);
 	void DeleteAllGameObjects();
 
-	GameObject* Instantiate(HObject object);
+	/* Instantiate object with given handle */
+	GameObject* Instantiate(HObject hobject);
+	/* Instantiate object with given name */
 	GameObject* Instantiate(const std::string& name);
 
 private:

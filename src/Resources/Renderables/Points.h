@@ -4,14 +4,16 @@
 
 namespace vengine {
 
+/* Simple renderable class representing points */
 class Points : public Renderable
 {
 public:
 	Points();
 
-
+	/* Set color of the all points that will be added after this call */
 	void SetColor(const Vector3& color);
 	const Vector3& GetColor() const;
+	
 	void AddPoint(const Vector3& point);
 	void AddPoint(const Vector3& point, const Vector3& color);
 

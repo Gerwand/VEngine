@@ -2,9 +2,11 @@
 
 #include "Button.h"
 
-namespace vengine
+namespace vengine {
+
+/* Button that will be toggling one value on and off every click */
+class ToggleButton : public Button
 {
-class ToggleButton : public Button {
 public:
 	ToggleButton();
 	ToggleButton(const Vector2& position, const Vector2& size, const Vector4& color = Vector4(0.0f));

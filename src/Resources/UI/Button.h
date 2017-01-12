@@ -4,6 +4,7 @@
 
 namespace vengine {
 
+/* Simple class representing button. Can perform some actions when clicked. */
 class Button
 {
 public:
@@ -14,12 +15,15 @@ public:
 
 	void SetPosition(const Vector2& position);
 	void SetSize(const Vector2& size);
+
 	const Vector2& GetPosition();
 	const Vector2& GetSize();
 	const Vector4& GetColor();
 
+	/* Check if point is inside the button */
 	bool IsInside(const Vector2& point);
 
+	/* Do something when clicked. Will be called by canvas class */
 	virtual void OnClick() { std::cout << "Click!" << std::endl; };
 private:
 	std::string _description;

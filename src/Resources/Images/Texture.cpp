@@ -39,6 +39,8 @@ int
 Texture::LoadTexture(const std::string& path)
 {
 	assert(IsValid(), "Cannot load texture for unitialized handle");
+
+	/* Use SOIL2 for loading textures */
 	unsigned int flags = SOIL_FLAG_INVERT_Y |
 		SOIL_FLAG_NTSC_SAFE_RGB | SOIL_FLAG_MIPMAPS |
 		SOIL_FLAG_COMPRESS_TO_DXT | SOIL_FLAG_TEXTURE_REPEATS;
@@ -57,6 +59,7 @@ Texture::Bind(int unit)
 
 	glActiveTexture(texID);
 	glBindTexture(GL_TEXTURE_2D, _handle);
+	/* Nearest filer will be better for voxel game, less blurry */
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 }

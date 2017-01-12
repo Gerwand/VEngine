@@ -80,7 +80,7 @@ HandleManager<DATA, HANDLE>::~HandleManager()
 {
 	for (DataVector::iterator i = _dataVec.begin(); i != _dataVec.end(); ++i) {
 		DATA* item = *i;
-		if (item != NULL)
+		if (item != nullptr)
 			delete item;
 	}
 }
@@ -161,7 +161,7 @@ HandleManager<DATA, HANDLE>::Release(HANDLE handle)
 
 	// ok remove it - tag as unused and add to free list
 	delete _dataVec[index];
-	_dataVec[index] = NULL;
+	_dataVec[index] = nullptr;
 	_magicVec[index] = HANDLE::EMPTY_VALUE;
 	_freeVec.push_back(index);
 }
@@ -175,7 +175,7 @@ DATA*
 HandleManager<DATA, HANDLE>::GetItem(HANDLE handle)
 {
 	if (handle.IsEmpty())
-		return NULL;
+		return nullptr;
 
 	unsigned int index = handle.GetIndex();
 	assert((index < _dataVec.size()) && (_magicVec[index] == handle.GetMagicNumber()),

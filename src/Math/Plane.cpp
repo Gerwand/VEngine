@@ -63,12 +63,6 @@ Plane::operator=(const Plane& other)
 	return *this;
 }
 
-bool 
-Plane::IsOnPlane(const Vector3& point)
-{
-	return between(Distance(point), -0.00001f, 0.00001f);
-}
-
 float 
 Plane::Distance(const Vector3& point) const
 {
@@ -79,7 +73,7 @@ Vector3
 Plane::RayIntersection(const Vector3& start, const Vector3& direction)
 {
 	assert(around(direction.MagnitudeFast(), 1.0f, 0.001f), "Direction vector of the plane must be normalized.");
-	//Check if ray is pararell
+	/* Check if ray is pararell */
 	float a = Vector3::Dot(_normal, direction);
 	if (between(a, -0.00001f, 0.00001f))
 		return start;

@@ -44,7 +44,7 @@ public:
 	/* Same as above function, however it loads shader from shader manager */
 	int AddShader(const std::string& name, Shader::ShaderType type, ShadersIndexes destination);
 
-	/* Set model matrix for next draw */
+	/* Set model matrix for next draw for STANDARD and VOXEL shaders */
 	Renderer& SetModelMatrix(const Matrix4& model);
 
 	const Matrix4& GetProjectionMatrix() const;
@@ -54,16 +54,18 @@ public:
 
 	/*
 	* Depending on how many tiles are stored in one row of the atlas texture, this should be set in normalized values.
-	* If there are 16 tiles on each rowe, it must be 1/16.
+	* If there are 16 tiles on each rowe, it must be 1/16. It is set in Voxel shader.
 	*/
 	void SetAtlasTileSize(float tileSize);
 
+	/* Set ambient light color and strength. Can be used with direction for stering night and day */
 	void SetAmbientLight(const Vector3& color, float strength);
+	/* Set global light direction */
 	void SetGlobalLightDir(const Vector3& dir);
 
-	/* Update view matrix basing on active camera */
+	/* Update view matrix basing on active camera for STANDARD and VOXEL shaders */
 	void UpdateView();
-	/* Update projection matrix basing on active camera */
+	/* Update projection matrix basing on active camera for all shaders */
 	void UpdateProjection();
 
 	Renderer& SetActiveCamera(CameraFPP* camera);
@@ -79,41 +81,57 @@ public:
 	void Draw(const RenderInfo& info, ShadersIndexes mode);
 
 private:
+	/* Most of the variables are used for remembering current state of the uniforms to reduce some cost of sending data to GPU */
+
+	/* Used for indicating in which mode the shader is drawing */
 	enum ShadersModes {
-		TEXTURED = 0x01u,
-		WIRED = 0x02u
+		TEXTURED = 0x01u,	/* Solid or texture mode */
+		WIRED = 0x02u		/* Wired mode */
 	};
 
-	static const int _shadersNumber = 3;
-	static int _rendererNumber;
+	static const int _shadersNumber = 3;	/* Number of types in class */
+	static int _rendererNumber;				/* Indicates number of renderers currently active. However, class has not been optimized
+											 * for using multiple renderers if they are sharing shaders!  It can cause unpredictable results. */
 
-	unsigned int _pipe;
+	unsigned int _pipe;		/* Handle for pipeline object in pipelineManager */
 
-	unsigned int _shaderModes[_shadersNumber];
-	unsigned int _vertShaders[_shadersNumber];
-	unsigned int _fragShaders[_shadersNumber];
+	unsigned int _shaderModes[_shadersNumber]; /* Keeps information about current mode of the binded shader*/
+	unsigned int _vertShaders[_shadersNumber]; /* Keeps handles for the vertex shaders */
+	unsigned int _fragShaders[_shadersNumber]; /* Keeps handles for the fragment shaders */
 
-	CameraFPP* _activeCamera;
+	CameraFPP* _activeCamera; /* Pointer to the active camera for rendering */
 
 
-	Vector3 _lightDir;
-	Vector3 _ambColor;
-	float _ambStrength;
+	Vector3 _lightDir;	/* Last used global light direction */
+	Vector3 _ambColor;	/* Last used ambient light color */
+	float _ambStrength; /* Last used ambient light strength */
 
-	Vector3 _clearColor;
-	Vector3 _wireColor;
-	unsigned int _tex;
+	Vector3 _clearColor;	/* Buffer will be cleared with this color every frame */
+	Vector3 _wireColor;		/* Color of the drawn wires */
+	unsigned int _tex;		/* Currently binded texture */
 
-	float _tileSize;
+	float _tileSize;	/* Atlas tile size in normalized UV coordinates */
 
-	Matrix4 _modelMatrix;
-	Matrix4 _viewMatrix;
-	Matrix4 _projMatrix;
+	Matrix4 _modelMatrix;	/* Last used model matrix */
+	Matrix4 _viewMatrix;	/* Last used view matrix */
+	Matrix4 _projMatrix;	/* Last used projection matrix */
 
+	/*
+	* Loads shader from file, compiles its, attaches to new program and links. It will be saved in programManager with given name
+	*
+	* @return error code - 0 if succeed
+	*/
 	int PrepareShader(const std::string& name, const std::string& path, Shader::ShaderType type);
+
+	/* This functions should not be called by the developer. Texture and wire color should be passed through RenderInfo structure. */
+	/* Set color of the wires */
 	void SetWireColor(const Vector3& color);
+	/* Set active texture handle */
 	void SetTexture(unsigned int tex);
+
+	/* Check if shader is working in given mode (textured or wired) */
 	inline bool IsEnabled(ShadersModes mode, ShadersIndexes index);
+	/* Toggle state on/off */
 	inline void ToggleState(ShadersModes mode, ShadersIndexes index);
 
 };

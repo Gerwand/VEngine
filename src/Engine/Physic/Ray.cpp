@@ -52,6 +52,7 @@ Ray::Shoot()
 	if (!HasEnded()) {
 		_shootingParam += _accuracy;
 		
+		/* Clamp shooting param if exceeded */
 		if (HasEnded())
 			_shootingParam = _length;
 
@@ -66,6 +67,7 @@ Ray::Advance(float t)
 	if (!HasEnded()) {
 		_shootingParam += t;
 
+		/* Clamp shooting param if exceeded */
 		if (HasEnded())
 			_shootingParam = _length;
 

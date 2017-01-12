@@ -25,7 +25,7 @@ void
 GameObjectManager::DeleteGameObject(HObject hobject)
 {
 	GameObject* object = _objects.GetItem(hobject);
-	assert(object != NULL, "Invalid handle.");
+	assert(object != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(object->GetRawName());
 	_objects.Release(hobject);
@@ -45,7 +45,7 @@ GameObject*
 GameObjectManager::Instantiate(HObject hobject)
 {
 	GameObject* object = _objects.GetItem(hobject);
-	assert(object != NULL, "Invalid handle.");
+	assert(object != nullptr, "Invalid handle.");
 
 	return GameObject::Instantiate(object);
 }
@@ -54,7 +54,7 @@ GameObject*
 GameObjectManager::Instantiate(const std::string& name)
 {
 	GameObject* object = _objects.GetItem(_nameIndex[name]);
-	assert(object != NULL, "Invalid handle.");
+	assert(object != nullptr, "Invalid handle.");
 
 	return GameObject::Instantiate(object);
 }

@@ -10,7 +10,7 @@
 
 namespace vengine {
 
-
+/* Game manager used for storing and managing objects created from voxels. */
 class VoxelArrayManager : public Singleton<VoxelArrayManager>
 {
 private:

@@ -247,6 +247,8 @@ VoxelArray3D::GenerateMesh(VoxelMesh* mesh)
 			delete[] mask;
 		}
 	}
+
+	/* If did not added any quads, indicate that this voxel array is empty */
 	if (total_quads == 0)
 		_empty = true;
 }

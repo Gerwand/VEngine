@@ -590,10 +590,11 @@ Octree::Insert(Chunk* chunk, VoxelMesh* chunkMesh)
 				break;
 			}
 		}
-
+#ifdef VE_DEBUG
 		/* If it did not fit in any child, there had to be an error */
 		if (!fits)
 			assert(false, "Chunk out of bound of the octree");
+#endif
 	}
 	else if (IsRoot()) {
 		/* Inform about chunk being outside game range, and as for now do nothing */
@@ -1288,10 +1289,11 @@ Octree::Insert(const Voxel& voxel, Vector3 coordinates)
 				break;
 			}
 		}
-
+#ifdef VE_DEBUG
 		/* If it did not fit in any child, there had to be an error */
 		if (!fits)
 			assert(false, "Vox out of bound of the octree");
+#endif
 	}
 	else if (IsRoot()) {
 		assert(false, "Vox out of playable area");

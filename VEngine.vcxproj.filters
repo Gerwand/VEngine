@@ -135,9 +135,6 @@
     <ClInclude Include="src\Engine\Vertex.h">
       <Filter>Header Files\Engine</Filter>
     </ClInclude>
-    <ClInclude Include="src\Engine\Objects\World.h">
-      <Filter>Header Files\Engine</Filter>
-    </ClInclude>
     <ClInclude Include="src\Math\Frustum.h">
       <Filter>Header Files\Math</Filter>
     </ClInclude>
@@ -321,6 +318,9 @@
     <ClInclude Include="src\Engine\Objects\Projectile.h">
       <Filter>Header Files\Engine\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="src\Engine\Objects\World.h">
+      <Filter>Header Files\Engine\Objects</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Others\glad.c">
@@ -494,12 +494,6 @@
       <Filter>Source Files\Shaders</Filter>
     </None>
     <None Include="Shaders\GUI.vert">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="fonts\Text.frag">
-      <Filter>Source Files\Shaders</Filter>
-    </None>
-    <None Include="fonts\Text.vert">
       <Filter>Source Files\Shaders</Filter>
     </None>
   </ItemGroup>

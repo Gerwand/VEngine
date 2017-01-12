@@ -118,71 +118,72 @@ GlProgram::SetSeparable(bool isSeparable)
 
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, const Matrix4& matrix)
+GlProgram::SetUniform(const std::string& name, const Matrix4& matrix)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniformMatrix4fv(_handle, location, 1, GL_FALSE, matrix);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, const Vector2& vector)
+GlProgram::SetUniform(const std::string& name, const Vector2& vector)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform2fv(_handle, location, 1, vector);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, const Vector3& vector)
+GlProgram::SetUniform(const std::string& name, const Vector3& vector)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform3fv(_handle, location, 1, vector);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, const Vector4& vector)
+GlProgram::SetUniform(const std::string& name, const Vector4& vector)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform4fv(_handle, location, 1, vector);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, GLfloat value)
+GlProgram::SetUniform(const std::string& name, GLfloat value)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform1f(_handle, location, value);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, GLint value)
+GlProgram::SetUniform(const std::string& name, GLint value)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform1i(_handle, location, value);
 }
 
 void
-GlProgram::SetUniform(const std::string& name, GlProgram::Stage stage, GLuint value)
+GlProgram::SetUniform(const std::string& name, GLuint value)
 {
-	assert(IsValid(), "Cannot set matrix for unitiliazed uniform");
-	GLint location = GetUniformLocation(name, stage);
+	assert(IsValid(), "Cannot set value for unitiliazed uniform");
+	GLint location = GetUniformLocation(name);
 
 	glProgramUniform1ui(_handle, location, value);
 }
 
 GLint
-GlProgram::GetUniformLocation(const std::string& name, Stage stage)
+GlProgram::GetUniformLocation(const std::string& name)
 {
-	return glGetUniformLocation(_handle, name.c_str());
+	 GLint loc = glGetUniformLocation(_handle, name.c_str());
+	 return loc;
 }
 }

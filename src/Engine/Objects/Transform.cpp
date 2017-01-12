@@ -27,16 +27,19 @@ Transform::GetModelMatrix()
 void 
 Transform::UpdateMatrix()
 {
+	/* Check if anything changed */
 	bool changed = false;
 	if (_lastPosition != _position || _lastScale != _scale || _lastRotation != _rotation)
 		changed = true;
 
+	/* If changed, update local matrix */
 	if (changed) {
 		_localModelMatrix = Matrix4::GetTranslate(_position) * _rotation * Matrix4::GetScale(_scale);
 		_recalculated = true;
 	}
 
 	if (_parent) {
+		/* If parent or local matrix changed, we must recalculate global model matrix */
 		if (_parent->_recalculated || changed) {
 			_modelMatrix = _parent->_modelMatrix * _localModelMatrix;
 			_recalculated = true;

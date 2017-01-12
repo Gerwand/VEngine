@@ -49,7 +49,7 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 			_velocity.y =  -_velocity.y * _bounciness;
 			newPos.y = last.y;
 		}
-
+		/* If collision is on north and we are going north, collision could happen. Same for others. */
 		if (collision.HasCollidedWithTerrain(CollisionInfo::NORTH ) && dir.z < 0.0) {
 			_velocity.z =  -_velocity.z * _bounciness;
 			newPos.z = last.z;
@@ -69,16 +69,19 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 		}
 
 		_grounded = false;
+		/* If we hit the ground, object is grounded */
 		if (collision.HasCollidedWithTerrain(CollisionInfo::BOTTOM))
 			_grounded = true;
 	}
 
+	/* Detect collisions with objects */
 	if (collision.HasCollidedWithObject()) {
 		PhysicalObject* other = (PhysicalObject *)collision.GetOtherObject();
 		assert(other != nullptr, "Other object is null");
 
 		const Vector3 relPos = other->GetCollider().GetPosition() - _collider.GetPosition();
 
+		/* If direction pf tjhe move and position have the same signs */
 		if (dir.x * relPos.x >= 0.0f) {
 			newPos.x = last.x;
 			_velocity.x = 0.0f;
@@ -93,14 +96,16 @@ PhysicalObject::OnCollision(const CollisionInfo& collision)
 		}
 	}
 	
-	
+	/* Revert position if any proper collision happened */
 	_transform.SetPosition(newPos);
+	/* Update collider position */
 	_collider.SetPosition(_transform.GetWorldPosition());
 }
 
 void
 PhysicalObject::OnPhysic()
 {
+	/* Only apply physic for non static objects */
 	if (!IsStatic()) {
 		UpdatePhysic();
 		if (HasChanged()) {
@@ -118,15 +123,18 @@ PhysicalObject::AddForce(const Vector3& force)
 void
 PhysicalObject::UpdatePhysic()
 {
+	/* Add gravity if objects is not grounded */
 	if(!_grounded)
 		_acceleration += _gravityForce * _mass * Time::DeltaTime();
 	_velocity += _acceleration;
 
+	/* Add friction for grounded objects */
 	if (_grounded) {
 		Vector3 friction = _terrainFriction * Vector3(-_velocity.x * _mass * _gravityForce.y, 0.0f, -_velocity.z * _mass * _gravityForce.y);
 		_velocity += friction;
 	}
 
+	/* Clear acceleration */
 	_acceleration = Vector3::zeroes;
 
 	_transform.GetPosition() += _velocity * Time::DeltaTime();
@@ -136,10 +144,12 @@ PhysicalObject::UpdatePhysic()
 void 
 PhysicalObject::OnDraw(Renderer* renderer) 
 {
+	/* Draw mesh */
 	MeshedObject::OnDraw(renderer);
 
 #ifdef VE_DEBUG
 	if (debugConfig->drawColliders) {
+		/* And draw collider in naive way */
 		Lines boxes;
 		std::vector<Vector3> lines;
 		boxes.Init();

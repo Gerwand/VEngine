@@ -18,6 +18,7 @@ Time::Update()
 float
 Time::DeltaTime()
 {
+	/* We want to clamp delta time if it is aboce 1 second to prevent physic bugs */
 	return _deltaTime > 1.0f ? 1.0f : _deltaTime;
 }
 

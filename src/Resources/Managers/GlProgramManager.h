@@ -68,13 +68,14 @@ public:
 	*/
 	void DeleteAllPrograms();
 
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, const Matrix4& matrix);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, const Vector2& vector);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, const Vector3& vector);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, const Vector4& vector);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, GLfloat value);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, GLint value);
-	void SetUniform(HProgram hprogram, const std::string& name, GlProgram::Stage stage, GLuint value);
+	/* Set uniforms of the program */
+	void SetUniform(HProgram hprogram, const std::string& name, const Matrix4& matrix);
+	void SetUniform(HProgram hprogram, const std::string& name, const Vector2& vector);
+	void SetUniform(HProgram hprogram, const std::string& name, const Vector3& vector);
+	void SetUniform(HProgram hprogram, const std::string& name, const Vector4& vector);
+	void SetUniform(HProgram hprogram, const std::string& name, GLfloat value);
+	void SetUniform(HProgram hprogram, const std::string& name, GLint value);
+	void SetUniform(HProgram hprogram, const std::string& name, GLuint value);
 
 	/**
 	*	Attach given shader to the program. Use it before linking.

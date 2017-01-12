@@ -2,7 +2,6 @@
 
 namespace vengine {
 
-VEngine::VEngine() {}
 VEngine::~VEngine()
 {
 	Destroy();
@@ -134,7 +133,6 @@ VEngine::InitGLFWLibrary()
 int
 VEngine::InitWindow()
 {
-	//Read resolution from config file
 	Window::Init(1366, 768, _gameTitle.c_str());
 	if (!Window::CreateWindowed())
 		return VE_FAULT;
@@ -557,17 +555,23 @@ VEngine::GetRenderer()
 void
 VEngine::Run()
 {
+	/* Initialize objects */
 	_world->Init();
+
+	/* Initialize octree */
 	_octree.UpdateTree();
 	_octree.Update();
 
 	Time::Update();
+
+	/* Main loop */
 	while (Window::IsOpened()) {
 		Time::Update();
 		Input::UpdateMouseOffset();
 
 #ifdef VE_DEBUG
 		if (Input::GetCursorMode()) {
+			/* Update menu options only if cursor is active */
 			if (_menuGui->Update()) {
 				_debugConfig.drawOctree = _octButton->GetValue();
 				_debugConfig.drawColliders = _colButton->GetValue();
@@ -581,13 +585,19 @@ VEngine::Run()
 		_world->Physic();
 		_octree.UpdateTree();
 		_octree.Update();
-
+		
+		/* Late update is done after update, physic and collision checks */
 		_world->LateUpdate();
 
+		/* Destroy are destroyed object */
 		GameObject::HandleDestroyed();
 
+		/* Prepare for drawing */
 		Draw();
+
+		/* Draw chunks */
 		_octree.Draw(&_renderer);
+		/* Draw world */
 		_world->Draw(&_renderer);
 		_world->LateDraw(&_renderer);
 
@@ -595,6 +605,7 @@ VEngine::Run()
 		if (_debugConfig.drawOctree) {
 			_octree.DrawDebug(&_renderer);
 		}
+		/* Draw menu only if cursor is active */
 		if(Input::GetCursorMode())
 			_menuGui->Draw(&_renderer);
 #endif	
@@ -603,9 +614,11 @@ VEngine::Run()
 		Window::HandleWindow();
 
 #ifdef VE_DEBUG
+		/* Fps and position in console */
 		std::cout << "\rFPS: " << 1.0f / Time::DeltaTime() << "\tPosition:" << _renderer.GetActiveCamera()->GetPosition();
 #endif
 
+		/* If ESC is pressed, close */
 		if (Input::IsPressed("Exit")) {
 			Window::Close();
 		}

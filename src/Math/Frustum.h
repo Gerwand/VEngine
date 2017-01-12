@@ -5,9 +5,11 @@
 
 namespace vengine {
 
+/* Class represeintg frustu with planes */
 class Frustum
 {
 public:
+	/* Index of the planes for more convinient use of the array */
 	enum PlaneIndex {
 		PLANE_NEAR,
 		PLANE_FAR,
@@ -18,9 +20,13 @@ public:
 		NUM_OF_PLANES
 	};
 
+	/* Create frustum storing given view options */
 	Frustum(float fov, float aspect, float nearDist, float farDist);
 
+	/* Create frustum planes from projection and model matrix */
 	void Set(const Matrix4& mat);
+
+	/* Set culling of the frustum */
 	void SetCulling(float fov, float aspect, float nearDist, float farDist);
 
 	void SetFov(float fov);

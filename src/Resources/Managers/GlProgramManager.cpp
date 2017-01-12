@@ -34,7 +34,7 @@ void
 GlProgramManager::DeleteProgram(HProgram hprogram)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(program->GetName());
 	_programs.Release(hprogram);
@@ -57,7 +57,7 @@ int
 GlProgramManager::LinkProgram(HProgram hprogram)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	return program->Link();
 }
@@ -105,10 +105,9 @@ void
 GlProgramManager::AttachShader(HProgram hprogram, ShaderManager::HShader hshader)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid program handle.");
+	assert(program != nullptr, "Invalid program handle.");
 
 	GLuint shaderHandle = shaderManager.GetGlHandle(hshader);
-	assert(shaderHandle != NULL, "Invalid shader handle.");
 
 	program->AttachShader(shaderHandle);
 }
@@ -117,7 +116,7 @@ GLuint
 GlProgramManager::GetGlHandle(HProgram hprogram)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	return *program;
 }
@@ -126,7 +125,7 @@ void
 GlProgramManager::SetProgramSeparable(HProgram hprogram, bool separable)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	program->SetSeparable(separable);
 }
@@ -135,7 +134,7 @@ int
 GlProgramManager::IsSeparable(HProgram hprogram)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	return program->IsSeparable();
 }
@@ -150,7 +149,7 @@ void
 GlProgramManager::BindProgram(HProgram hprogram)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
 	if (_active != hprogram) {
 		program->Bind();
@@ -165,79 +164,72 @@ GlProgramManager::UnbindProgram()
 		return;
 
 	GlProgram* program = _programs.GetItem(_active);
-	assert(program != NULL, "Invalid handle");
+	assert(program != nullptr, "Invalid handle");
 
 	_active = 0;
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-									GlProgram::Stage stage,const Matrix4& matrix)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, const Matrix4& matrix)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, matrix);
+	program->SetUniform(name, matrix);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							 GlProgram::Stage stage, const Vector2& vector)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, const Vector2& vector)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, vector);
+	program->SetUniform(name, vector);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							 GlProgram::Stage stage, const Vector3& vector)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, const Vector3& vector)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, vector);
+	program->SetUniform(name,vector);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							 GlProgram::Stage stage, const Vector4& vector)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, const Vector4& vector)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, vector);
+	program->SetUniform(name, vector);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							  GlProgram::Stage stage, GLfloat value)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, GLfloat value)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, value);
+	program->SetUniform(name, value);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							  GlProgram::Stage stage, GLint value)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, GLint value)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, value);
+	program->SetUniform(name, value);
 }
 
 void
-GlProgramManager::SetUniform(HProgram hprogram, const std::string& name,
-							  GlProgram::Stage stage, GLuint value)
+GlProgramManager::SetUniform(HProgram hprogram, const std::string& name, GLuint value)
 {
 	GlProgram* program = _programs.GetItem(hprogram);
-	assert(program != NULL, "Invalid handle.");
+	assert(program != nullptr, "Invalid handle.");
 
-	program->SetUniform(name, stage, value);
+	program->SetUniform(name, value);
 }
 
 

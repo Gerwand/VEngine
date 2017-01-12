@@ -69,12 +69,15 @@ TerrainGenerator::GetVoxel(int x, int y, int z)
 	float detail = _perlinGenerator.GetNoise(x / _details, z / _details, 0.3f);
 	height = (height + (rough * detail)) * _spread + _seaOffset;
 
-
+	/* How deep rocks will appear using normal distribution */
 	int rocks = (int)_distribution(_generator);
 
+	/* If we are below air level*/
 	if (y < height) {
+		/* If we are below rock level, draw rock*/
 		if (y < height - 1 - rocks)
 			return Voxel(Voxel::STONE);
+		/* If we are at the top of the solid voxels, draw grass */
 		else if (y == height - 1)
 			return Voxel(Voxel::GRASS);
 		else
@@ -92,6 +95,7 @@ TerrainGenerator::GetChunk(Chunk* source)
 	const Vector3& offset = source->GetOffset();
 	int added = 0;
 
+	/* First, generate height map for whole chunk */
 	int heightMap[size][size];
 	for (int z = 0; z < size; ++z) {
 		for (int x = 0; x < size; ++x) {
@@ -104,23 +108,32 @@ TerrainGenerator::GetChunk(Chunk* source)
 		}
 	}
 
+	/* Now, for each voxel in the chunk we must check: */
 	for (int z = 0; z < size; ++z) {
 		for (int x = 0; x < size; ++x) {
 			int height = heightMap[z][x];
 
 			for (int y = 0; y < size; ++y) {
 				int index = x + size * (y + z * size);
+				/* Generate rock level from normal distribution */
 				int rocks = (int)_distribution(_generator);
 
+				/* Calculate height of the chunk in world coordinates */
 				int chunkHeight = y + (int)offset.y;
 
+				/* And similar like for single voxel: if below air level */
 				if (chunkHeight < height) {
+					/* And if below rock level draw stone */
 					if (chunkHeight < height - 1 - rocks)
 						source->SetLocal(x, y, z, Voxel::STONE);
+					/* else if at top, draw grass*/
 					else if (chunkHeight == height - 1)
 						source->SetLocal(x, y, z, Voxel::GRASS);
+					/* else just draw dirt*/
 					else
 						source->SetLocal(x, y, z, Voxel::DIRT);
+
+					/* Indicate that we added one voxel */
 					++added;
 				}
 				else {
@@ -131,6 +144,7 @@ TerrainGenerator::GetChunk(Chunk* source)
 		}
 	}
 
+	/* If there were no voxels added, we want to indicate that */
 	return (added != 0);
 }
 

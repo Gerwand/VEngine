@@ -36,13 +36,13 @@ public:
 	void AttachShader(GLuint shader);
 	void SetSeparable(bool isSeparable);
 
-	void SetUniform(const std::string& name, GlProgram::Stage stage, const Matrix4& matrix);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, const Vector2& value);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, const Vector3& value);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, const Vector4& value);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, GLfloat value);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, GLint value);
-	void SetUniform(const std::string& name, GlProgram::Stage stage, GLuint value);
+	void SetUniform(const std::string& name, const Matrix4& matrix);
+	void SetUniform(const std::string& name, const Vector2& value);
+	void SetUniform(const std::string& name, const Vector3& value);
+	void SetUniform(const std::string& name, const Vector4& value);
+	void SetUniform(const std::string& name, GLfloat value);
+	void SetUniform(const std::string& name, GLint value);
+	void SetUniform(const std::string& name, GLuint value);
 
 	void Bind();
 
@@ -67,7 +67,7 @@ private:
 	std::vector<char> _linkLog;		/* Linking log.						*/
 	Uniforms _uniforms;
 
-	GLint GetUniformLocation(const std::string& name, GlProgram::Stage stage);
+	GLint GetUniformLocation(const std::string& name);
 };
 
 }

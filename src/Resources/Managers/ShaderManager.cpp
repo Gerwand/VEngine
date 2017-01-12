@@ -44,7 +44,7 @@ void
 ShaderManager::DeleteShader(HShader hshader)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(shader->GetName());
 	_shaders.Release(hshader);
@@ -63,7 +63,7 @@ int
 ShaderManager::CompileShader(HShader hshader)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	return shader->Compile();
 }
@@ -88,7 +88,7 @@ const char*
 ShaderManager::GetCompileLog(HShader hshader)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	return shader->GetCompileLog();
 }
@@ -111,7 +111,7 @@ void
 ShaderManager::SetSourceCode(HShader hshader, const std::string& source)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	shader->SetSource(source);
 }
@@ -120,7 +120,7 @@ void
 ShaderManager::SetType(HShader hshader, Shader::ShaderType type)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	shader->SetType(type);
 }
@@ -131,7 +131,7 @@ ShaderManager::GetType(HShader hshader)
 {
 
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	return shader->GetType();
 }
@@ -140,7 +140,7 @@ int
 ShaderManager::LoadShaderDataFromFile(HShader hshader, const std::string& fileName)
 {
 	int error = 0;
-	char *buff = NULL;
+	char *buff = nullptr;
 	ShaderFileManager::HFile hfile = shaderFileManager.GetFileRead(fileName);
 	
 	error = shaderFileManager.ReadData(hfile, (void **)&buff);
@@ -150,7 +150,7 @@ ShaderManager::LoadShaderDataFromFile(HShader hshader, const std::string& fileNa
 	}
 
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 	shader->SetSource(buff);
 
 	delete[] buff;
@@ -161,7 +161,7 @@ GLuint
 ShaderManager::GetGlHandle(HShader hshader)
 {
 	Shader* shader = _shaders.GetItem(hshader);
-	assert(shader != NULL, "Invalid handle.");
+	assert(shader != nullptr, "Invalid handle.");
 
 	return *shader;
 }

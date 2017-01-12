@@ -21,7 +21,6 @@ TextureManager::GetTexture(const std::string& name)
 	//If this element is new
 	if (rc.second) {
 		Texture* tex = _textures.Acquire(rc.first->second);
-		//if (shader->Init(name, type)) {
 		if (tex->Init(name)) {
 			DeleteTexture(rc.first->second);
 			rc.first->second = HTexture();
@@ -35,7 +34,7 @@ void
 TextureManager::DeleteTexture(HTexture htex)
 {
 	Texture* tex = _textures.GetItem(htex);
-	assert(tex != NULL, "Invalid handle.");
+	assert(tex != nullptr, "Invalid handle.");
 
 	_nameIndex.erase(tex->GetName());
 	_textures.Release(htex);
@@ -54,7 +53,7 @@ int
 TextureManager::LoadTexture(HTexture htex, const std::string& fileName)
 {
 	Texture* tex = _textures.GetItem(htex);
-	assert(tex != NULL, "Invalid handle.");
+	assert(tex != nullptr, "Invalid handle.");
 
 	return tex->LoadTexture(fileName);
 }
@@ -63,7 +62,7 @@ GLuint
 TextureManager::GetGlHandle(HTexture htex)
 {
 	Texture* tex = _textures.GetItem(htex);
-	assert(tex != NULL, "Invalid handle.");
+	assert(tex != nullptr, "Invalid handle.");
 
 	return *tex;
 }
@@ -72,7 +71,7 @@ void
 TextureManager::BindTexture(HTexture htex, int unit)
 {
 	Texture* tex = _textures.GetItem(htex);
-	assert(tex != NULL, "Invalid handle.");
+	assert(tex != nullptr, "Invalid handle.");
 
 	if (_activeTex[unit] != htex) {
 		_activeTex[unit] = htex;

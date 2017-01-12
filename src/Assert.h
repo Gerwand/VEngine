@@ -11,6 +11,7 @@
 #include <conio.h>
 #include <stdlib.h>
 
+/* Function used for assertions handling */
 static bool assertFun(bool condition, const char* message, int line, const char* function, const char* file, bool *ignore) 
 {
 	if (!condition) {
@@ -42,17 +43,20 @@ static bool assertFun(bool condition, const char* message, int line, const char*
 	return false;
 }
 
-
 #define DEBUG_INFO(fmt, ...) printf("%s\n" fmt"\n", __FUNCTION__, ##__VA_ARGS__)
+
+/* It will only work if it was compiled in debug mode */
 #ifdef _DEBUG
 #define DEBUG_LINE __asm {int 3}
 #else /* _DEBUG */
+
 #define DEBUG_LINE													\
 	do {															\
 		printf("Not compiled with debugger support, exiting...");	\
 		exit(VE_EMODE);												\
 	} while (0)
 #endif /* _DEBUG */
+
 #define assert(exp, desc, ...)										\
 	do {															\
 		if(!(exp)) {												\
@@ -67,6 +71,7 @@ static bool assertFun(bool condition, const char* message, int line, const char*
 			}														\
 		}															\
 	} while (0)
+
 
 #define warnOn(exp, fmt, ...)										\
 	do {															\

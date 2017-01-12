@@ -109,6 +109,7 @@ CameraFPP::GetProjectionMatrix(Matrix4* proj, int w, int h)
 		_projectionMatrix = *proj;
 	}
 	else {
+		/* Used just for debuging and testing, it is size of the world. */
 		*proj = Matrix4::GetOrtho(-128 * _viewFrustum.GetAspect(), 128 * _viewFrustum.GetAspect(),
 								  -128, 128, _viewFrustum.GetNear(), _viewFrustum.GetFar());
 		_projectionMatrix = *proj;
@@ -118,7 +119,9 @@ CameraFPP::GetProjectionMatrix(Matrix4* proj, int w, int h)
 const Matrix4&
 CameraFPP::GetViewMatrix()
 {
+	/* Update view only if moved */
 	if (_moved) {
+		/* Use simple euler angles math S*/
 		Vector3 front;
 		front.x = cos(degToRad(_orientation.x)) * cos(degToRad(_orientation.y));
 		front.y = sin(degToRad(_orientation.y));
@@ -133,6 +136,7 @@ CameraFPP::GetViewMatrix()
 		_viewMatrix = Matrix4::GetLookAt(_position, _position + front, up);
 		_moved = false;
 
+		/* Update frustum */
 		_viewFrustum.Set(_projectionMatrix * _viewMatrix);
 	}
 	return _viewMatrix;
@@ -165,14 +169,14 @@ CameraFPP::PerspectiveChanged()
 bool
 CameraFPP::IsVisible(const BoundingBox& boundary)
 {
-
-
+	/* Check if objet is visible using p vertices */
 	for (int i = 0; i < Frustum::NUM_OF_PLANES; i++) {
 		const Plane& plane = _viewFrustum.GetPlane(i);
 
 		Vector3 pVert;
 		boundary.GetPVertex(&pVert, plane.GetNormal());
 
+		/* If any pvertex is not inside, it is not visible */
 		if (plane.Distance(pVert) < 0.0f)
 			return false;
 	}

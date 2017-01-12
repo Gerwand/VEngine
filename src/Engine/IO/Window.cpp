@@ -117,10 +117,6 @@ Window::MakeActiveContext()
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		printf("Failed to initialize OpenGL context\n");
 	}
-	//glewExperimental = GL_TRUE;
-	//if (glewInit() != GLEW_OK) {
-	//	printf("Failed to initialize GLEW\n");
-	//}
 }
 
 bool 

@@ -176,7 +176,7 @@ BoundingBox::IsContaining(const BoundingBox& boundingBox) const
 		Vector3(otherMax.x, otherMax.y, otherMin.z),
 		Vector3(otherMax.x, otherMax.y, otherMax.z)
 	};
-
+	/* Naive checking if object is containing other object */
 	for (int i = 0; i < 8; ++i) {
 		if (!IsContaining(pts[i]))
 			return false;

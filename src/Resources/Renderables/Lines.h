@@ -4,14 +4,15 @@
 
 namespace vengine {
 
+/* Allows to add lines and render them with proper renderer */
 class Lines : public Renderable
 {
 public:	
 	Lines();
 
-
 	void SetColor(const Vector4& color);
 	const Vector4& GetColor() const;
+
 	void AddLine(const Vector3& start, const Vector3& end);
 	void AddLine(const Vector3& start, const Vector3& end, const Vector4& color);
 
